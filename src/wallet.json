@@ -293,6 +293,66 @@
                     }
                 }
             },
+            "instrumentAllocation": {
+                "description": "An instrument used for this transaction",
+                "type": "object",
+                "required": [
+                    "paymentInstrumentId",
+                    "instrumentType",
+                    "transactions"
+                ],
+                "properties": {
+                    "paymentInstrumentId": {
+                        "description": "The ID of the payment instrument",
+                        "type": "string"
+                    },
+                    "instrumentType": {
+                        "description": "The type of the payment instrument.",
+                        "type": "string"
+                    },
+                    "transactions": {
+                        "description": "The list of transactions associated with the instrument.  If no results match the request then an empty array will be returned",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "description": "Information about the transaction.",
+                            "properties": {
+                                "type": {
+                                    "description": "The type of transaction: PAYMENT or REFUND",
+                                    "type": "string",
+                                    "enum": [
+                                        "PAYMENT",
+                                        "REFUND"
+                                    ]
+                                },
+                                "executionTime": {
+                                    "description": "Date/time stamp of when the transaction occurred in ISO string format",
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "example": "2017-11-06T19:38:09.890+11:00"
+                                },
+                                "paymentTransactionRef": {
+                                    "description": "The reference for the payment",
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "description": "The current status of the transactions",
+                                    "type": "string",
+                                    "enum": [
+                                        "PROCESSING",
+                                        "APPROVED",
+                                        "REJECTED"
+                                    ]
+                                },
+                                "amount": {
+                                    "description": "The amount charged against or refunded to this instrument",
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "posPayload": {
                 "description": "Payload describing the specific POS system.  This payload originates in the payment request and is carried with any resulting transactions.  Provided in a generic schema previous configured by the merchant",
                 "type": "object",
@@ -428,7 +488,8 @@
                             "transactionId",
                             "type",
                             "executionTime",
-                            "status"
+                            "status",
+                            "instruments"
                         ],
                         "properties": {
                             "transactionId": {
@@ -471,6 +532,13 @@
                             "refundReason": {
                                 "description": "The reason provided for the refund.  Only provided for REFUND transactions",
                                 "type": "string"
+                            },
+                            "instruments": {
+                                "description": "The instruments used to make the payment.  For refunds and cash back amounts will be negative",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/instrumentAllocation"
+                                }
                             }
                         }
                     },
@@ -488,40 +556,13 @@
                     {
                         "type": "object",
                         "required": [
-                            "merchantId",
-                            "instruments"
+                            "merchantId"
                         ],
                         "properties": {
                             "merchantId": {
                                 "description": "The ID of the merchant associated with this transaction",
                                 "type": "string",
                                 "example": "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
-                            },
-                            "instruments": {
-                                "description": "The instruments used to make the payment.  For refunds and cash back amounts will be negative",
-                                "type": "array",
-                                "items": {
-                                    "description": "An instrument used for this transaction",
-                                    "type": "object",
-                                    "required": [
-                                        "paymentInstrumentId",
-                                        "amount"
-                                    ],
-                                    "properties": {
-                                        "paymentInstrumentId": {
-                                            "description": "The ID of the payment instrument",
-                                            "type": "string"
-                                        },
-                                        "amount": {
-                                            "description": "The amount charged against or refunded to this instrument",
-                                            "type": "number"
-                                        },
-                                        "paymentTransactionRef": {
-                                            "description": "The reference for the payment",
-                                            "type": "string"
-                                        }
-                                    }
-                                }
                             }
                         }
                     }
@@ -4024,6 +4065,24 @@
                                             "clientReference": {
                                                 "description": "An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
                                                 "type": "string"
+                                            },
+                                            "subTransactions": {
+                                                "description": "List of payments and amounts to refund. Can be used to refund to multiple payment instruments or to issue partial refunds. If subTransactions is not supplied the entire transaction will be refunded.",
+                                                "type": "object",
+                                                "required": [
+                                                    "subTransactionRef",
+                                                    "amount"
+                                                ],
+                                                "properties": {
+                                                    "subTransactionRef": {
+                                                        "description": "The payment reference for this sub transaction.",
+                                                        "type": "string"
+                                                    },
+                                                    "amount": {
+                                                        "description": "The amount to be refunded as part of this transaction.",
+                                                        "type": "number"
+                                                    }
+                                                }
                                             }
                                         }
                                     },
