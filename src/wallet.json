@@ -563,6 +563,32 @@
                     }
                 ]
             },
+            "customerTermsAndConditionsAcceptance": {
+                "description": "The Ts and Cs the customer has accepted.",
+                "type": "object",
+                "required": [
+                    "type",
+                    "version",
+                    "timestamp"
+                ],
+                "properties": {
+                    "type": {
+                        "description": "The type of the Ts and Cs.",
+                        "type": "string",
+                        "example": "EVERYDAY_PAY"
+                    },
+                    "version": {
+                        "description": "The version of the Ts and Cs.",
+                        "type": "string",
+                        "example": "1.0.0"
+                    },
+                    "timestamp": {
+                        "description": "The timestamp when the shopper/customer agreed to the Everyday Pay Ts and Cs.  The timestamp format is milliseconds since epoch.",
+                        "type": "number",
+                        "example": 1604284343175
+                    }
+                }
+            },
             "merchantTransactionDetail": {
                 "description": "Detailed information for a single transaction",
                 "allOf": [
@@ -1273,6 +1299,55 @@
                                         "payments": {
                                             "primaryInstrumentId": "90271"
                                         }
+                                    },
+                                    "meta": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "getCustomerTermsAndConditionsResponse": {
+                "description": "Successful Ts and Cs response",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "title": "customerTermsAndConditionsResult",
+                            "type": "object",
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "properties": {
+                                "data": {
+                                    "description": "Customer T&Cs acceptance",
+                                    "type": "object",
+                                    "properties": {
+                                        "termsAndConditionsAcceptances": {
+                                            "description": "An array of Ts and Cs the customer has accepted.",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/customerTermsAndConditionsAcceptance"
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "examples": {
+                            "CustomerTermsAndConditions": {
+                                "value": {
+                                    "data": {
+                                        "termsAndConditionsAcceptances": [
+                                            {
+                                                "type": "EVERYDAY_PAY",
+                                                "version": "1.0.0",
+                                                "timestamp": 1612223671155
+                                            }
+                                        ]
                                     },
                                     "meta": {}
                                 }
@@ -3184,6 +3259,126 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/customer/termsandconditions/acceptance": {
+            "get": {
+                "summary": "Get Customer Terms and Conditions acceptance",
+                "operationId": "getCustomerTermsAndConditionsAcceptance",
+                "security": [
+                    {
+                        "ApiKeyAuth": [],
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Get the terms and conditions agreed to by the customer",
+                "tags": [
+                    "Customer"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Wallet-ID",
+                        "schema": {
+                            "type": "string",
+                            "example": "bb8f86af-9e7b-4659-85d5-346b5e99d500"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "type",
+                        "description": "The type of Ts and Cs that the shopper/customer has agreed to.  Defaults to all if absent",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "version",
+                        "description": "The version of Ts and Cs that the shopper/customer has agreed to.  Defaults to all if absent",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/getCustomerTermsAndConditionsResponse"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Agree to T&Cs",
+                "operationId": "acceptCustomerTermsAndConditions",
+                "security": [
+                    {
+                        "ApiKeyAuth": [],
+                        "bearerAuth": []
+                    }
+                ],
+                "description": "Customer accepts terms and conditions",
+                "tags": [
+                    "Customer"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "X-Wallet-ID",
+                        "schema": {
+                            "type": "string",
+                            "example": "bb8f86af-9e7b-4659-85d5-346b5e99d500"
+                        },
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request payload containing the acceptance of T&Cs.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "title": "customerTermsAndConditions",
+                                "type": "object",
+                                "required": [
+                                    "data"
+                                ],
+                                "properties": {
+                                    "data": {
+                                        "description": "Mandatory data object containing request",
+                                        "type": "object",
+                                        "required": [
+                                            "type",
+                                            "version"
+                                        ],
+                                        "properties": {
+                                            "type": {
+                                                "description": "The type of Ts and Cs that the shopper/customer has agreed to.",
+                                                "type": "string",
+                                                "example": "EVERYDAY_PAY"
+                                            },
+                                            "version": {
+                                                "description": "The current version of the Ts and Cs that the shopper/customer has agreed to.",
+                                                "type": "string",
+                                                "example": "1.0.0"
+                                            }
+                                        }
+                                    },
+                                    "meta": {
+                                        "$ref": "#/components/schemas/meta"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Ts and Cs successfully accepted.  No content returned"
                     }
                 }
             }
