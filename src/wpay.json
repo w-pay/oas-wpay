@@ -3246,15 +3246,15 @@
                     },
                     "500": {
                         "description": "An unknown error occurred.",
-                        "$ref": "#/definitions/VerifyPaymentInstrumentsErrorResponse"
+                        "$ref": "#/components/responses/verifyPaymentInstrumentsErrorResponse"
                     },
                     "501": {
                         "description": "A Business Validation error occurred.",
-                        "$ref": "#/definitions/VerifyPaymentInstrumentsErrorResponse"
+                        "$ref": "#/components/responses/verifyPaymentInstrumentsErrorResponse"
                     },
                     "502": {
                         "description": "An Internal System error occurred.",
-                        "$ref": "#/definitions/VerifyPaymentInstrumentsErrorResponse"
+                        "$ref": "#/components/responses/verifyPaymentInstrumentsErrorResponse"
                     },
                     "503": {
                         "description": "The Service is currently unavailable.",
