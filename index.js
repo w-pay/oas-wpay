@@ -11,8 +11,8 @@ function createSchemaDictionary(schemaDirectoryPath, fileNameMatch){
         const match = file.match(fileNameMatch)
         if(match){
             const schemaVersion = match[1].replace(/-/g,'.')
-            const schemaFile = require(path.join(resolvedPath, file));
-            dictionary[schemaVersion] = schemaFile;
+            const schema = require(path.join(resolvedPath, file));
+            dictionary[schemaVersion] = schema;
         }
     });
     
