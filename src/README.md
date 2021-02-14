@@ -27,7 +27,10 @@ For end points to be mapped to existing DigiPay targets:
 
 # TODO notes by James
 
+* Componentise all request bodies and responses
+* Fill in all of the error responses on the wallet end points
 * Fix the descriptions of requests and responses
+* Fix request and response examples
 * Incoporate recent changes to wallet.json by Wayne and James (Ts&Cs,
     preferences, split payments)
 * Finish the combined end points
