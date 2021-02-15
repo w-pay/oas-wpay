@@ -3,7 +3,7 @@
     "info": {
         "title": "Village Wallet",
         "description": "APIs for Village Wallet",
-        "version": "0.0.8"
+        "version": "0.0.9"
     },
     "servers": [
         {
@@ -4263,22 +4263,19 @@
                                             },
                                             "subTransactions": {
                                                 "description": "List of payments and amounts to refund. Can be used to refund to multiple payment instruments or to issue partial refunds. If subTransactions is not supplied the entire transaction will be refunded.",
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "required": [
-                                                        "subTransactionRef",
-                                                        "amount"
-                                                    ],
-                                                    "properties": {
-                                                        "subTransactionRef": {
-                                                            "description": "The payment reference for this sub transaction.",
-                                                            "type": "string"
-                                                        },
-                                                        "amount": {
-                                                            "description": "The amount to be refunded as part of this transaction.",
-                                                            "type": "number"
-                                                        }
+                                                "type": "object",
+                                                "required": [
+                                                    "subTransactionRef",
+                                                    "amount"
+                                                ],
+                                                "properties": {
+                                                    "subTransactionRef": {
+                                                        "description": "The payment reference for this sub transaction.",
+                                                        "type": "string"
+                                                    },
+                                                    "amount": {
+                                                        "description": "The amount to be refunded as part of this transaction.",
+                                                        "type": "number"
                                                     }
                                                 }
                                             }
