@@ -10691,6 +10691,7 @@
                     "expiryMonth",
                     "expiryYear",
                     "lastUpdated",
+                    "createdOn",
                     "paymentInstrumentId",
                     "paymentToken",
                     "primary",
@@ -10728,6 +10729,12 @@
                     },
                     "lastUsed":{
                         "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
+                        "format":"date-time",
+                        "type":"string",
+                        "example":"2017-11-06T19:38:09.890+11:00"
+                    },
+                    "createdOn":{
+                        "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
                         "format":"date-time",
                         "type":"string",
                         "example":"2017-11-06T19:38:09.890+11:00"
@@ -10819,6 +10826,7 @@
                     "allowed",
                     "cardSuffix",
                     "lastUpdated",
+                    "createdOn",
                     "paymentInstrumentId",
                     "paymentToken",
                     "primary",
@@ -10856,6 +10864,12 @@
                         "format":"date-time",
                         "type":"string",
                         "example":"2017-10-12T13:25:49.770+11:00"
+                    },
+                    "createdOn":{
+                        "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                        "format":"date-time",
+                        "type":"string",
+                        "example":"2017-11-06T19:38:09.890+11:00"
                     },
                     "primary":{
                         "description":"A flag to indicate if this payment instrument is the primary instrument in the container.",
@@ -12210,6 +12224,7 @@
                                 "expiryYear",
                                 "lastUpdated",
                                 "lastUsed",
+                                "createdOn",
                                 "paymentInstrumentId",
                                 "paymentToken",
                                 "primary",
@@ -12250,6 +12265,12 @@
                                     "type":"string",
                                     "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                                     "example":"2017-11-06T08:38:09.890Z"
+                                },
+                                "createdOn":{
+                                    "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                                    "format":"date-time",
+                                    "type":"string",
+                                    "example":"2017-11-06T19:38:09.890+11:00"
                                 },
                                 "primary":{
                                     "type":"boolean",
@@ -12342,6 +12363,7 @@
                                 "cardSuffix",
                                 "lastUpdated",
                                 "lastUsed",
+                                "createdOn",
                                 "paymentInstrumentId",
                                 "paymentToken",
                                 "primary",
@@ -12379,6 +12401,12 @@
                                     "type":"string",
                                     "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                                     "example":"2017-10-12T02:25:49.770Z"
+                                },
+                                "createdOn":{
+                                    "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                                    "format":"date-time",
+                                    "type":"string",
+                                    "example":"2017-11-06T19:38:09.890+11:00"
                                 },
                                 "primary":{
                                     "type":"boolean",
@@ -12436,6 +12464,7 @@
                                 "customerId",
                                 "lastUpdated",
                                 "lastUsed",
+                                "createdOn",
                                 "payPalId",
                                 "paymentInstrumentId",
                                 "paymentToken",
@@ -12474,6 +12503,12 @@
                                     "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                                     "example":"2017-11-06T08:38:09.860Z"
                                 },
+                                "createdOn":{
+                                    "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                                    "format":"date-time",
+                                    "type":"string",
+                                    "example":"2017-11-06T19:38:09.890+11:00"
+                                },
                                 "primary":{
                                     "type":"boolean",
                                     "description":"A flag to indicate if this payment instrument is the primary instrument in the container.",
@@ -12509,6 +12544,7 @@
                                 "expired",
                                 "lastUpdated",
                                 "lastUsed",
+                                "createdOn",
                                 "paymentInstrumentId",
                                 "paymentToken",
                                 "primary",
@@ -12543,6 +12579,12 @@
                                     "type":"string",
                                     "description":"The timestamp the payment agreement was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                                     "example":"2018-09-14T12:00:00.000+1100"
+                                },
+                                "createdOn":{
+                                    "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                                    "format":"date-time",
+                                    "type":"string",
+                                    "example":"2017-11-06T19:38:09.890+11:00"
                                 },
                                 "primary":{
                                     "type":"boolean",
@@ -12671,6 +12713,7 @@
                             "expired",
                             "lastUpdated",
                             "lastUsed",
+                            "createdOn",
                             "paymentInstrumentId",
                             "paymentToken",
                             "primary",
@@ -12707,6 +12750,12 @@
                                 "type":"string",
                                 "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                                 "example":"2017-07-28T02:58:56.187Z"
+                            },
+                            "createdOn":{
+                                "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                                "format":"date-time",
+                                "type":"string",
+                                "example":"2017-11-06T19:38:09.890+11:00"
                             },
                             "primary":{
                                 "type":"boolean",
@@ -12756,6 +12805,7 @@
                             "allowed",
                             "lastUpdated",
                             "lastUsed",
+                            "createdOn",
                             "paymentInstrumentId",
                             "paymentToken",
                             "primary",
@@ -12793,6 +12843,12 @@
                                 "type":"string",
                                 "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                                 "example":"2017-09-20T06:20:18.173Z"
+                            },
+                            "createdOn":{
+                                "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                                "format":"date-time",
+                                "type":"string",
+                                "example":"2017-11-06T19:38:09.890+11:00"
                             },
                             "primary":{
                                 "type":"boolean",
@@ -12841,6 +12897,7 @@
                             "status":"UNVERIFIED_PERSISTENT",
                             "lastUpdated":"2017-11-06T08:38:09.890Z",
                             "lastUsed":"2017-11-06T08:38:09.890Z",
+                            "createdOn":"2017-11-06T08:38:09.890Z",
                             "primary":true,
                             "allowed":true,
                             "expiryYear":"21",
@@ -12866,6 +12923,7 @@
                             "status":"UNVERIFIED_PERSISTENT",
                             "lastUpdated":"2017-11-06T08:38:09.860Z",
                             "lastUsed":"2017-10-12T02:25:49.770Z",
+                            "createdOn":"2017-11-06T08:38:09.890Z",
                             "primary":false,
                             "allowed":true,
                             "programName":"WISH Gift Card",
@@ -12884,6 +12942,7 @@
                             "status":"UNVERIFIED_PERSISTENT",
                             "lastUpdated":"2017-11-06T08:38:09.860Z",
                             "lastUsed":"2017-11-06T08:38:09.860Z",
+                            "createdOn":"2017-11-06T08:38:09.890Z",
                             "primary":false,
                             "allowed":true,
                             "payPalId":"jane.doe@paypal.com",
@@ -12896,6 +12955,7 @@
                             "status":"VERIFIED",
                             "lastUpdated":"2018-09-01T00:00:00.000+1100",
                             "lastUsed":"2018-09-14T12:00:00.000+1100",
+                            "createdOn":"2017-11-06T08:38:09.890Z",
                             "primary":false,
                             "allowed":true,
                             "type":"RECURRING",
@@ -12924,6 +12984,7 @@
                         "status":"VERIFIED",
                         "lastUpdated":"2017-09-20T06:20:18.173Z",
                         "lastUsed":"2017-07-28T02:58:56.187Z",
+                        "createdOn":"2017-11-06T08:38:09.890Z",
                         "primary":false,
                         "allowed":true,
                         "expired":true,
@@ -12939,6 +13000,7 @@
                         "status":"VERIFIED",
                         "lastUpdated":"2017-07-28T02:58:56.187Z",
                         "lastUsed":"2017-09-20T06:20:18.173Z",
+                        "createdOn":"2017-11-06T08:38:09.890Z",
                         "primary":false,
                         "allowed":true,
                         "stepUp":{
@@ -18634,6 +18696,7 @@
                                                 "expiryYear":"21",
                                                 "lastUpdated":"2017-11-06T19:38:09.890+11:00",
                                                 "lastUsed":"2017-11-06T19:38:09.890+11:00",
+                                                "createdOn":"2017-11-06T08:38:09.890Z",
                                                 "paymentInstrumentId":"90731",
                                                 "paymentToken":"712029a1-c0aa-41bc-a810-3d42424c5834",
                                                 "primary":true,
@@ -18654,6 +18717,7 @@
                                                 "cardSuffix":"2517",
                                                 "lastUpdated":"2017-11-06T19:38:09.860+11:00",
                                                 "lastUsed":"2017-10-12T13:25:49.770+11:00",
+                                                "createdOn":"2017-11-06T08:38:09.890Z",
                                                 "paymentInstrumentId":"81054",
                                                 "paymentToken":"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
                                                 "primary":true,
@@ -18678,6 +18742,7 @@
                                                     "expiryYear":"21",
                                                     "lastUpdated":"2017-11-06T19:38:09.890+11:00",
                                                     "lastUsed":"2017-11-06T19:38:09.890+11:00",
+                                                    "createdOn":"2017-11-06T08:38:09.890Z",
                                                     "paymentInstrumentId":"90731",
                                                     "paymentToken":"712029a1-c0aa-41bc-a810-3d42424c5834",
                                                     "primary":true,
@@ -18698,6 +18763,7 @@
                                                     "cardSuffix":"2517",
                                                     "lastUpdated":"2017-11-06T19:38:09.860+11:00",
                                                     "lastUsed":"2017-10-12T13:25:49.770+11:00",
+                                                    "createdOn":"2017-11-06T08:38:09.890Z",
                                                     "paymentInstrumentId":"81054",
                                                     "paymentToken":"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
                                                     "primary":true,
