@@ -20598,9 +20598,17 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PaymentAgreement"
+                                    "type": "object",
+                                    "required": [
+                                        "paymentAgreements"
+                                    ],
+                                    "properties": {
+                                        "paymentAgreements": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/PaymentAgreement"
+                                            }
+                                        }
                                     }
                                 },
                                 "meta": {
