@@ -3,7 +3,7 @@
     "info":{
         "title":"Wpay APIs",
         "description":"Wpay APIs for payments and gifting",
-        "version":"1.0.0"
+        "version":"1.0.1"
     },
     "servers":[
         {
@@ -605,16 +605,14 @@
                                         "description":"Mandatory data object containing response",
                                         "type":"object",
                                         "required":[
-                                            "primaryInstrumentId",
-                                            "secondaryInstruments"
                                         ],
                                         "properties":{
                                             "primaryInstrumentId":{
-                                                "description":"The Id of the primary instrument.  Will be used as the balance of the transaction",
+                                                "description":"The Id of the primary instrument.  Will be used as the balance of the transaction.  If not present then the primary instrument from the customer preferences will be used.",
                                                 "type":"string"
                                             },
                                             "secondaryInstruments":{
-                                                "description":"The secondary instruments (if any) used to partially make the payment",
+                                                "description":"The secondary instruments (if any) used to partially make the payment.  If not present then the primary instrument from the customer preferences will be used.  To specify that no secondary instruments should be used an empty array should be provided.",
                                                 "type":"array",
                                                 "items":{
                                                     "description":"An instrument used for this transaction",
@@ -1357,16 +1355,14 @@
                                         "description":"Mandatory data object containing response",
                                         "type":"object",
                                         "required":[
-                                            "primaryInstrumentId",
-                                            "secondaryInstruments"
                                         ],
                                         "properties":{
                                             "primaryInstrumentId":{
-                                                "description":"The Id of the primary instrument.  Will be used as the balance of the transaction",
+                                                "description":"The Id of the primary instrument.  Will be used as the balance of the transaction.  If not present then the primary instrument from the customer preferences will be used.",
                                                 "type":"string"
                                             },
                                             "secondaryInstruments":{
-                                                "description":"The secondary instruments (if any) used to partially make the payment",
+                                                "description":"The secondary instruments (if any) used to partially make the payment.  If not present then the primary instrument from the customer preferences will be used.  To specify that no secondary instruments should be used an empty array should be provided.",
                                                 "type":"array",
                                                 "items":{
                                                     "description":"An instrument used for this transaction",
