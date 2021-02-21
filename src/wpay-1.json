@@ -604,8 +604,6 @@
                                     "data":{
                                         "description":"Mandatory data object containing response",
                                         "type":"object",
-                                        "required":[
-                                        ],
                                         "properties":{
                                             "primaryInstrumentId":{
                                                 "description":"The Id of the primary instrument.  Will be used as the balance of the transaction.  If not present then the primary instrument from the customer preferences will be used.",
@@ -1354,8 +1352,6 @@
                                     "data":{
                                         "description":"Mandatory data object containing response",
                                         "type":"object",
-                                        "required":[
-                                        ],
                                         "properties":{
                                             "primaryInstrumentId":{
                                                 "description":"The Id of the primary instrument.  Will be used as the balance of the transaction.  If not present then the primary instrument from the customer preferences will be used.",
@@ -1875,9 +1871,9 @@
                 "summary": "Create Payment Agreement",
                 "operationId": "createCustomerPaymentAgreement",
                 "security": [
-                    { 
-                        "ApiKeyAuth": [], 
-                        "bearerAuth": [] 
+                    {
+                        "ApiKeyAuth": [],
+                        "bearerAuth": []
                     }
                 ],
                 "description": "Create an new payment agreement",
@@ -11282,6 +11278,82 @@
                     }
                 }
             },
+            "billingAddress": {
+              "required": [
+                "countryCode",
+                "firstName",
+                "lastName",
+                "postalCode",
+                "stateOrTerritory",
+                "streetAddress",
+                "suburb"
+              ],
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "description": "The customer's first name.",
+                  "example": "Francois"
+                },
+                "lastName": {
+                  "type": "string",
+                  "description": "The customer's last name.",
+                  "example": "van der Merwe"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The customer’s email address.",
+                  "example": "fvandermerwe@woolworths.com.au"
+                },
+                "company": {
+                  "type": "string",
+                  "description": "The customer's company name.",
+                  "example": "Woolworths Limited"
+                },
+                "extendedAddress": {
+                  "type": "string",
+                  "description": "The customer's extended address line.",
+                  "example": "Level 1"
+                },
+                "streetAddress": {
+                  "type": "string",
+                  "description": "The customer's street address line.",
+                  "example": "22 River Oak Circuit"
+                },
+                "suburb": {
+                  "type": "string",
+                  "description": "The customer's suburb.",
+                  "example": "Kellyville"
+                },
+                "stateOrTerritory": {
+                  "type": "string",
+                  "description": "The customer's abbreviated state or territory.",
+                  "example": "NSW"
+                },
+                "postalCode": {
+                  "type": "string",
+                  "description": "The customer's postal code.",
+                  "example": "2155"
+                },
+                "countryCode": {
+                  "type": "string",
+                  "description": "The customer's Alpha-2 (2-character) ISO-3166-1 country code.",
+                  "example": "AU"
+                }
+              },
+              "description": "The customer's billing address."
+            },
+            "transactionType": {
+              "type": "string",
+              "description": "The container transaction type.",
+              "enum": [
+                "PREAUTH",
+                "PURCHASE",
+                "COMPLETION",
+                "VOID",
+                "REFUND"
+              ]
+            },
             "InitiateCardCaptureRequest":{
                 "required":[
                     "clientReference"
@@ -18892,7 +18964,7 @@
                     "errorDetail":"Oops! An error has occurred: ScriptExecutionFailed"
                 }
             },
-            "PaymentAgreement": {
+            "paymentAgreement": {
                 "description": "Definition of a payment agreement",
                 "type":"array",
                 "items":{
@@ -20571,7 +20643,7 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "$ref": "#/components/schemas/PaymentAgreement"
+                                    "$ref": "#/components/schemas/paymentAgreement"
                                 },
                                 "meta": {
                                     "$ref": "#/components/schemas/meta"
@@ -20602,7 +20674,7 @@
                                         "paymentAgreements": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/PaymentAgreement"
+                                                "$ref": "#/components/schemas/paymentAgreement"
                                             }
                                         }
                                     }
