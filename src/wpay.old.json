@@ -5021,1315 +5021,7 @@
             }
         }
         },
-        "-/v2/customer/payments/agreements": {
-            "post": {
-                "tags": [
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "Content-Type",
-                        "description": "The MIME type of the body of the request.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "default": "application/json"
-                    },
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    },
-                    {
-                        "name": "Authorization",
-                        "description": "The access token is obtained from the auth/login endpoint after a user is authenticated. This token is a bearer token.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "x-example": "Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
-                    },
-                    {
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/CreatePaymentAgreementRequest"
-                        },
-                        "in": "body",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Create Payment Agreement",
-                "description": "Create a new payment agreement which will be added to the users wallet after validating the payment instrument. This API is IP restricted to allow unauthenticated server side calls."
-            }
-        },
-        "-/v2/customer/payments/agreements/{paymentAgreementId}": {
-            "post": {
-                "tags": [
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "Content-Type",
-                        "description": "The MIME type of the body of the request.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "default": "application/json"
-                    },
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    },
-                    {
-                        "name": "Authorization",
-                        "description": "The access token is obtained from the auth/login endpoint after a user is authenticated. This token is a bearer token. Only required if the update was initiated by the customer, eg. to update the funding instrument.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
-                    },
-                    {
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/UpdatePaymentAgreementRequest"
-                        },
-                        "in": "body",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Update Payment Agreement",
-                "description": "Update an existing payment agreement and validate the payment instrument if changed. This API is IP restricted to allow unauthenticated server side calls."
-            },
-            "delete": {
-                "tags": [
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/DeletePaymentAgreementResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Delete Payment Agreement",
-                "description": "Delete an existing payment agreement. This API is IP restricted to allow unauthenticated server side calls."
-            },
-            "parameters": [
-                {
-                    "name": "paymentToken",
-                    "description": "The payment token of the payment agreement. The payment token is a unique identifier for the payment agreement.",
-                    "in": "path",
-                    "required": true,
-                    "type": "string",
-                    "x-example": "27e07e4e-58df-4072-8e75-33dd464af667"
-                }
-            ]
-        },
 
-        "-/v2/merchant/wallets": {
-            "post": {
-                "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "Content-Type",
-                        "description": "The MIME type of the body of the request.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "default": "application/json"
-                    },
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    },
-                    {
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/DeleteWalletRequest"
-                        },
-                        "in": "body",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/DeleteWalletResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Delete Wallet",
-                "description": "Delete a consumers wallet. This API is IP restricted to allow unauthenticated server side calls."
-            }
-        },
-        "-/v2/merchant/wallets/{walletId}/instruments/verify": {
-            "post": {
-                "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "Content-Type",
-                        "description": "The MIME type of the body of the request.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "default": "application/json"
-                    },
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    },
-                    {
-                        "name": "Authorization",
-                        "description": "The access token is obtained from the auth/login endpoint after a user is authenticated. This token is a bearer token.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "x-example": "Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
-                    },
-                    {
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/VerifyPaymentInstrumentsRequest"
-                        },
-                        "in": "body",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/VerifyPaymentInstrumentsSuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/definitions/VerifyPaymentInstrumentsErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/VerifyPaymentInstrumentsErrorResponse"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/VerifyPaymentInstrumentsErrorResponse"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/VerifyPaymentInstrumentsErrorResponse"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Verify Payment Instruments",
-                "description": "Verify if a provided payment instrument is valid and optionally perform a fraud check on the instrument."
-            }
-        },
-        "-/v2/merchant/wallets/{walletId}/instruments/import": {
-            "post": {
-                "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "Content-Type",
-                        "description": "The MIME type of the body of the request.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "default": "application/json"
-                    },
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    },
-                    {
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/ImportPaymentInstrumentsRequest"
-                        },
-                        "in": "body",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/ImportPaymentInstrumentsResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Import Payment Instruments",
-                "description": "Import a consumers credit cards (from WebPay) and paypal accounts to a new wallet. This API is IP restricted to allow unauthenticated server side calls."
-            }
-        },
-        "-/v2/merchant/payments/agreements": {
-            "post": {
-                "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "Content-Type",
-                        "description": "The MIME type of the body of the request.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "default": "application/json"
-                    },
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    },
-                    {
-                        "name": "Authorization",
-                        "description": "The access token is obtained from the auth/login endpoint after a user is authenticated. This token is a bearer token.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "x-example": "Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
-                    },
-                    {
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/CreatePaymentAgreementRequest"
-                        },
-                        "in": "body",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/PaymentAgreementErrorResponse"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Create Payment Agreement",
-                "description": "Create a new payment agreement which will be added to the users wallet after validating the payment instrument. This API is IP restricted to allow unauthenticated server side calls."
-            }
-        },
-        "-/v2/merchant/transactions/{transactionId}/completion": {
-            "post": {
-                "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "Content-Type",
-                        "description": "The MIME type of the body of the request.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "default": "application/json"
-                    },
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    },
-                    {
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/CompletionsRequest"
-                        },
-                        "in": "body",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/CompletionsSuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/definitions/CompletionsErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/CompletionsErrorResponse"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/CompletionsErrorResponse"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/CompletionsErrorResponse"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Completions",
-                "description": "Complete pre-authed payments. This API is IP restricted to allow unauthenticated server side calls."
-            }
-        },
-        "-/v2/merchant/transactions/{transactionId}/void": {
-            "post": {
-                "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "Content-Type",
-                        "description": "The MIME type of the body of the request.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "default": "application/json"
-                    },
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    },
-                    {
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/VoidsRequest"
-                        },
-                        "in": "body",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/VoidsSuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/definitions/VoidsErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/VoidsErrorResponse"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/VoidsErrorResponse"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/VoidsErrorResponse"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Voids",
-                "description": "Void (cancel) pre-authed payments. This API is IP restricted to allow unauthenticated server side calls."
-            }
-        },
-        "-/v2/merchant/openpay/payments": {
-            "post": {
-                "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "Content-Type",
-                        "description": "The MIME type of the body of the request.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "default": "application/json"
-                    },
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    },
-                    {
-                        "name": "Authorization",
-                        "description": "The access token is obtained from the auth/login endpoint after a user is authenticated. This token is a bearer token.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "x-example": "Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
-                    },
-                    {
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayPaymentsRequest"
-                        },
-                        "in": "body",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayPaymentsSuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayPaymentsErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayPaymentsErrorResponse"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayPaymentsErrorResponse"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayPaymentsErrorResponse"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Openpay Payments",
-                "description": "Make payments to a merchant using Openpay payment tokens."
-            }
-        },
-        "-/v2/merchant/openpay/refunds": {
-            "post": {
-                "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
-                ],
-                "parameters": [
-                    {
-                        "name": "Content-Type",
-                        "description": "The MIME type of the body of the request.",
-                        "in": "header",
-                        "required": true,
-                        "type": "string",
-                        "default": "application/json"
-                    },
-                    {
-                        "name": "X-Api-Key",
-                        "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                    },
-                    {
-                        "name": "X-Auth-Key",
-                        "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "OHR1Ull5TVk53NjI5Ng=="
-                    },
-                    {
-                        "name": "X-Auth-Digest",
-                        "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                    },
-                    {
-                        "name": "X-Message-Id",
-                        "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
-                        "in": "header",
-                        "required": false,
-                        "type": "string",
-                        "x-example": "f23c096b2e816da158fdf1ad839298e2"
-                    },
-                    {
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayRefundsRequest"
-                        },
-                        "in": "body",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayRefundsSuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Missing or invalid request payload or value.",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayRefundsErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "404": {
-                        "description": "Invalid API Route.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "500": {
-                        "description": "An unknown error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayRefundsErrorResponse"
-                        }
-                    },
-                    "501": {
-                        "description": "A Business Validation error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayRefundsErrorResponse"
-                        }
-                    },
-                    "502": {
-                        "description": "An Internal System error occurred.",
-                        "schema": {
-                            "$ref": "#/definitions/OpenpayRefundsErrorResponse"
-                        }
-                    },
-                    "503": {
-                        "description": "The Service is currently unavailable.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    },
-                    "504": {
-                        "description": "The request timed out.",
-                        "schema": {
-                            "$ref": "#/components/schemas/error"
-                        }
-                    }
-                },
-                "summary": "Openpay Refunds",
-                "description": "Refund Openpay payments. This API is IP restricted to allow unauthenticated server side calls."
-            }
-        },
         "+/v2/merchant/wallets/{walletId}/instruments": {
         "/customer/instruments": {
             "get": {
@@ -8301,6 +6993,330 @@
                 "description": "Get a credit card detials input iframe (URL) for a guest user. This API is rate limited to 10 requests per minute per guest shopper id."
             }
         }
+    },
+
+        "/openpay/completions":{
+            "post":{
+                "tags":[
+                    "Openpay"
+                ],
+                "summary":"Openpay Completions",
+                "description":"Complete pre-authed Openpay payments. This API is IP restricted to allow unauthenticated server side calls.",
+                "parameters":[
+                    {
+                        "name":"X-Api-Key",
+                        "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "in":"header",
+                        "required":true,
+                        "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+                    },
+                    {
+                        "name":"X-Auth-Key",
+                        "in":"header",
+                        "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"OHR1Ull5TVk53NjI5Ng=="
+                    },
+                    {
+                        "name":"X-Auth-Digest",
+                        "in":"header",
+                        "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+                    },
+                    {
+                        "name":"X-Message-Id",
+                        "in":"header",
+                        "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"f23c096b2e816da158fdf1ad839298e2"
+                    },
+                    {
+                        "name":"X-JWS-Signature",
+                        "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "in":"header",
+                        "required":true,
+                        "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/OpenpayCompletionsRequest"
+                            }
+                        }
+                    },
+                    "required":true
+                },
+                "responses":{
+                    "200":{
+                        "description":"Success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/OpenpayCompletionsSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/OpenpayCompletionsErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/BaseErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/BaseErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/OpenpayCompletionsErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/OpenpayCompletionsErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/OpenpayCompletionsErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/BaseErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/BaseErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-codegen-request-body-name":"body"
+            }
+        },
+        "/openpay/voids":{
+            "post":{
+                "tags":[
+                    "Openpay"
+                ],
+                "summary":"Openpay Voids",
+                "description":"Void (cancel) pre-authed Openpay payments. This API is IP restricted to allow unauthenticated server side calls.",
+                "parameters":[
+                    {
+                        "name":"X-Api-Key",
+                        "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "in":"header",
+                        "required":true,
+                        "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+                    },
+                    {
+                        "name":"X-Auth-Key",
+                        "in":"header",
+                        "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"OHR1Ull5TVk53NjI5Ng=="
+                    },
+                    {
+                        "name":"X-Auth-Digest",
+                        "in":"header",
+                        "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+                    },
+                    {
+                        "name":"X-Message-Id",
+                        "in":"header",
+                        "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"f23c096b2e816da158fdf1ad839298e2"
+                    },
+                    {
+                        "name":"X-JWS-Signature",
+                        "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "in":"header",
+                        "required":true,
+                        "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/OpenpayVoidsRequest"
+                            }
+                        }
+                    },
+                    "required":true
+                },
+                "responses":{
+                    "200":{
+                        "description":"Success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/OpenpayVoidsSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/OpenpayVoidsErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/BaseErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/BaseErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/OpenpayVoidsErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/OpenpayVoidsErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/OpenpayVoidsErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/BaseErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/BaseErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-codegen-request-body-name":"body"
+            }
         }
+
     }
 }
