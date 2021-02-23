@@ -27,11 +27,15 @@ function getLatestVersion(schemas){
         const latest = latestVersion? latestVersion.match(/(\d+).(\d+).(\d+)/): undefined;
         const current = version.match(/(\d+).(\d+).(\d+)/);
         //update if there is no latest version defined or the major, minor and patch versions are >=
-        if(!latestVersion || (current[1]>=latest[1] && current[2]>=latest[2] && current[3]>latest[3])){
+        if(!latestVersion || 
+            current[1] > latest[1] ||
+            current[1] === latest[1] && current[2] >= latest[2] ||
+            current[1] === latest[1] && current[2] === latest[2] && current[3] > latest[3]
+        ){
                 latestVersion = version;
         }
     }
     return latestVersion? schemas[latestVersion] : undefined;
 }
 
-exports.Schemas = createSchemaDictionary('./dist', /wallet-(\d+-\d+-\d+)/);
+exports.Schemas = createSchemaDictionary('./dist', /wpay-(\d+-\d+-\d+)/);
