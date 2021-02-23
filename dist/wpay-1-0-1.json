@@ -10832,9 +10832,12 @@
                                     "REJECTED"
                                 ]
                             },
-                            "statusDetail":{
-                                "description":"The error detail returned by downstream processes when the payment is REJECTED",
-                                "type":"object"
+                            "subTransactions":{
+                                "description":"Array of transaction responses returned by downstream processes",
+                                "type":"array",
+                                "items": {
+                                    "type": "object"
+                                }
                             },
                             "refundReason":{
                                 "description":"The reason provided for the refund.  Only provided for REFUND transactions",
