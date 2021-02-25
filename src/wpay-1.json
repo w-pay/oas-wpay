@@ -633,6 +633,10 @@
                                                     }
                                                 }
                                             },
+                                            "skipRollback": {
+                                                "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                                                "type": "boolean"
+                                            },
                                             "clientReference":{
                                                 "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
                                                 "type":"string"
@@ -1380,6 +1384,10 @@
                                                         }
                                                     }
                                                 }
+                                            },
+                                            "skipRollback": {
+                                                "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                                                "type": "boolean"
                                             },
                                             "clientReference":{
                                                 "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
@@ -10830,6 +10838,16 @@
                                     "PROCESSING",
                                     "APPROVED",
                                     "REJECTED"
+                                ]
+                            },
+                            "rollback":{
+                                "description":"The rollback state of this transaction",
+                                "type":"string",
+                                "enum":[
+                                    "REQUIRED",
+                                    "NOT_REQUIRED",
+                                    "FAILED",
+                                    "SUCCESSFUL"
                                 ]
                             },
                             "subTransactions":{
