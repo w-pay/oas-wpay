@@ -747,7 +747,7 @@
                 ],
                 "responses":{
                     "200":{
-                        "$ref":"#/components/responses/getCustomerPaymentInstrumentResponse"
+                        "$ref":"#/components/responses/getCustomerPaymentInstrumentsResponse"
                     }
                 }
             },
@@ -864,6 +864,119 @@
                 "responses":{
                     "200":{
                         "$ref":"#/components/responses/initiatePaymentInstrumentAdditionResponse"
+                    }
+                }
+            }
+        },
+        "/instore/customer/instruments/{paymentToken}":{
+            "get":{
+                "summary":"Get Payment Instrument",
+                "operationId":"getCustomerPaymentInstrument",
+                "security":[
+                    {
+                        "ApiKeyAuth":[
+
+                        ],
+                        "bearerAuth":[
+
+                        ]
+                    }
+                ],
+                "description":"Get the specified payment instrument of the customer. Returns the payment instrument data and optionally the sensitive data (encrypted in the response) of an instrument record",
+                "tags":[
+                    "Customer"
+                ],
+                "parameters":[
+                    {
+                        "name":"paymentToken",
+                        "in":"path",
+                        "description":"The payment token of the payment instrument to fetch.",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"712029a1-c0aa-41bc-a810-3d42424c5834"
+                    },
+                    {
+                        "name":"X-Api-Key",
+                        "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "in":"header",
+                        "required":true,
+                        "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+                    },
+                    {
+                        "name":"X-Auth-Key",
+                        "in":"header",
+                        "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"OHR1Ull5TVk53NjI5Ng=="
+                    },
+                    {
+                        "name":"X-Auth-Digest",
+                        "in":"header",
+                        "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+                    },
+                    {
+                        "name":"X-Message-Id",
+                        "in":"header",
+                        "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"f23c096b2e816da158fdf1ad839298e2"
+                    },
+                    {
+                        "name":"Authorization",
+                        "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "in":"header",
+                        "required":true,
+                        "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
+                    },
+                    {
+                        "name":"X-JWS-Signature",
+                        "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible. The X-JWS-Signature header is only required if the Authorization header is not present.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "in":"header",
+                        "required":true,
+                        "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+                    },
+                    {
+                        "name":"X-Everyday-Pay-Wallet",
+                        "description":"A flag to indicate if the Everyday Pay wallet should be used when processing the API request. Set the header value to \"true\" to use the Everyday Pay wallet. Set the header value to \"false\" or exclude the header completely to use the default merchant wallet.",
+                        "schema":{
+                            "type":"string"
+                        },
+                        "in":"header",
+                        "example":"true"
+                    },
+                    {
+                        "in":"query",
+                        "name":"publicKey",
+                        "description":"The optional ephemeral public key used to encrypt sensitive instrument data and include ('cipherText' in the 'meta' object) that encrypted data in the response sent back to the consumer. If this parameter is omitted the sensitive data is NOT returned in the response to the consumer.",
+                        "required":false,
+                        "schema":{
+                            "type":"string",
+                            "example":"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEbLF8"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getCustomerPaymentInstrumentResponse"
                     }
                 }
             }
@@ -10436,6 +10549,17 @@
                     }
                 }
             },
+            "metaEncrypted":{
+                "description":"Meta Object containing encrypted information",
+                "type":"object",
+                "properties":{
+                    "cipherText":{
+                        "description":"An encrypted JSON object containing sensitive data",
+                        "type":"string",
+                        "example":"INLh2cH2MtnTKQ1RxwwWQHiXUZ2B04KhXMFh1P1fMYYvy2rSKygl1Ew"
+                    }
+                }
+            },
             "preferencesCustomer":{
                 "description":"Available preference settings for a customer",
                 "type":"object",
@@ -19255,7 +19379,7 @@
                     }
                 }
             },
-            "getCustomerPaymentInstrumentResponse":{
+            "getCustomerPaymentInstrumentsResponse":{
                 "description":"Successful response",
                 "content":{
                     "application/json":{
@@ -19415,6 +19539,162 @@
                                     },
                                     "meta":{
 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "getCustomerPaymentInstrumentResponse":{
+                "description":"Successful response",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "title":"getCustomerPaymentInstrumentResult",
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "description":"Mandatory data object containing response",
+                                    "type":"object",
+                                    "required":[
+                                        "paymentInstrumentId",
+                                        "paymentInstrumentType",
+                                        "paymentToken",
+                                        "status",
+                                        "createdOn",
+                                        "lastUpdated",
+                                        "lastUsed",
+                                        "primary",
+                                        "allowed",
+                                        "paymentInstrumentDetail"
+                                    ],
+                                    "properties":{
+                                        "paymentInstrumentId":{
+                                            "description":"The payment instrument id.",
+                                            "type":"string",
+                                            "example":"90731"
+                                        },
+                                        "paymentToken":{
+                                            "description":"The payment token. The payment token is a unique identifier for the payment instrument.",
+                                            "type":"string",
+                                            "example":"712029a1-c0aa-41bc-a810-3d42424c5834"
+                                        },
+                                        "paymentInstrumentType":{
+                                            "type":"string",
+                                            "description":"The type of the payment instrument.",
+                                            "example":"GIFT_CARD"
+                                        },
+                                        "status":{
+                                            "description":"The status of the payment instrument in the container.",
+                                            "enum":[
+                                                "UNVERIFIED_PERSISTENT",
+                                                "VERIFIED"
+                                            ],
+                                            "type":"string"
+                                        },
+                                        "createdOn":{
+                                            "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                                            "format":"date-time",
+                                            "type":"string",
+                                            "example":"2017-11-06T19:38:09.890+11:00"
+                                        },
+                                        "lastUpdated":{
+                                            "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
+                                            "format":"date-time",
+                                            "type":"string",
+                                            "example":"2017-11-06T19:38:09.890+11:00"
+                                        },
+                                        "lastUsed":{
+                                            "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
+                                            "format":"date-time",
+                                            "type":"string",
+                                            "example":"2017-11-06T19:38:09.890+11:00"
+                                        },
+                                        "primary":{
+                                            "description":"A flag to indicate if this payment instrument is the primary instrument in the container.",
+                                            "type":"boolean",
+                                            "example":true
+                                        },
+                                        "allowed":{
+                                            "description":"A flag to indicate if the merchant profile in the container allows the use of this payment instrument.",
+                                            "type":"boolean",
+                                            "example":true
+                                        },
+                                        "paymentInstrumentDetail":{
+                                            "required":[
+                                                "cardSuffix",
+                                                "programName",
+                                                "stepUp",
+                                            ],
+                                            "type":"object",
+                                            "properties":{
+                                                "cardSuffix":{
+                                                    "type":"string",
+                                                    "description":"The suffix (last 4 digits) of the gift card number.",
+                                                    "example":"2517"
+                                                },
+                                                "programName":{
+                                                    "description":"The gift card program name.",
+                                                    "type":"string",
+                                                    "example":"WISH Gift Card"
+                                                },
+                                                "stepUp":{
+                                                    "required":[
+                                                        "type",
+                                                        "mandatory"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "type":{
+                                                            "description":"The type of the step up action. For gift cards this will be REQUIRE_PASSCODE which identifies that the consumer must capture the PIN prior to payment.",
+                                                            "type":"string",
+                                                            "example":"REQUIRE_PASSCODE"
+                                                        },
+                                                        "mandatory":{
+                                                            "description":"A flag to indicate if this step up (action) is mandatory.",
+                                                            "type":"boolean",
+                                                            "example":true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/metaEncrypted"
+                                }
+                            }
+                        },
+                        "examples":{
+                            "SampleInstruments":{
+                                "value":{
+                                    "data":{
+                                        "paymentInstrumentId":"81054",
+                                        "paymentInstrumentType":"GIFT_CARD",
+                                        "paymentToken":"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
+                                        "status":"UNVERIFIED_PERSISTENT",
+                                        "createdOn":"2017-11-06T08:38:09.890Z",
+                                        "lastUpdated":"2017-11-06T19:38:09.860+11:00",
+                                        "lastUsed":"2017-10-12T13:25:49.770+11:00",
+                                        "primary":true,
+                                        "allowed":true,
+                                        "paymentInstrumentDetail": {
+                                            "cardSuffix":"2517",
+                                            "programName":"WISH Gift Card",
+                                            "stepUp":{
+                                                "type":"REQUIRE_PASSCODE",
+                                                "mandatory":true
+                                            }                                            
+                                        }
+                                    },
+                                    "meta":{
+                                        "cipherText": "INLh2cH2MtnTKQ1RxwwWQHiXUZ2B04KhXMFh1P1fMYYvy2rSKygl1Ew"
                                     }
                                 }
                             }
