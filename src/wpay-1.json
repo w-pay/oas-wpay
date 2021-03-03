@@ -19629,7 +19629,7 @@
                                             "required":[
                                                 "cardSuffix",
                                                 "programName",
-                                                "stepUp",
+                                                "stepUp"
                                             ],
                                             "type":"object",
                                             "properties":{
