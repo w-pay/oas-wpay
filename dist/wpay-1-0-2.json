@@ -868,7 +868,7 @@
                 }
             }
         },
-        "/instore/customer/instruments/{paymentToken}":{
+        "/instore/customer/instruments/{paymentInstrumentId}":{
             "get":{
                 "summary":"Get Payment Instrument",
                 "operationId":"getCustomerPaymentInstrument",
@@ -888,9 +888,9 @@
                 ],
                 "parameters":[
                     {
-                        "name":"paymentToken",
                         "in":"path",
-                        "description":"The payment token of the payment instrument to fetch.",
+                        "name":"paymentInstrumentId",
+                        "description":"The ID of the specific instrument",
                         "required":true,
                         "schema":{
                             "type":"string"
@@ -979,9 +979,7 @@
                         "$ref":"#/components/responses/getCustomerPaymentInstrumentResponse"
                     }
                 }
-            }
-        },
-        "/instore/customer/instruments/{paymentInstrumentId}":{
+            },
             "delete":{
                 "summary":"Delete a payment instrument",
                 "operationId":"deletePaymentInstrument",
@@ -19690,7 +19688,7 @@
                                             "stepUp":{
                                                 "type":"REQUIRE_PASSCODE",
                                                 "mandatory":true
-                                            }                                            
+                                            }
                                         }
                                     },
                                     "meta":{
@@ -21028,4 +21026,3 @@
         }
     }
 }
-
