@@ -19835,7 +19835,8 @@
                                     "data":{
                                         "payments":{
                                             "primaryInstrumentId":"90271"
-                                        }
+                                        },
+                                        "general": {}
                                     },
                                     "meta":{
 
@@ -19990,53 +19991,12 @@
                                                 "instruments":[
                                                     {
                                                         "paymentInstrumentId":"123456",
-                                                        "amount":12000
+                                                        "instrumentType": "CREDIT_CARD",
+                                                        "transactions": []
                                                     }
                                                 ],
                                                 "status":"APPROVED",
-                                                "statusDetail":{
-
-                                                },
                                                 "transactionId":"7617edb9-d0c9-40ca-8058-158dafc60ea2"
-                                            },
-                                            {
-                                                "merchantReferenceId":"123456",
-                                                "paymentRequestId":"f5283ad4-3dfc-4b65-b00d-baa529b9a260",
-                                                "type":"REFUND",
-                                                "grossAmount":-12000,
-                                                "executionTime":"2020-04-23T04:41:44.343Z",
-                                                "instruments":[
-                                                    {
-                                                        "paymentInstrumentId":"123456",
-                                                        "amount":12000
-                                                    }
-                                                ],
-                                                "status":"APPROVED",
-                                                "statusDetail":{
-
-                                                },
-                                                "transactionId":"ffedbb5b-9747-4000-ae20-82d03e0ee99a",
-                                                "merchantId":"eb3645a8-2959-4442-bdce-1d48ee4ce009",
-                                                "refundReason":"Some reason"
-                                            },
-                                            {
-                                                "merchantId":"eb3645a8-2959-4442-bdce-1d48ee4ce009",
-                                                "merchantReferenceId":"123456",
-                                                "paymentRequestId":"d9e5c2b3-05da-4d17-be1a-7ab092c11f9c",
-                                                "type":"PAYMENT",
-                                                "grossAmount":12000,
-                                                "executionTime":"2020-04-23T05:01:39.146Z",
-                                                "instruments":[
-                                                    {
-                                                        "paymentInstrumentId":"123456",
-                                                        "amount":12000
-                                                    }
-                                                ],
-                                                "status":"APPROVED",
-                                                "statusDetail":{
-
-                                                },
-                                                "transactionId":"75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
                                             }
                                         ]
                                     },
@@ -20083,13 +20043,11 @@
                                         "instruments":[
                                             {
                                                 "paymentInstrumentId":"123456",
-                                                "amount":12000
+                                                "instrumentType": "CREDIT_CARD",
+                                                "transactions": []
                                             }
                                         ],
                                         "status":"REJECTED",
-                                        "statusDetail":{
-
-                                        },
                                         "transactionId":"7617edb9-d0c9-40ca-8058-158dafc60ea2",
                                         "basket":{
                                             "items":[
@@ -20861,7 +20819,8 @@
                                         "instruments":[
                                             {
                                                 "paymentInstrumentId":"123456",
-                                                "amount":12000
+                                                "instrumentType": "CREDIT_CARD",
+                                                "transactions": []
                                             }
                                         ],
                                         "status":"REJECTED",
