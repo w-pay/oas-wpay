@@ -19113,173 +19113,170 @@
             },
             "paymentAgreement": {
                 "description": "Definition of a payment agreement",
-                "type":"array",
-                "items":{
-                    "required":[
-                        "allowed",
-                        "chargeAmount",
-                        "chargeCycle",
-                        "chargeFrequency",
-                        "endDate",
-                        "expired",
-                        "lastUpdated",
-                        "lastUsed",
-                        "createdOn",
-                        "paymentInstrumentId",
-                        "paymentToken",
-                        "primary",
-                        "startDate",
-                        "status",
-                        "type",
-                        "updateURL"
-                    ],
-                    "type":"object",
-                    "properties":{
-                        "paymentToken":{
-                            "type":"string",
-                            "description":"The payment token of the payment agreement. The payment token is a unique identifier for the payment agreement.",
-                            "example":"27e07e4e-58df-4072-8e75-33dd464af667"
-                        },
-                        "status":{
-                            "type":"string",
-                            "description":"The status of the payment agreement in the container.",
-                            "enum":[
-                                "UNVERIFIED_PERSISTENT",
-                                "VERIFIED"
-                            ]
-                        },
-                        "lastUpdated":{
-                            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
-                            "type":"string",
-                            "description":"The timestamp the payment agreement was last updated in the container. The timestamp format is ISO8601.",
-                            "example":"2018-09-01T00:00:00.000+1100"
-                        },
-                        "lastUsed":{
-                            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
-                            "type":"string",
-                            "description":"The timestamp the payment agreement was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
-                            "example":"2018-09-14T12:00:00.000+1100"
-                        },
-                        "createdOn":{
-                            "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
-                            "format":"date-time",
-                            "type":"string",
-                            "example":"2017-11-06T19:38:09.890+11:00"
-                        },
-                        "primary":{
-                            "type":"boolean",
-                            "description":"A flag to indicate if this payment instrument is the primary instrument in the container. Not used for payment agreements.",
-                            "example":false
-                        },
-                        "allowed":{
-                            "type":"boolean",
-                            "description":"A flag to indicate if the merchant profile in the container allows the use of this payment agreement.",
-                            "example":true
-                        },
-                        "type":{
-                            "type":"string",
-                            "description":"The payment agreement type.",
-                            "enum":[
-                                "RECURRING",
-                                "ADHOC",
-                                "INSTALLMENT"
-                            ]
-                        },
-                        "paymentInstrumentId":{
-                            "type":"string",
-                            "description":"The payment agreement payment instrument id that will be used for the charges.",
-                            "example":"90731"
-                        },
-                        "scheme":{
-                            "type":"string",
-                            "description":"The credit card scheme.",
-                            "example":"VISA"
-                        },
-                        "cardSuffix":{
-                            "type":"string",
-                            "description":"The suffix (last 4 digits) of the credit card number.",
-                            "example":"4405"
-                        },
-                        "expiryMonth":{
-                            "type":"string",
-                            "description":"The month of the expiry date of the credit card.",
-                            "example":"11"
-                        },
-                        "expiryYear":{
-                            "type":"string",
-                            "description":"The year of the expiry date of the credit card.",
-                            "example":"22"
-                        },
-                        "startDate":{
-                            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
-                            "type":"string",
-                            "description":"The payment agreement start date and time. The timestamp format is ISO8601.",
-                            "example":"2018-09-01T00:00:00.000+1100"
-                        },
-                        "endDate":{
-                            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
-                            "type":"string",
-                            "description":"The payment agreement end date and time. The timestamp format is ISO8601.",
-                            "example":"2018-12-31T23:59:59.999+1100"
-                        },
-                        "chargeFrequency":{
-                            "type":"string",
-                            "description":"The payment agreement charge frequency.",
-                            "enum":[
-                                "WEEKLY",
-                                "FORTNIGHTLY",
-                                "MONTHLY"
-                            ]
-                        },
-                        "chargeAmount":{
-                            "type":"number",
-                            "description":"The amount that will be charged at the frequency specified in the payment agreement.",
-                            "example":25.99
-                        },
-                        "chargeCycle":{
-                            "type":"number",
-                            "description":"The current charge cycle number.",
-                            "example":2
-                        },
-                        "expired":{
-                            "type":"string",
-                            "description":"A flag to indicate if the payment agreement is expired.",
-                            "example":"false"
-                        },
-                        "updateURL":{
-                            "type":"string",
-                            "description":"The URL of the endpoint to use to update the payment agreement.",
-                            "example":"https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/paymentagreements/27e07e4e-58df-4072-8e75-33dd464af667"
-                        },
-                        "stepUp":{
-                            "required":[
-                                "mandatory",
-                                "type",
-                                "url"
-                            ],
-                            "type":"object",
-                            "properties":{
-                                "type":{
-                                    "type":"string",
-                                    "description":"The type of the step up action. For payment agreements this will be CAPTURE_CVV which identifies that the consumer must capture the CVV prior to payment.",
-                                    "example":"CAPTURE_CVV"
-                                },
-                                "mandatory":{
-                                    "type":"boolean",
-                                    "description":"A flag to indicate if this step up (action) is mandatory.",
-                                    "example":true
-                                },
-                                "url":{
-                                    "type":"string",
-                                    "description":"The URL of an iframe. This iframe is used to capture a credit card expiry and CVV or CVV only. The URL will automatically switch between expiry and CVV or CVV only endpoints based on the container requirement.",
-                                    "example":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/cvvExpiry/353629ec-4cb5-4fc3-ab47-8c9c3f117ab8/90731"
-                                }
+                "required":[
+                    "allowed",
+                    "chargeAmount",
+                    "chargeCycle",
+                    "chargeFrequency",
+                    "endDate",
+                    "expired",
+                    "lastUpdated",
+                    "lastUsed",
+                    "createdOn",
+                    "paymentInstrumentId",
+                    "paymentToken",
+                    "primary",
+                    "startDate",
+                    "status",
+                    "type",
+                    "updateURL"
+                ],
+                "type":"object",
+                "properties":{
+                    "paymentToken":{
+                        "type":"string",
+                        "description":"The payment token of the payment agreement. The payment token is a unique identifier for the payment agreement.",
+                        "example":"27e07e4e-58df-4072-8e75-33dd464af667"
+                    },
+                    "status":{
+                        "type":"string",
+                        "description":"The status of the payment agreement in the container.",
+                        "enum":[
+                            "UNVERIFIED_PERSISTENT",
+                            "VERIFIED"
+                        ]
+                    },
+                    "lastUpdated":{
+                        "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+                        "type":"string",
+                        "description":"The timestamp the payment agreement was last updated in the container. The timestamp format is ISO8601.",
+                        "example":"2018-09-01T00:00:00.000+1100"
+                    },
+                    "lastUsed":{
+                        "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+                        "type":"string",
+                        "description":"The timestamp the payment agreement was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
+                        "example":"2018-09-14T12:00:00.000+1100"
+                    },
+                    "createdOn":{
+                        "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                        "format":"date-time",
+                        "type":"string",
+                        "example":"2017-11-06T19:38:09.890+11:00"
+                    },
+                    "primary":{
+                        "type":"boolean",
+                        "description":"A flag to indicate if this payment instrument is the primary instrument in the container. Not used for payment agreements.",
+                        "example":false
+                    },
+                    "allowed":{
+                        "type":"boolean",
+                        "description":"A flag to indicate if the merchant profile in the container allows the use of this payment agreement.",
+                        "example":true
+                    },
+                    "type":{
+                        "type":"string",
+                        "description":"The payment agreement type.",
+                        "enum":[
+                            "RECURRING",
+                            "ADHOC",
+                            "INSTALLMENT"
+                        ]
+                    },
+                    "paymentInstrumentId":{
+                        "type":"string",
+                        "description":"The payment agreement payment instrument id that will be used for the charges.",
+                        "example":"90731"
+                    },
+                    "scheme":{
+                        "type":"string",
+                        "description":"The credit card scheme.",
+                        "example":"VISA"
+                    },
+                    "cardSuffix":{
+                        "type":"string",
+                        "description":"The suffix (last 4 digits) of the credit card number.",
+                        "example":"4405"
+                    },
+                    "expiryMonth":{
+                        "type":"string",
+                        "description":"The month of the expiry date of the credit card.",
+                        "example":"11"
+                    },
+                    "expiryYear":{
+                        "type":"string",
+                        "description":"The year of the expiry date of the credit card.",
+                        "example":"22"
+                    },
+                    "startDate":{
+                        "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+                        "type":"string",
+                        "description":"The payment agreement start date and time. The timestamp format is ISO8601.",
+                        "example":"2018-09-01T00:00:00.000+1100"
+                    },
+                    "endDate":{
+                        "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+                        "type":"string",
+                        "description":"The payment agreement end date and time. The timestamp format is ISO8601.",
+                        "example":"2018-12-31T23:59:59.999+1100"
+                    },
+                    "chargeFrequency":{
+                        "type":"string",
+                        "description":"The payment agreement charge frequency.",
+                        "enum":[
+                            "WEEKLY",
+                            "FORTNIGHTLY",
+                            "MONTHLY"
+                        ]
+                    },
+                    "chargeAmount":{
+                        "type":"number",
+                        "description":"The amount that will be charged at the frequency specified in the payment agreement.",
+                        "example":25.99
+                    },
+                    "chargeCycle":{
+                        "type":"number",
+                        "description":"The current charge cycle number.",
+                        "example":2
+                    },
+                    "expired":{
+                        "type":"string",
+                        "description":"A flag to indicate if the payment agreement is expired.",
+                        "example":"false"
+                    },
+                    "updateURL":{
+                        "type":"string",
+                        "description":"The URL of the endpoint to use to update the payment agreement.",
+                        "example":"https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/paymentagreements/27e07e4e-58df-4072-8e75-33dd464af667"
+                    },
+                    "stepUp":{
+                        "required":[
+                            "mandatory",
+                            "type",
+                            "url"
+                        ],
+                        "type":"object",
+                        "properties":{
+                            "type":{
+                                "type":"string",
+                                "description":"The type of the step up action. For payment agreements this will be CAPTURE_CVV which identifies that the consumer must capture the CVV prior to payment.",
+                                "example":"CAPTURE_CVV"
+                            },
+                            "mandatory":{
+                                "type":"boolean",
+                                "description":"A flag to indicate if this step up (action) is mandatory.",
+                                "example":true
+                            },
+                            "url":{
+                                "type":"string",
+                                "description":"The URL of an iframe. This iframe is used to capture a credit card expiry and CVV or CVV only. The URL will automatically switch between expiry and CVV or CVV only endpoints based on the container requirement.",
+                                "example":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/cvvExpiry/353629ec-4cb5-4fc3-ab47-8c9c3f117ab8/90731"
                             }
-                        },
-                        "description": {
-                            "type": "string",
-                            "description": "A description of the payment agreement"
                         }
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "A description of the payment agreement"
                     }
                 }
             }
@@ -20962,10 +20959,7 @@
                             ],
                             "properties": {
                                 "data": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/PaymentAgreementResponse"
-                                    }
+                                    "$ref": "#/components/schemas/PaymentAgreementResponse"
                                 },
                                 "meta": {
                                     "$ref": "#/components/schemas/meta"
