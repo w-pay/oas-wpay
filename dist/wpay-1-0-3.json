@@ -640,6 +640,9 @@
                                             "clientReference":{
                                                 "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
                                                 "type":"string"
+                                            },
+                                            "preferences": {
+                                                "$ref": "#/components/schemas/preferencePayments"
                                             }
                                         }
                                     },
@@ -1503,6 +1506,9 @@
                                             "clientReference":{
                                                 "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
                                                 "type":"string"
+                                            },
+                                            "preferences": {
+                                                "$ref": "#/components/schemas/preferencePayments"
                                             }
                                         }
                                     },
