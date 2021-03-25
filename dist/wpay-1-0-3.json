@@ -2072,7 +2072,7 @@
                 },
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/paymentAgreementResponse"
+                        "$ref": "#/components/responses/customerPaymentAgreementResponse"
                     }
                 }
             }
@@ -2110,7 +2110,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/paymentAgreementResponse"
+                        "$ref": "#/components/responses/customerPaymentAgreementResponse"
                     }
                 }
             },
@@ -2198,7 +2198,7 @@
                 },
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/paymentAgreementResponse"
+                        "$ref": "#/components/responses/customerPaymentAgreementResponse"
                     }
                 }
             }
@@ -20895,12 +20895,12 @@
                     }
                 }
             },
-            "paymentAgreementResponse": {
+            "customerPaymentAgreementResponse": {
                 "description": "Response for Get, Create and Update Payment Agreements",
                 "content": {
                     "application/json": {
                         "schema": {
-                            "title": "paymentAgreementResponse",
+                            "title": "customerPaymentAgreementResponse",
                             "type": "object",
                             "required": [
                                 "data",
