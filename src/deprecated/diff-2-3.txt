@@ -1,0 +1,20 @@
+6c6
+<         "version":"1.0.2"
+---
+>         "version":"1.0.3"
+642a643,645
+>                                             },
+>                                             "preferences": {
+>                                                 "$ref": "#/components/schemas/preferencePayments"
+1505a1509,1511
+>                                             },
+>                                             "preferences": {
+>                                                 "$ref": "#/components/schemas/preferencePayments"
+10772c10778,10782
+<                                     "description": "The reference for the payment",
+---
+>                                     "description": "The reference for the payment.  If a refund this is the reference to the transaction being refunded",
+>                                     "type": "string"
+>                                 },
+>                                 "refundTransactionRef": {
+>                                     "description": "The reference for the refund.",

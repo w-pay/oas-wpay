@@ -3,7 +3,7 @@
     "info":{
         "title":"Wpay APIs",
         "description":"Wpay APIs for payments and gifting",
-        "version":"2.0.1"
+        "version":"2.0.2"
     },
     "servers":[
         {
@@ -2435,6 +2435,152 @@
                         }
                     }
                 }
+            },
+            "openpayCompletionsRequest": {
+                "description": "The JSON request structure of the Openpay Completions endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required": [
+                                        "clientReference",
+                                        "completions"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "clientReference": {
+                                            "type": "string",
+                                            "description": "A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                                            "example": "4VWPZ8676N7MUAO"
+                                        },
+                                        "orderNumber": {
+                                            "type": "string",
+                                            "description": "The merchant order number of the transaction.",
+                                            "example": "20170505090"
+                                        },
+                                        "merchantTransactedAt": {
+                                            "pattern": "YYYY-MM-DDTHH:mm:ss.SSSZ",
+                                            "type": "string",
+                                            "description": "The merchants transaction date and time. The timestamp format is ISO8601.",
+                                            "example": "2020-06-19T18:00:00.000+1100"
+                                        },
+                                        "completions": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "amount",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the payment transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    },
+                                                    "amount": {
+                                                        "type": "number",
+                                                        "description": "The amount you want to process in the completion.",
+                                                        "example": 20.5
+                                                    },
+                                                    "gstAmount": {
+                                                        "type": "number",
+                                                        "description": "The GST amount of the amount you want to process in the completion.",
+                                                        "example": 1.86
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "clientReference": "4VWPZ8676N7MUAO",
+                            "orderNumber": "20170505090",
+                            "merchantTransactedAt": "2020-06-19T18:00:00.000+1100",
+                            "completions": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622",
+                                    "amount": 20.5,
+                                    "gstAmount": 1.86
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "openpayVoidsRequest": {
+                "description": "The JSON request structure of the Openpay Voids endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required": [
+                                        "clientReference",
+                                        "voids"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "clientReference": {
+                                            "type": "string",
+                                            "description": "A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                                            "example": "H72YZE8JS9J7BYS"
+                                        },
+                                        "orderNumber": {
+                                            "type": "string",
+                                            "description": "The merchant order number of the transaction.",
+                                            "example": "20170505090"
+                                        },
+                                        "voids": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the payment transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "clientReference": "H72YZE8JS9J7BYS",
+                            "orderNumber": "20170505090",
+                            "voids": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622"
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         },
         "responses":{
@@ -4761,6 +4907,300 @@
                     }
                 }
             },
+            "openpayCompletionsResponse": {
+                "description": "The JSON success response structure of the Completions endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required": [
+                                        "completionResponses",
+                                        "transactionReceipt"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "transactionReceipt": {
+                                            "type": "string",
+                                            "description": "Container reference in the transaction logs. This number uniquely identifies the whole/grouped transaction in the container.",
+                                            "example": "1000000000670747"
+                                        },
+                                        "completionResponses": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "amount",
+                                                    "completionTransactionRef",
+                                                    "extendedTransactionData",
+                                                    "externalServiceCode",
+                                                    "externalServiceMessage",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the openpay transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    },
+                                                    "completionTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the completion transaction in the container.",
+                                                        "example": "1000000000670747"
+                                                    },
+                                                    "amount": {
+                                                        "type": "number",
+                                                        "description": "The amount processed in the completion.",
+                                                        "example": 20.5
+                                                    },
+                                                    "extendedTransactionData": {
+                                                        "type": "array",
+                                                        "description": "This array is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "items": {
+                                                        "required": [
+                                                        "field",
+                                                        "value"
+                                                        ],
+                                                        "type": "object",
+                                                        "properties": {
+                                                        "field": {
+                                                        "type": "string",
+                                                        "description": "The name of the extended transaction data field.",
+                                                        "enum": [
+                                                        "openPayTransactionId",
+                                                        "openPayOrderId",
+                                                        "openPayPaymentMethod",
+                                                        "openPayCreatedAt",
+                                                        "openPayBillingAccountId",
+                                                        "openPayBillingAccountName",
+                                                        "openPayBillingAccountABN"
+                                                        ]
+                                                        },
+                                                        "value": {
+                                                        "type": "string",
+                                                        "description": "The value of the extended transaction data field.",
+                                                        "example": "3049562340, 100015, openPayPaymentMethod, 1592494136891, 24354657685656, Some Business Account, 88 000 014 675"
+                                                        }
+                                                        }
+                                                        }
+                                                        },
+                                                    "externalServiceCode": {
+                                                        "type": "string",
+                                                        "description": "The external service code (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "00"
+                                                    },
+                                                    "externalServiceMessage": {
+                                                        "type": "string",
+                                                        "description": "The external service message (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "APPROVED"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "transactionReceipt": "1000000000670747",
+                            "completionResponses": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622",
+                                    "completionTransactionRef": "1000000000670747",
+                                    "amount": 20.5,
+                                    "extendedTransactionData": [
+                                        {
+                                            "field": "openPayTransactionId",
+                                            "value": "3049562340"
+                                        },
+                                        {
+                                            "field": "openPayOrderId",
+                                            "value": "100015"
+                                        },
+                                        {
+                                            "field": "openPayPaymentMethod",
+                                            "value": "openPayPaymentMethod"
+                                        },
+                                        {
+                                            "field": "openPayCreatedAt",
+                                            "value": "1592494136891"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountId",
+                                            "value": "24354657685656"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountName",
+                                            "value": "Some Business Account"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountABN",
+                                            "value": "88 000 014 675"
+                                        }
+                                    ],
+                                    "externalServiceCode": "00",
+                                    "externalServiceMessage": "APPROVED"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "openpayVoidsResponse": {
+                "description": "The JSON success response structure of the Voids endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required": [
+                                        "transactionReceipt",
+                                        "voidResponses"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "transactionReceipt": {
+                                            "type": "string",
+                                            "description": "Container reference in the transaction logs. This number uniquely identifies the whole/grouped transaction in the container.",
+                                            "example": "1000000000670747"
+                                        },
+                                        "voidResponses": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "amount",
+                                                    "extendedTransactionData",
+                                                    "externalServiceCode",
+                                                    "externalServiceMessage",
+                                                    "paymentTransactionRef",
+                                                    "voidTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the openpay transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    },
+                                                    "voidTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the void transaction in the container.",
+                                                        "example": "1000000000670747"
+                                                    },
+                                                    "amount": {
+                                                        "type": "number",
+                                                        "description": "The amount processed in the void.",
+                                                        "example": 20.5
+                                                    },
+                                                    "extendedTransactionData": {
+                                                        "type": "array",
+                                                        "description": "This array is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "items": {
+                                                            "required": [
+                                                                "field",
+                                                                "value"
+                                                            ],
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "field": {
+                                                                    "type": "string",
+                                                                    "description": "The name of the extended transaction data field.",
+                                                                    "enum": [
+                                                                        "openPayTransactionId",
+                                                                        "openPayOrderId",
+                                                                        "openPayPaymentMethod",
+                                                                        "openPayCreatedAt",
+                                                                        "openPayBillingAccountId",
+                                                                        "openPayBillingAccountName",
+                                                                        "openPayBillingAccountABN"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "description": "The value of the extended transaction data field.",
+                                                                    "example": "3049562340, 100015, openPayPaymentMethod, 1592494136891, 24354657685656, Some Business Account, 88 000 014 675"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "externalServiceCode": {
+                                                        "type": "string",
+                                                        "description": "The external service code (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "00"
+                                                    },
+                                                    "externalServiceMessage": {
+                                                        "type": "string",
+                                                        "description": "The external service message (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "APPROVED"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "transactionReceipt": "1000000000670747",
+                            "voidResponses": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622",
+                                    "voidTransactionRef": "1000000000670747",
+                                    "amount": 20.5,
+                                    "extendedTransactionData": [
+                                        {
+                                            "field": "openPayTransactionId",
+                                            "value": "3049562340"
+                                        },
+                                        {
+                                            "field": "openPayOrderId",
+                                            "value": "100015"
+                                        },
+                                        {
+                                            "field": "openPayPaymentMethod",
+                                            "value": "openPayPaymentMethod"
+                                        },
+                                        {
+                                            "field": "openPayCreatedAt",
+                                            "value": "1592494136891"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountId",
+                                            "value": "24354657685656"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountName",
+                                            "value": "Some Business Account"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountABN",
+                                            "value": "88 000 014 675"
+                                        }
+                                    ],
+                                    "externalServiceCode": "00",
+                                    "externalServiceMessage": "APPROVED"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
 
             "errorResponse": {
                 "description": "Generic error response.",
@@ -5459,6 +5899,168 @@
                                     "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
                                     "externalServiceCode": "05",
                                     "externalServiceMessage": "DO NOT HONOUR"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "openpayCompletionsErrorResponse": {
+                "description": "The JSON error response structure of the Completions endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "completionResponses": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "errorCode",
+                                                    "errorDetail",
+                                                    "errorMessage",
+                                                    "externalServiceCode",
+                                                    "externalServiceMessage",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    },
+                                                    "errorCode": {
+                                                        "type": "string",
+                                                        "description": "The error code. Only present if an error occurred during payment.",
+                                                        "example": "BI52"
+                                                    },
+                                                    "errorMessage": {
+                                                        "type": "string",
+                                                        "description": "The error message. Only present if an error occurred during payment.",
+                                                        "example": "PAYMENT TRANSACTION FAILED"
+                                                    },
+                                                    "errorDetail": {
+                                                        "type": "string",
+                                                        "description": "The error detail. Only present if an error occurred during payment.",
+                                                        "example": "We are currently experiencing technical issues with our service."
+                                                    },
+                                                    "externalServiceCode": {
+                                                        "type": "string",
+                                                        "description": "The external service code (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "0T"
+                                                    },
+                                                    "externalServiceMessage": {
+                                                        "type": "string",
+                                                        "description": "The external service message (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "INVALID COMPLETION AUTH NOT FOUND"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "example": {
+                            "httpStatusCode": 400,
+                            "errorCode": "BI52",
+                            "errorMessage": "PAYMENT TRANSACTION FAILED",
+                            "errorDetail": "We are currently experiencing technical issues with our service.",
+                            "completionResponses": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622",
+                                    "errorCode": "BI52",
+                                    "errorMessage": "PAYMENT TRANSACTION FAILED",
+                                    "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                                    "externalServiceCode": "0T",
+                                    "externalServiceMessage": "INVALID COMPLETION AUTH NOT FOUND"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "openpayVoidsErrorResponse": {
+                "description": "The JSON error response structure of the Voids endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "voidResponses": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "errorCode",
+                                                    "errorDetail",
+                                                    "errorMessage",
+                                                    "externalServiceCode",
+                                                    "externalServiceMessage",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    },
+                                                    "errorCode": {
+                                                        "type": "string",
+                                                        "description": "The error code. Only present if an error occurred during payment.",
+                                                        "example": "BI52"
+                                                    },
+                                                    "errorMessage": {
+                                                        "type": "string",
+                                                        "description": "The error message. Only present if an error occurred during payment.",
+                                                        "example": "PAYMENT TRANSACTION FAILED"
+                                                    },
+                                                    "errorDetail": {
+                                                        "type": "string",
+                                                        "description": "The error detail. Only present if an error occurred during payment.",
+                                                        "example": "We are currently experiencing technical issues with our service."
+                                                    },
+                                                    "externalServiceCode": {
+                                                        "type": "string",
+                                                        "description": "The external service code (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "0T"
+                                                    },
+                                                    "externalServiceMessage": {
+                                                        "type": "string",
+                                                        "description": "The external service message (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "INVALID VOID AUTH NOT FOUND"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "example": {
+                            "httpStatusCode": 400,
+                            "errorCode": "BI52",
+                            "errorMessage": "PAYMENT TRANSACTION FAILED",
+                            "errorDetail": "We are currently experiencing technical issues with our service.",
+                            "voidResponses": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622",
+                                    "errorCode": "BI52",
+                                    "errorMessage": "PAYMENT TRANSACTION FAILED",
+                                    "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                                    "externalServiceCode": "0T",
+                                    "externalServiceMessage": "INVALID VOID AUTH NOT FOUND"
                                 }
                             ]
                         }
@@ -7533,7 +8135,7 @@
                     "XXXXTO_DIGIPAY"
                 ],
                 "summary":"Openpay Refunds",
-                "description":"Refund Openpay payments. This API is IP restricted to allow unauthenticated server side calls.",
+                "description":"Refund Openpay payments.",
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
                     { "$ref": "#/components/parameters/authKeyParam" },
@@ -7581,6 +8183,126 @@
                     "504":{
                         "description":"The request timed out.",
                         "$ref": "#/components/responses/errorResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/openpay/completions":{
+            "post":{
+                "tags":[
+                    "Merchant",
+                    "XXXXTO_DIGIPAY"
+                ],
+                "summary":"Openpay Completions",
+                "description":"Complete pre-authed Openpay payments.",
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody":{
+                    "$ref":"#/components/requestBodies/openpayCompletionsRequest",
+                    "required":true
+                },
+                "responses":{
+                    "200":{
+                        "description":"Success",
+                        "$ref":"#/components/responses/openpayCompletionsResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/openpayCompletionsErrorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/openpayCompletionsErrorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/openpayCompletionsErrorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/openpayCompletionsErrorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/openpay/voids":{
+            "post":{
+                "tags":[
+                    "Merchant",
+                    "XXXXTO_DIGIPAY"
+                ],
+                "summary":"Openpay Voids",
+                "description":"Void (cancel) pre-authed Openpay payments.",
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody":{
+                    "$ref":"#/components/requestBodies/openpayVoidsRequest",
+                    "required":true
+                },
+                "responses":{
+                    "200":{
+                        "description":"Success",
+                        "$ref":"#/components/responses/openpayVoidsResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/openpayVoidsErrorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/openpayVoidsErrorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/openpayVoidsErrorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/openpayVoidsErrorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
                     }
                 }
             }
