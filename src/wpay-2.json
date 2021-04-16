@@ -146,6 +146,17 @@
                     }
                 }
             },
+            "metaEncrypted":{
+                "description":"Meta Object containing encrypted information",
+                "type":"object",
+                "properties":{
+                    "cipherText":{
+                        "description":"An encrypted JSON object containing sensitive data",
+                        "type":"string",
+                        "example":"INLh2cH2MtnTKQ1RxwwWQHiXUZ2B04KhXMFh1P1fMYYvy2rSKygl1Ew"
+                    }
+                }
+            },
             "preferencesCustomer":{
                 "description":"Available preference settings for a customer",
                 "type":"object",
@@ -357,7 +368,7 @@
                                     "example": "2017-11-06T19:38:09.890+11:00"
                                 },
                                 "paymentTransactionRef": {
-                                    "description": "The reference for the payment",
+                                    "description": "The reference for the payment.  If a refund this is the reference to the transaction being refunded",
                                     "type": "string"
                                 },
                                 "status": {
@@ -550,9 +561,22 @@
                                     "REJECTED"
                                 ]
                             },
-                            "statusDetail":{
-                                "description":"The error detail returned by downstream processes when the payment is REJECTED",
-                                "type":"object"
+                            "rollback":{
+                                "description":"The rollback state of this transaction",
+                                "type":"string",
+                                "enum":[
+                                    "REQUIRED",
+                                    "NOT_REQUIRED",
+                                    "FAILED",
+                                    "SUCCESSFUL"
+                                ]
+                            },
+                            "subTransactions":{
+                                "description":"Array of transaction responses returned by downstream processes",
+                                "type":"array",
+                                "items":{
+                                    "type":"object"
+                                }
                             },
                             "refundReason":{
                                 "description":"The reason provided for the refund.  Only provided for REFUND transactions",
@@ -2680,7 +2704,7 @@
                     }
                 }
             },
-            "getCustomerPaymentInstrumentResponse":{
+            "getCustomerPaymentInstrumentsResponse":{
                 "description":"Successful response",
                 "content":{
                     "application/json":{
@@ -2847,6 +2871,162 @@
                     }
                 }
             },
+            "getCustomerPaymentInstrumentResponse":{
+                "description":"Successful response",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "title":"getCustomerPaymentInstrumentResult",
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "description":"Mandatory data object containing response",
+                                    "type":"object",
+                                    "required":[
+                                        "paymentInstrumentId",
+                                        "paymentInstrumentType",
+                                        "paymentToken",
+                                        "status",
+                                        "createdOn",
+                                        "lastUpdated",
+                                        "lastUsed",
+                                        "primary",
+                                        "allowed",
+                                        "paymentInstrumentDetail"
+                                    ],
+                                    "properties":{
+                                        "paymentInstrumentId":{
+                                            "description":"The payment instrument id.",
+                                            "type":"string",
+                                            "example":"90731"
+                                        },
+                                        "paymentToken":{
+                                            "description":"The payment token. The payment token is a unique identifier for the payment instrument.",
+                                            "type":"string",
+                                            "example":"712029a1-c0aa-41bc-a810-3d42424c5834"
+                                        },
+                                        "paymentInstrumentType":{
+                                            "type":"string",
+                                            "description":"The type of the payment instrument.",
+                                            "example":"GIFT_CARD"
+                                        },
+                                        "status":{
+                                            "description":"The status of the payment instrument in the container.",
+                                            "enum":[
+                                                "UNVERIFIED_PERSISTENT",
+                                                "VERIFIED"
+                                            ],
+                                            "type":"string"
+                                        },
+                                        "createdOn":{
+                                            "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                                            "format":"date-time",
+                                            "type":"string",
+                                            "example":"2017-11-06T19:38:09.890+11:00"
+                                        },
+                                        "lastUpdated":{
+                                            "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
+                                            "format":"date-time",
+                                            "type":"string",
+                                            "example":"2017-11-06T19:38:09.890+11:00"
+                                        },
+                                        "lastUsed":{
+                                            "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
+                                            "format":"date-time",
+                                            "type":"string",
+                                            "example":"2017-11-06T19:38:09.890+11:00"
+                                        },
+                                        "primary":{
+                                            "description":"A flag to indicate if this payment instrument is the primary instrument in the container.",
+                                            "type":"boolean",
+                                            "example":true
+                                        },
+                                        "allowed":{
+                                            "description":"A flag to indicate if the merchant profile in the container allows the use of this payment instrument.",
+                                            "type":"boolean",
+                                            "example":true
+                                        },
+                                        "paymentInstrumentDetail":{
+                                            "required":[
+                                                "cardSuffix",
+                                                "programName",
+                                                "stepUp"
+                                            ],
+                                            "type":"object",
+                                            "properties":{
+                                                "cardSuffix":{
+                                                    "type":"string",
+                                                    "description":"The suffix (last 4 digits) of the gift card number.",
+                                                    "example":"2517"
+                                                },
+                                                "programName":{
+                                                    "description":"The gift card program name.",
+                                                    "type":"string",
+                                                    "example":"WISH Gift Card"
+                                                },
+                                                "stepUp":{
+                                                    "required":[
+                                                        "type",
+                                                        "mandatory"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "type":{
+                                                            "description":"The type of the step up action. For gift cards this will be REQUIRE_PASSCODE which identifies that the consumer must capture the PIN prior to payment.",
+                                                            "type":"string",
+                                                            "example":"REQUIRE_PASSCODE"
+                                                        },
+                                                        "mandatory":{
+                                                            "description":"A flag to indicate if this step up (action) is mandatory.",
+                                                            "type":"boolean",
+                                                            "example":true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/metaEncrypted"
+                                }
+                            }
+                        },
+                        "examples":{
+                            "SampleInstruments":{
+                                "value":{
+                                    "data":{
+                                        "paymentInstrumentId":"81054",
+                                        "paymentInstrumentType":"GIFT_CARD",
+                                        "paymentToken":"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
+                                        "status":"UNVERIFIED_PERSISTENT",
+                                        "createdOn":"2017-11-06T08:38:09.890Z",
+                                        "lastUpdated":"2017-11-06T19:38:09.860+11:00",
+                                        "lastUsed":"2017-10-12T13:25:49.770+11:00",
+                                        "primary":true,
+                                        "allowed":true,
+                                        "paymentInstrumentDetail": {
+                                            "cardSuffix":"2517",
+                                            "programName":"WISH Gift Card",
+                                            "stepUp":{
+                                                "type":"REQUIRE_PASSCODE",
+                                                "mandatory":true
+                                            }
+                                        }
+                                    },
+                                    "meta":{
+                                        "cipherText": "INLh2cH2MtnTKQ1RxwwWQHiXUZ2B04KhXMFh1P1fMYYvy2rSKygl1Ew"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "initiatePaymentInstrumentAdditionResponse":{
                 "description":"Successful response",
                 "content":{
@@ -2978,7 +3158,8 @@
                                     "data":{
                                         "payments":{
                                             "primaryInstrumentId":"90271"
-                                        }
+                                        },
+                                        "general": {}
                                     },
                                     "meta":{
 
@@ -3133,53 +3314,12 @@
                                                 "instruments":[
                                                     {
                                                         "paymentInstrumentId":"123456",
-                                                        "amount":12000
+                                                        "instrumentType": "CREDIT_CARD",
+                                                        "transactions": []
                                                     }
                                                 ],
                                                 "status":"APPROVED",
-                                                "statusDetail":{
-
-                                                },
                                                 "transactionId":"7617edb9-d0c9-40ca-8058-158dafc60ea2"
-                                            },
-                                            {
-                                                "merchantReferenceId":"123456",
-                                                "paymentRequestId":"f5283ad4-3dfc-4b65-b00d-baa529b9a260",
-                                                "type":"REFUND",
-                                                "grossAmount":-12000,
-                                                "executionTime":"2020-04-23T04:41:44.343Z",
-                                                "instruments":[
-                                                    {
-                                                        "paymentInstrumentId":"123456",
-                                                        "amount":12000
-                                                    }
-                                                ],
-                                                "status":"APPROVED",
-                                                "statusDetail":{
-
-                                                },
-                                                "transactionId":"ffedbb5b-9747-4000-ae20-82d03e0ee99a",
-                                                "merchantId":"eb3645a8-2959-4442-bdce-1d48ee4ce009",
-                                                "refundReason":"Some reason"
-                                            },
-                                            {
-                                                "merchantId":"eb3645a8-2959-4442-bdce-1d48ee4ce009",
-                                                "merchantReferenceId":"123456",
-                                                "paymentRequestId":"d9e5c2b3-05da-4d17-be1a-7ab092c11f9c",
-                                                "type":"PAYMENT",
-                                                "grossAmount":12000,
-                                                "executionTime":"2020-04-23T05:01:39.146Z",
-                                                "instruments":[
-                                                    {
-                                                        "paymentInstrumentId":"123456",
-                                                        "amount":12000
-                                                    }
-                                                ],
-                                                "status":"APPROVED",
-                                                "statusDetail":{
-
-                                                },
-                                                "transactionId":"75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
                                             }
                                         ]
                                     },
@@ -6244,9 +6384,16 @@
                                                     }
                                                 }
                                             },
+                                            "skipRollback": {
+                                                "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                                                "type": "boolean"
+                                            },
                                             "clientReference":{
                                                 "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
                                                 "type":"string"
+                                            },
+                                            "preferences": {
+                                                "$ref": "#/components/schemas/preferencePayments"
                                             }
                                         }
                                     },
@@ -6392,9 +6539,16 @@
                                                     }
                                                 }
                                             },
+                                            "skipRollback": {
+                                                "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                                                "type": "boolean"
+                                            },
                                             "clientReference":{
                                                 "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
                                                 "type":"string"
+                                            },
+                                            "preferences": {
+                                                "$ref": "#/components/schemas/preferencePayments"
                                             }
                                         }
                                     },
