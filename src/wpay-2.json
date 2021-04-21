@@ -3,7 +3,7 @@
     "info":{
         "title":"Wpay APIs",
         "description":"Wpay APIs for payments and gifting",
-        "version":"2.0.1"
+        "version":"2.0.2"
     },
     "servers":[
         {
@@ -143,6 +143,17 @@
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "metaEncrypted":{
+                "description":"Meta Object containing encrypted information",
+                "type":"object",
+                "properties":{
+                    "cipherText":{
+                        "description":"An encrypted JSON object containing sensitive data",
+                        "type":"string",
+                        "example":"INLh2cH2MtnTKQ1RxwwWQHiXUZ2B04KhXMFh1P1fMYYvy2rSKygl1Ew"
                     }
                 }
             },
@@ -357,7 +368,7 @@
                                     "example": "2017-11-06T19:38:09.890+11:00"
                                 },
                                 "paymentTransactionRef": {
-                                    "description": "The reference for the payment",
+                                    "description": "The reference for the payment.  If a refund this is the reference to the transaction being refunded",
                                     "type": "string"
                                 },
                                 "status": {
@@ -550,9 +561,22 @@
                                     "REJECTED"
                                 ]
                             },
-                            "statusDetail":{
-                                "description":"The error detail returned by downstream processes when the payment is REJECTED",
-                                "type":"object"
+                            "rollback":{
+                                "description":"The rollback state of this transaction",
+                                "type":"string",
+                                "enum":[
+                                    "REQUIRED",
+                                    "NOT_REQUIRED",
+                                    "FAILED",
+                                    "SUCCESSFUL"
+                                ]
+                            },
+                            "subTransactions":{
+                                "description":"Array of transaction responses returned by downstream processes",
+                                "type":"array",
+                                "items":{
+                                    "type":"object"
+                                }
                             },
                             "refundReason":{
                                 "description":"The reason provided for the refund.  Only provided for REFUND transactions",
@@ -2435,6 +2459,563 @@
                         }
                     }
                 }
+            },
+            "openpayCompletionsRequest": {
+                "description": "The JSON request structure of the Openpay Completions endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required": [
+                                        "clientReference",
+                                        "completions"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "clientReference": {
+                                            "type": "string",
+                                            "description": "A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                                            "example": "4VWPZ8676N7MUAO"
+                                        },
+                                        "orderNumber": {
+                                            "type": "string",
+                                            "description": "The merchant order number of the transaction.",
+                                            "example": "20170505090"
+                                        },
+                                        "merchantTransactedAt": {
+                                            "pattern": "YYYY-MM-DDTHH:mm:ss.SSSZ",
+                                            "type": "string",
+                                            "description": "The merchants transaction date and time. The timestamp format is ISO8601.",
+                                            "example": "2020-06-19T18:00:00.000+1100"
+                                        },
+                                        "completions": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "amount",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the payment transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    },
+                                                    "amount": {
+                                                        "type": "number",
+                                                        "description": "The amount you want to process in the completion.",
+                                                        "example": 20.5
+                                                    },
+                                                    "gstAmount": {
+                                                        "type": "number",
+                                                        "description": "The GST amount of the amount you want to process in the completion.",
+                                                        "example": 1.86
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "clientReference": "4VWPZ8676N7MUAO",
+                            "orderNumber": "20170505090",
+                            "merchantTransactedAt": "2020-06-19T18:00:00.000+1100",
+                            "completions": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622",
+                                    "amount": 20.5,
+                                    "gstAmount": 1.86
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "openpayVoidsRequest": {
+                "description": "The JSON request structure of the Openpay Voids endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required": [
+                                        "clientReference",
+                                        "voids"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "clientReference": {
+                                            "type": "string",
+                                            "description": "A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                                            "example": "H72YZE8JS9J7BYS"
+                                        },
+                                        "orderNumber": {
+                                            "type": "string",
+                                            "description": "The merchant order number of the transaction.",
+                                            "example": "20170505090"
+                                        },
+                                        "voids": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the payment transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "clientReference": "H72YZE8JS9J7BYS",
+                            "orderNumber": "20170505090",
+                            "voids": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "initiatePaymentInstrumentAdditionRequest": {
+                "description":"The JSON request structure of the Initiate Payment Instrument Addition endpoint.",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "description":"Mandatory data object containing request",
+                                    "type":"object",
+                                    "required":[
+                                        "clientReference"
+                                    ],
+                                    "properties":{
+                                        "clientReference":{
+                                            "description":"The unique reference for this interaction as defined by the client application",
+                                            "type":"string"
+                                        }
+                                    }
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example":{
+                            "data":{
+                                "clientReference": "75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
+                            },
+                            "meta":{}
+                        }
+                    }
+                }
+            },
+            "instrumentsBalanceRequest": {
+                "description":"Request payload containing details required to retrieve instrument balances and expiry information",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "title":"instrumentAdditionDetails",
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "description":"Mandatory data object containing request",
+                                    "type":"object",
+                                    "properties":{
+                                        "giftCards":{
+                                            "type":"array",
+                                            "description":"Use this array if the endpoint is being called with \"cardNumber\" and \"pinCode\" request properties.",
+                                            "items":{
+                                                "required":[
+                                                    "cardNumber",
+                                                    "pinCode"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "cardNumber":{
+                                                        "type":"string",
+                                                        "description":"The gift card number.",
+                                                        "example":"6280003090920742517"
+                                                    },
+                                                    "pinCode":{
+                                                        "type":"string",
+                                                        "description":"The gift card pin code.",
+                                                        "example":"3196"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "giftCardInstruments":{
+                                            "type":"array",
+                                            "description":"Use this array if the endpoint is being called with \"paymentInstrumentId\" request properties.",
+                                            "items":{
+                                                "required":[
+                                                    "paymentInstrumentId"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The gift card payment instrument id.",
+                                                        "example":"81054"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example":{
+                            "data":{
+                                "giftCards":[
+                                    {
+                                        "cardNumber": "6280003090926286519",
+                                        "pinCode": "9101"
+                                    },
+                                    {
+                                        "cardNumber": "6280005550028790195",
+                                        "pinCode": "4697"
+                                    }
+                                ]
+                            },
+                            "meta":{}
+                        }
+                    }
+                }
+            },
+            "tokenizeInstrumentRequest": {
+                "description":"The JSON request structure of the Tokenize Instrument endpoint.",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "description":"Mandatory data object containing request",
+                                    "type":"object",
+                                    "anyOf": [
+                                        {
+                                            "properties": {
+                                                "paypal":{
+                                                    "required":[
+                                                        "nonce",
+                                                        "primary"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "nonce":{
+                                                            "type":"string",
+                                                            "description":"The Paypal nonce that will be used during a Paypal payment.",
+                                                            "example":"d5e2986b-ffd5-03af-1bee-ff2dc1e83a56"
+                                                        },
+                                                        "primary":{
+                                                            "type":"boolean",
+                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument.",
+                                                            "example":true
+                                                        }
+                                                    },
+                                                    "description":"The JSON request structure to Tokenize a Paypal instrument.",
+                                                    "example":{
+                                                        "nonce":"d5e2986b-ffd5-03af-1bee-ff2dc1e83a56",
+                                                        "primary":true
+                                                    }
+                                                }
+                                            },
+                                            "required": ["paypal"]
+                                        },
+                                        {
+                                            "properties": {
+                                                "giftcard":{
+                                                    "required":[
+                                                        "cardNumber",
+                                                        "pinCode",
+                                                        "primary",
+                                                        "save"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "cardNumber":{
+                                                            "type":"string",
+                                                            "description":"The gift card number.",
+                                                            "example":"6280003090920742517"
+                                                        },
+                                                        "pinCode":{
+                                                            "type":"string",
+                                                            "description":"The gift card pin code.",
+                                                            "example":"3196"
+                                                        },
+                                                        "primary":{
+                                                            "type":"boolean",
+                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument.",
+                                                            "example":true
+                                                        },
+                                                        "save":{
+                                                            "type":"boolean",
+                                                            "description":"A flag to indicate if this payment instrument has to be saved in the container or tokenized for one-off use.",
+                                                            "example":true
+                                                        }
+                                                    },
+                                                    "description":"The JSON request structure to Tokenize a Giftcard instrument.",
+                                                    "example":{
+                                                        "cardNumber":"6280003090920742517",
+                                                        "pinCode":"3196",
+                                                        "primary":true,
+                                                        "save":true
+                                                    }
+                                                }
+                                            },
+                                            "required": ["giftcard"]
+                                        },
+                                        {
+                                            "properties": {
+                                                "androidPay":{
+                                                    "required":[
+                                                        "comment",
+                                                        "encryptedMessage",
+                                                        "ephemeralPublicKey",
+                                                        "instrumentType",
+                                                        "primary",
+                                                        "publicKeyHash",
+                                                        "tag"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "encryptedMessage":{
+                                                            "type":"string",
+                                                            "description":"The \"encryptedMessage\" value from the Android Pay wallet.",
+                                                            "example":"AkG06mqN9YuZKY6gWtXFdOAJUkJtCByrj9boK1UEWIbz"
+                                                        },
+                                                        "ephemeralPublicKey":{
+                                                            "type":"string",
+                                                            "description":"The \"ephemeralPublicKey\" value from the Android Pay wallet.",
+                                                            "example":"BP38r9n4rE6PtYruJV2IUv2y6ztU10o7="
+                                                        },
+                                                        "tag":{
+                                                            "type":"string",
+                                                            "description":"The \"tag\" value from the Android Pay wallet.",
+                                                            "example":"oUjJxWs0SbHy4t1P6KETS34xGLr3ZkbJv="
+                                                        },
+                                                        "publicKeyHash":{
+                                                            "type":"string",
+                                                            "description":"The \"publicKeyHash\" value from the merchant profile response.",
+                                                            "example":"L121Yu2YU6ApskgvSMWg7H0="
+                                                        },
+                                                        "instrumentType":{
+                                                            "type":"string",
+                                                            "description":"The type/schema value from the Android Pay wallet.",
+                                                            "example":"MASTERCARD"
+                                                        },
+                                                        "primary":{
+                                                            "type":"boolean",
+                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument.",
+                                                            "example":true
+                                                        },
+                                                        "comment":{
+                                                            "type":"string",
+                                                            "description":"The display text returned by the Android Pay wallet.",
+                                                            "example":"MASTER-5803"
+                                                        }
+                                                    },
+                                                    "description":"The JSON request structure to Tokenize an Android Pay instrument.",
+                                                    "example":{
+                                                        "encryptedMessage":"AkG06mqN9YuZKY6gWtXFdOAJUkJtCByrj9boK1UEWIbz",
+                                                        "ephemeralPublicKey":"BP38r9n4rE6PtYruJV2IUv2y6ztU10o7=",
+                                                        "tag":"oUjJxWs0SbHy4t1P6KETS34xGLr3ZkbJv=",
+                                                        "publicKeyHash":"L121Yu2YU6ApskgvSMWg7H0=",
+                                                        "instrumentType":"MASTERCARD",
+                                                        "primary":true,
+                                                        "comment":"MASTER-5803"
+                                                    }
+                                                }
+                                            },
+                                            "required": ["androidPay"]
+                                        },
+                                        {
+                                            "properties": {
+                                                "googlePay":{
+                                                    "required":[
+                                                        "comment",
+                                                        "instrumentType",
+                                                        "tokenData"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "instrumentType":{
+                                                            "type":"string",
+                                                            "description":"The type/schema value from the Google Pay wallet.",
+                                                            "example":"AMEX"
+                                                        },
+                                                        "comment":{
+                                                            "type":"string",
+                                                            "description":"The display text returned by the Google Pay wallet.",
+                                                            "example":"AMEX-5232"
+                                                        },
+                                                        "tokenData":{
+                                                            "type":"string",
+                                                            "description":"The \"tokenData\" payload from the Google Pay wallet.",
+                                                            "example":"{\\\"protocolVersion\\\":\\\"ECv2\\\",\\\"signature\\\":\\\"MEQCIBec51ti5KFs==\\\",\\\"intermediateSigningKey\\\":{\\\"signatures\\\":[\\\"MEUCIEvA6rkOlThv=\\\"],\\\"signedKey\\\":\\\"{\\\\\\\"keyValue\\\\\\\":\\\\\\\"MFkwEwYHKoZIzj0CAQYI\\\\\\\",\\\\\\\"keyExpiration\\\\\\\":\\\\\\\"1601448494595\\\\\\\"}\\\"},\\\"signedMessage\\\":\\\"{\\\\\\\"encryptedMessage\\\\\\\":\\\\\\\"o7raQeRaPE8NxOQuZPro6u\\\\\\\",\\\\\\\"ephemeralPublicKey\\\\\\\":\\\\\\\"BMEuZ4HsiNh\\\\\\\",\\\\\\\"tag\\\\\\\":\\\\\\\"kfFQwoP5evLtDoh5fTq\\\\\\\"}\\\"}"
+                                                        }
+                                                    },
+                                                    "description":"The JSON request structure to Tokenize a Google Pay instrument.",
+                                                    "example":{
+                                                        "instrumentType":"AMEX",
+                                                        "comment":"AMEX-5232",
+                                                        "tokenData":"{\\\"protocolVersion\\\":\\\"ECv2\\\",\\\"signature\\\":\\\"MEQCIBec51ti5KFs==\\\",\\\"intermediateSigningKey\\\":{\\\"signatures\\\":[\\\"MEUCIEvA6rkOlThv=\\\"],\\\"signedKey\\\":\\\"{\\\\\\\"keyValue\\\\\\\":\\\\\\\"MFkwEwYHKoZIzj0CAQYI\\\\\\\",\\\\\\\"keyExpiration\\\\\\\":\\\\\\\"1601448494595\\\\\\\"}\\\"},\\\"signedMessage\\\":\\\"{\\\\\\\"encryptedMessage\\\\\\\":\\\\\\\"o7raQeRaPE8NxOQuZPro6u\\\\\\\",\\\\\\\"ephemeralPublicKey\\\\\\\":\\\\\\\"BMEuZ4HsiNh\\\\\\\",\\\\\\\"tag\\\\\\\":\\\\\\\"kfFQwoP5evLtDoh5fTq\\\\\\\"}\\\"}"
+                                                    }
+                                                }
+                                            },
+                                            "required": ["googlePay"]
+                                        },
+                                        {
+                                            "properties": {
+                                                "applePay":{
+                                                    "required":[
+                                                        "applicationData",
+                                                        "comment",
+                                                        "data",
+                                                        "ephemeralPublicKey",
+                                                        "instrumentType",
+                                                        "primary",
+                                                        "publicKeyHash",
+                                                        "signature",
+                                                        "transactionId",
+                                                        "version"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "data":{
+                                                            "type":"string",
+                                                            "description":"The \"data\" value from the Apple Pay wallet.",
+                                                            "example":"a15owFtcCC6xUY3S9R9qGetYgD0iEW7"
+                                                        },
+                                                        "ephemeralPublicKey":{
+                                                            "type":"string",
+                                                            "description":"The \"ephemeralPublicKey\" value from the Apple Pay wallet.",
+                                                            "example":"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEbLF8="
+                                                        },
+                                                        "publicKeyHash":{
+                                                            "type":"string",
+                                                            "description":"The \"publicKeyHash\" value from the Apple Pay wallet.",
+                                                            "example":"AwqjNEgX2nTIQ9zIbCcA+G9iHOWU4RQ56SrYM="
+                                                        },
+                                                        "transactionId":{
+                                                            "type":"string",
+                                                            "description":"The \"transactionId\" value from the Apple Pay wallet.",
+                                                            "example":"87a124b4d59d3819c666555ef411c"
+                                                        },
+                                                        "signature":{
+                                                            "type":"string",
+                                                            "description":"The \"signature\" value from the Apple Pay wallet.",
+                                                            "example":"MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghk="
+                                                        },
+                                                        "version":{
+                                                            "type":"string",
+                                                            "description":"The \"version\" value from the Apple Pay wallet.",
+                                                            "example":"EC_V1"
+                                                        },
+                                                        "instrumentType":{
+                                                            "type":"string",
+                                                            "description":"The type/schema value from the Apple Pay wallet.",
+                                                            "example":"AMEX"
+                                                        },
+                                                        "primary":{
+                                                            "type":"boolean",
+                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument.",
+                                                            "example":true
+                                                        },
+                                                        "comment":{
+                                                            "type":"string",
+                                                            "description":"The display text returned by the Apple Pay wallet.",
+                                                            "example":"AMEX-0001"
+                                                        },
+                                                        "applicationData":{
+                                                            "type":"string",
+                                                            "description":"The \"applicationData\" value from the Apple Pay wallet.",
+                                                            "example":"666555ef411bf515621f"
+                                                        }
+                                                    },
+                                                    "description":"The JSON request structure to Tokenize an Apple Pay instrument.",
+                                                    "example":{
+                                                        "data":"a15owFtcCC6xUY3S9R9qGetYgD0iEW7",
+                                                        "ephemeralPublicKey":"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEbLF8=",
+                                                        "publicKeyHash":"AwqjNEgX2nTIQ9zIbCcA+G9iHOWU4RQ56SrYM=",
+                                                        "transactionId":"87a124b4d59d3819c666555ef411c",
+                                                        "signature":"MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghk=",
+                                                        "version":"EC_V1",
+                                                        "instrumentType":"AMEX",
+                                                        "primary":true,
+                                                        "comment":"AMEX-0001",
+                                                        "applicationData":"666555ef411bf515621f"
+                                                    }
+                                                }
+                                            },
+                                            "required": ["applePay"]
+                                        }
+
+                                    ]
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example":{
+                            "data":{
+                                "paypal":{
+                                    "nonce":"d5e2986b-ffd5-03af-1bee-ff2dc1e83a56",
+                                    "primary":true
+                                }
+                            },
+                            "meta":{}
+                        }
+                    }
+                }
             }
         },
         "responses":{
@@ -2534,7 +3115,7 @@
                     }
                 }
             },
-            "getCustomerPaymentInstrumentResponse":{
+            "getCustomerPaymentInstrumentsResponse":{
                 "description":"Successful response",
                 "content":{
                     "application/json":{
@@ -2701,6 +3282,162 @@
                     }
                 }
             },
+            "getCustomerPaymentInstrumentResponse":{
+                "description":"Successful response",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "title":"getCustomerPaymentInstrumentResult",
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "description":"Mandatory data object containing response",
+                                    "type":"object",
+                                    "required":[
+                                        "paymentInstrumentId",
+                                        "paymentInstrumentType",
+                                        "paymentToken",
+                                        "status",
+                                        "createdOn",
+                                        "lastUpdated",
+                                        "lastUsed",
+                                        "primary",
+                                        "allowed",
+                                        "paymentInstrumentDetail"
+                                    ],
+                                    "properties":{
+                                        "paymentInstrumentId":{
+                                            "description":"The payment instrument id.",
+                                            "type":"string",
+                                            "example":"90731"
+                                        },
+                                        "paymentToken":{
+                                            "description":"The payment token. The payment token is a unique identifier for the payment instrument.",
+                                            "type":"string",
+                                            "example":"712029a1-c0aa-41bc-a810-3d42424c5834"
+                                        },
+                                        "paymentInstrumentType":{
+                                            "type":"string",
+                                            "description":"The type of the payment instrument.",
+                                            "example":"GIFT_CARD"
+                                        },
+                                        "status":{
+                                            "description":"The status of the payment instrument in the container.",
+                                            "enum":[
+                                                "UNVERIFIED_PERSISTENT",
+                                                "VERIFIED"
+                                            ],
+                                            "type":"string"
+                                        },
+                                        "createdOn":{
+                                            "description":"The timestamp for when the payment instrument was added. The timestamp format is ISO8601.",
+                                            "format":"date-time",
+                                            "type":"string",
+                                            "example":"2017-11-06T19:38:09.890+11:00"
+                                        },
+                                        "lastUpdated":{
+                                            "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
+                                            "format":"date-time",
+                                            "type":"string",
+                                            "example":"2017-11-06T19:38:09.890+11:00"
+                                        },
+                                        "lastUsed":{
+                                            "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
+                                            "format":"date-time",
+                                            "type":"string",
+                                            "example":"2017-11-06T19:38:09.890+11:00"
+                                        },
+                                        "primary":{
+                                            "description":"A flag to indicate if this payment instrument is the primary instrument in the container.",
+                                            "type":"boolean",
+                                            "example":true
+                                        },
+                                        "allowed":{
+                                            "description":"A flag to indicate if the merchant profile in the container allows the use of this payment instrument.",
+                                            "type":"boolean",
+                                            "example":true
+                                        },
+                                        "paymentInstrumentDetail":{
+                                            "required":[
+                                                "cardSuffix",
+                                                "programName",
+                                                "stepUp"
+                                            ],
+                                            "type":"object",
+                                            "properties":{
+                                                "cardSuffix":{
+                                                    "type":"string",
+                                                    "description":"The suffix (last 4 digits) of the gift card number.",
+                                                    "example":"2517"
+                                                },
+                                                "programName":{
+                                                    "description":"The gift card program name.",
+                                                    "type":"string",
+                                                    "example":"WISH Gift Card"
+                                                },
+                                                "stepUp":{
+                                                    "required":[
+                                                        "type",
+                                                        "mandatory"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "type":{
+                                                            "description":"The type of the step up action. For gift cards this will be REQUIRE_PASSCODE which identifies that the consumer must capture the PIN prior to payment.",
+                                                            "type":"string",
+                                                            "example":"REQUIRE_PASSCODE"
+                                                        },
+                                                        "mandatory":{
+                                                            "description":"A flag to indicate if this step up (action) is mandatory.",
+                                                            "type":"boolean",
+                                                            "example":true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/metaEncrypted"
+                                }
+                            }
+                        },
+                        "examples":{
+                            "SampleInstruments":{
+                                "value":{
+                                    "data":{
+                                        "paymentInstrumentId":"81054",
+                                        "paymentInstrumentType":"GIFT_CARD",
+                                        "paymentToken":"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
+                                        "status":"UNVERIFIED_PERSISTENT",
+                                        "createdOn":"2017-11-06T08:38:09.890Z",
+                                        "lastUpdated":"2017-11-06T19:38:09.860+11:00",
+                                        "lastUsed":"2017-10-12T13:25:49.770+11:00",
+                                        "primary":true,
+                                        "allowed":true,
+                                        "paymentInstrumentDetail": {
+                                            "cardSuffix":"2517",
+                                            "programName":"WISH Gift Card",
+                                            "stepUp":{
+                                                "type":"REQUIRE_PASSCODE",
+                                                "mandatory":true
+                                            }
+                                        }
+                                    },
+                                    "meta":{
+                                        "cipherText": "INLh2cH2MtnTKQ1RxwwWQHiXUZ2B04KhXMFh1P1fMYYvy2rSKygl1Ew"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "initiatePaymentInstrumentAdditionResponse":{
                 "description":"Successful response",
                 "content":{
@@ -2832,7 +3569,8 @@
                                     "data":{
                                         "payments":{
                                             "primaryInstrumentId":"90271"
-                                        }
+                                        },
+                                        "general": {}
                                     },
                                     "meta":{
 
@@ -2987,53 +3725,12 @@
                                                 "instruments":[
                                                     {
                                                         "paymentInstrumentId":"123456",
-                                                        "amount":12000
+                                                        "instrumentType": "CREDIT_CARD",
+                                                        "transactions": []
                                                     }
                                                 ],
                                                 "status":"APPROVED",
-                                                "statusDetail":{
-
-                                                },
                                                 "transactionId":"7617edb9-d0c9-40ca-8058-158dafc60ea2"
-                                            },
-                                            {
-                                                "merchantReferenceId":"123456",
-                                                "paymentRequestId":"f5283ad4-3dfc-4b65-b00d-baa529b9a260",
-                                                "type":"REFUND",
-                                                "grossAmount":-12000,
-                                                "executionTime":"2020-04-23T04:41:44.343Z",
-                                                "instruments":[
-                                                    {
-                                                        "paymentInstrumentId":"123456",
-                                                        "amount":12000
-                                                    }
-                                                ],
-                                                "status":"APPROVED",
-                                                "statusDetail":{
-
-                                                },
-                                                "transactionId":"ffedbb5b-9747-4000-ae20-82d03e0ee99a",
-                                                "merchantId":"eb3645a8-2959-4442-bdce-1d48ee4ce009",
-                                                "refundReason":"Some reason"
-                                            },
-                                            {
-                                                "merchantId":"eb3645a8-2959-4442-bdce-1d48ee4ce009",
-                                                "merchantReferenceId":"123456",
-                                                "paymentRequestId":"d9e5c2b3-05da-4d17-be1a-7ab092c11f9c",
-                                                "type":"PAYMENT",
-                                                "grossAmount":12000,
-                                                "executionTime":"2020-04-23T05:01:39.146Z",
-                                                "instruments":[
-                                                    {
-                                                        "paymentInstrumentId":"123456",
-                                                        "amount":12000
-                                                    }
-                                                ],
-                                                "status":"APPROVED",
-                                                "statusDetail":{
-
-                                                },
-                                                "transactionId":"75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
                                             }
                                         ]
                                     },
@@ -4761,6 +5458,710 @@
                     }
                 }
             },
+            "openpayCompletionsResponse": {
+                "description": "The JSON success response structure of the Completions endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required": [
+                                        "completionResponses",
+                                        "transactionReceipt"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "transactionReceipt": {
+                                            "type": "string",
+                                            "description": "Container reference in the transaction logs. This number uniquely identifies the whole/grouped transaction in the container.",
+                                            "example": "1000000000670747"
+                                        },
+                                        "completionResponses": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "amount",
+                                                    "completionTransactionRef",
+                                                    "extendedTransactionData",
+                                                    "externalServiceCode",
+                                                    "externalServiceMessage",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the openpay transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    },
+                                                    "completionTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the completion transaction in the container.",
+                                                        "example": "1000000000670747"
+                                                    },
+                                                    "amount": {
+                                                        "type": "number",
+                                                        "description": "The amount processed in the completion.",
+                                                        "example": 20.5
+                                                    },
+                                                    "extendedTransactionData": {
+                                                        "type": "array",
+                                                        "description": "This array is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "items": {
+                                                        "required": [
+                                                        "field",
+                                                        "value"
+                                                        ],
+                                                        "type": "object",
+                                                        "properties": {
+                                                        "field": {
+                                                        "type": "string",
+                                                        "description": "The name of the extended transaction data field.",
+                                                        "enum": [
+                                                        "openPayTransactionId",
+                                                        "openPayOrderId",
+                                                        "openPayPaymentMethod",
+                                                        "openPayCreatedAt",
+                                                        "openPayBillingAccountId",
+                                                        "openPayBillingAccountName",
+                                                        "openPayBillingAccountABN"
+                                                        ]
+                                                        },
+                                                        "value": {
+                                                        "type": "string",
+                                                        "description": "The value of the extended transaction data field.",
+                                                        "example": "3049562340, 100015, openPayPaymentMethod, 1592494136891, 24354657685656, Some Business Account, 88 000 014 675"
+                                                        }
+                                                        }
+                                                        }
+                                                        },
+                                                    "externalServiceCode": {
+                                                        "type": "string",
+                                                        "description": "The external service code (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "00"
+                                                    },
+                                                    "externalServiceMessage": {
+                                                        "type": "string",
+                                                        "description": "The external service message (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "APPROVED"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "transactionReceipt": "1000000000670747",
+                            "completionResponses": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622",
+                                    "completionTransactionRef": "1000000000670747",
+                                    "amount": 20.5,
+                                    "extendedTransactionData": [
+                                        {
+                                            "field": "openPayTransactionId",
+                                            "value": "3049562340"
+                                        },
+                                        {
+                                            "field": "openPayOrderId",
+                                            "value": "100015"
+                                        },
+                                        {
+                                            "field": "openPayPaymentMethod",
+                                            "value": "openPayPaymentMethod"
+                                        },
+                                        {
+                                            "field": "openPayCreatedAt",
+                                            "value": "1592494136891"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountId",
+                                            "value": "24354657685656"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountName",
+                                            "value": "Some Business Account"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountABN",
+                                            "value": "88 000 014 675"
+                                        }
+                                    ],
+                                    "externalServiceCode": "00",
+                                    "externalServiceMessage": "APPROVED"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "openpayVoidsResponse": {
+                "description": "The JSON success response structure of the Voids endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required": [
+                                        "transactionReceipt",
+                                        "voidResponses"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "transactionReceipt": {
+                                            "type": "string",
+                                            "description": "Container reference in the transaction logs. This number uniquely identifies the whole/grouped transaction in the container.",
+                                            "example": "1000000000670747"
+                                        },
+                                        "voidResponses": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "amount",
+                                                    "extendedTransactionData",
+                                                    "externalServiceCode",
+                                                    "externalServiceMessage",
+                                                    "paymentTransactionRef",
+                                                    "voidTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the openpay transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    },
+                                                    "voidTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the void transaction in the container.",
+                                                        "example": "1000000000670747"
+                                                    },
+                                                    "amount": {
+                                                        "type": "number",
+                                                        "description": "The amount processed in the void.",
+                                                        "example": 20.5
+                                                    },
+                                                    "extendedTransactionData": {
+                                                        "type": "array",
+                                                        "description": "This array is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "items": {
+                                                            "required": [
+                                                                "field",
+                                                                "value"
+                                                            ],
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "field": {
+                                                                    "type": "string",
+                                                                    "description": "The name of the extended transaction data field.",
+                                                                    "enum": [
+                                                                        "openPayTransactionId",
+                                                                        "openPayOrderId",
+                                                                        "openPayPaymentMethod",
+                                                                        "openPayCreatedAt",
+                                                                        "openPayBillingAccountId",
+                                                                        "openPayBillingAccountName",
+                                                                        "openPayBillingAccountABN"
+                                                                    ]
+                                                                },
+                                                                "value": {
+                                                                    "type": "string",
+                                                                    "description": "The value of the extended transaction data field.",
+                                                                    "example": "3049562340, 100015, openPayPaymentMethod, 1592494136891, 24354657685656, Some Business Account, 88 000 014 675"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "externalServiceCode": {
+                                                        "type": "string",
+                                                        "description": "The external service code (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "00"
+                                                    },
+                                                    "externalServiceMessage": {
+                                                        "type": "string",
+                                                        "description": "The external service message (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "APPROVED"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "transactionReceipt": "1000000000670747",
+                            "voidResponses": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622",
+                                    "voidTransactionRef": "1000000000670747",
+                                    "amount": 20.5,
+                                    "extendedTransactionData": [
+                                        {
+                                            "field": "openPayTransactionId",
+                                            "value": "3049562340"
+                                        },
+                                        {
+                                            "field": "openPayOrderId",
+                                            "value": "100015"
+                                        },
+                                        {
+                                            "field": "openPayPaymentMethod",
+                                            "value": "openPayPaymentMethod"
+                                        },
+                                        {
+                                            "field": "openPayCreatedAt",
+                                            "value": "1592494136891"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountId",
+                                            "value": "24354657685656"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountName",
+                                            "value": "Some Business Account"
+                                        },
+                                        {
+                                            "field": "openPayBillingAccountABN",
+                                            "value": "88 000 014 675"
+                                        }
+                                    ],
+                                    "externalServiceCode": "00",
+                                    "externalServiceMessage": "APPROVED"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "instrumentsBalanceResponse": {
+                "description": "The JSON response structure of the Instrument Balance endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "giftCardBalances":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "balance",
+                                                    "expired",
+                                                    "expiryDay",
+                                                    "expiryMonth",
+                                                    "expiryYear"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "cardNumber":{
+                                                        "type":"string",
+                                                        "description":"The gift card number. This property will only be returned if the endpoint was called with the \"cardNumber\" and \"pinCode\" request properties.",
+                                                        "example":"6280003090920742517"
+                                                    },
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The gift card payment instrument id. This property will only be returned if the endpoint was called with the \"paymentInstrumentId\" request property.",
+                                                        "example":"81054"
+                                                    },
+                                                    "balance":{
+                                                        "type":"number",
+                                                        "description":"The current available balance of the gift card.",
+                                                        "example":333.38
+                                                    },
+                                                    "expiryDay":{
+                                                        "type":"string",
+                                                        "description":"The day of the expiry date of the gift card.",
+                                                        "example":"31"
+                                                    },
+                                                    "expiryMonth":{
+                                                        "type":"string",
+                                                        "description":"The month of the expiry date of the gift card.",
+                                                        "example":"03"
+                                                    },
+                                                    "expiryYear":{
+                                                        "type":"string",
+                                                        "description":"The year of the expiry date of the gift card.",
+                                                        "example":"2018"
+                                                    },
+                                                    "expired":{
+                                                        "type":"boolean",
+                                                        "description":"A flag to indicate if the gift card is expired.",
+                                                        "example":true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "data": {
+                                "giftCardBalances":[
+                                    {
+                                        "cardNumber":"6280003090920742517",
+                                        "paymentInstrumentId":"81054",
+                                        "balance":333.38,
+                                        "expiryDay":"31",
+                                        "expiryMonth":"03",
+                                        "expiryYear":"2018",
+                                        "expired":false
+                                    }
+                                ]
+                            },
+                            "meta":{}
+                        }
+                    }
+                }
+            },
+            "tokenizeInstrumentResponse":{
+                "description": "The JSON response structure of the Tokenize Instrument endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object",
+                                    "anyOf": [
+                                        {
+                                            "required":[
+                                                "payPal"
+                                            ],
+                                            "type":"object",
+                                            "properties":{
+                                                "payPal":{
+                                                    "required":[
+                                                        "allowed",
+                                                        "customerId",
+                                                        "lastUpdated",
+                                                        "lastUsed",
+                                                        "payPalId",
+                                                        "paymentInstrumentId",
+                                                        "primary",
+                                                        "status"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "paymentInstrumentId":{
+                                                            "type":"string",
+                                                            "description":"The new payment instrument id to be used for payments.",
+                                                            "example":"90271"
+                                                        },
+                                                        "status":{
+                                                            "type":"string",
+                                                            "description":"The status of the payment instrument in the container.",
+                                                            "enum":[
+                                                                "UNVERIFIED_PERSISTENT",
+                                                                "VERIFIED"
+                                                            ]
+                                                        },
+                                                        "lastUpdated":{
+                                                            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+                                                            "type":"string",
+                                                            "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
+                                                            "example":"2017-10-26T04:56:25.046Z"
+                                                        },
+                                                        "lastUsed":{
+                                                            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+                                                            "type":"string",
+                                                            "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
+                                                            "example":"2017-10-26T04:56:25.046Z"
+                                                        },
+                                                        "primary":{
+                                                            "type":"boolean",
+                                                            "description":"A flag to indicate if this payment instrument is the primary instrument in the container.",
+                                                            "example":true
+                                                        },
+                                                        "allowed":{
+                                                            "type":"boolean",
+                                                            "description":"A flag to indicate if the merchant profile in the container allows the use of this payment instrument.",
+                                                            "example":true
+                                                        },
+                                                        "payPalId":{
+                                                            "type":"string",
+                                                            "description":"The Paypal email id.",
+                                                            "example":"jane.doe@paypal.com"
+                                                        },
+                                                        "customerId":{
+                                                            "type":"string",
+                                                            "description":"The Paypal customer id.",
+                                                            "example":"690238314"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "description":"The JSON response structure of tokenizing a Paypal instrument.",
+                                            "example":{
+                                                "payPal":{
+                                                    "paymentInstrumentId":"90271",
+                                                    "status":"UNVERIFIED_PERSISTENT",
+                                                    "lastUpdated":"2017-10-26T04:56:25.046Z",
+                                                    "primary":true,
+                                                    "allowed":true,
+                                                    "payPalId":"jane.doe@paypal.com",
+                                                    "customerId":"690238314"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "properties": {
+                                                "giftcard":{
+                                                    "required":[
+                                                        "balance",
+                                                        "expired",
+                                                        "expiryDay",
+                                                        "expiryMonth",
+                                                        "expiryYear",
+                                                        "giftCard"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "giftCard":{
+                                                            "required":[
+                                                                "allowed",
+                                                                "cardSuffix",
+                                                                "lastUpdated",
+                                                                "lastUsed",
+                                                                "paymentInstrumentId",
+                                                                "primary",
+                                                                "programName",
+                                                                "status"
+                                                            ],
+                                                            "type":"object",
+                                                            "properties":{
+                                                                "paymentInstrumentId":{
+                                                                    "type":"string",
+                                                                    "description":"The new payment instrument id to be used for payments.",
+                                                                    "example":"81054"
+                                                                },
+                                                                "status":{
+                                                                    "type":"string",
+                                                                    "description":"The status of the payment instrument in the container.",
+                                                                    "enum":[
+                                                                        "UNVERIFIED_PERSISTENT",
+                                                                        "VERIFIED"
+                                                                    ]
+                                                                },
+                                                                "lastUpdated":{
+                                                                    "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+                                                                    "type":"string",
+                                                                    "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
+                                                                    "example":"2017-10-26T06:35:09.083Z"
+                                                                },
+                                                                "lastUsed":{
+                                                                    "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+                                                                    "type":"string",
+                                                                    "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
+                                                                    "example":"2017-10-12T02:25:49.770Z"
+                                                                },
+                                                                "primary":{
+                                                                    "type":"boolean",
+                                                                    "description":"A flag to indicate if this payment instrument is the primary instrument in the container.",
+                                                                    "example":true
+                                                                },
+                                                                "allowed":{
+                                                                    "type":"boolean",
+                                                                    "description":"A flag to indicate if the merchant profile in the container allows the use of this payment instrument.",
+                                                                    "example":true
+                                                                },
+                                                                "programName":{
+                                                                    "type":"string",
+                                                                    "description":"The gift card program name.",
+                                                                    "example":"WISH Gift Card"
+                                                                },
+                                                                "cardSuffix":{
+                                                                    "type":"string",
+                                                                    "description":"The suffix (last 4 digits) of the gift card number.",
+                                                                    "example":"2517"
+                                                                }
+                                                            }
+                                                        },
+                                                        "balance":{
+                                                            "type":"number",
+                                                            "description":"The current available balance of the gift card.",
+                                                            "example":333.4
+                                                        },
+                                                        "expiryDay":{
+                                                            "type":"string",
+                                                            "description":"The day of the expiry date of the gift card.",
+                                                            "example":"31"
+                                                        },
+                                                        "expiryMonth":{
+                                                            "type":"string",
+                                                            "description":"The month of the expiry date of the gift card.",
+                                                            "example":"03"
+                                                        },
+                                                        "expiryYear":{
+                                                            "type":"string",
+                                                            "description":"The year of the expiry date of the gift card.",
+                                                            "example":"2018"
+                                                        },
+                                                        "expired":{
+                                                            "type":"boolean",
+                                                            "description":"A flag to indicate if the gift card is expired.",
+                                                            "example":true
+                                                        }
+                                                    },
+                                                    "description":"The JSON response structure of tokenizing a Gift Card instrument.",
+                                                    "example":{
+                                                        "giftCard":{
+                                                            "paymentInstrumentId":"81054",
+                                                            "status":"UNVERIFIED_PERSISTENT",
+                                                            "lastUpdated":"2017-10-26T06:35:09.083Z",
+                                                            "lastUsed":"2017-10-12T02:25:49.770Z",
+                                                            "primary":true,
+                                                            "allowed":true,
+                                                            "programName":"WISH Gift Card",
+                                                            "cardSuffix":"2517"
+                                                        },
+                                                        "balance":333.4,
+                                                        "expiryDay":"31",
+                                                        "expiryMonth":"03",
+                                                        "expiryYear":"2018",
+                                                        "expired":false
+                                                    }
+                                                }
+                                            },
+                                            "required": ["giftcard"]
+                                        },
+                                        {
+                                            "properties": {
+                                                "androidPay":{
+                                                    "required":[
+                                                        "paymentInstrumentId",
+                                                        "stepUpToken"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "paymentInstrumentId":{
+                                                            "type":"string",
+                                                            "description":"The new payment instrument id to be used for payments.",
+                                                            "example":"20191"
+                                                        },
+                                                        "stepUpToken":{
+                                                            "type":"string",
+                                                            "description":"The step-up token to be used for payments.",
+                                                            "example":"6bf0a37c-0a5d-4619-8182-4c331358d021"
+                                                        }
+                                                    },
+                                                    "description":"The JSON response structure of tokenizing an Android Pay instrument.",
+                                                    "example":{
+                                                        "paymentInstrumentId":"20191",
+                                                        "stepUpToken":"6bf0a37c-0a5d-4619-8182-4c331358d021"
+                                                    }
+                                                }
+                                            },
+                                            "required": ["androidPay"]
+                                        },
+                                        {
+                                            "properties": {
+                                                "googlePay":{
+                                                    "required":[
+                                                        "paymentToken"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "paymentToken":{
+                                                            "type":"string",
+                                                            "description":"The new payment token to be used for payments. The payment token is a unique identifier for the payment instrument.",
+                                                            "example":"76a4c2f1-7620-4bc4-8f4f-01c1467ea318"
+                                                        }
+                                                    },
+                                                    "description":"The JSON response structure of tokenizing a Google Pay instrument.",
+                                                    "example":{
+                                                        "paymentToken":"76a4c2f1-7620-4bc4-8f4f-01c1467ea318"
+                                                    }
+                                                }
+                                            },
+                                            "required": ["googlePay"]
+                                        },
+                                        {
+                                            "properties": {
+                                                "applePay":{
+                                                    "required":[
+                                                        "paymentInstrumentId",
+                                                        "stepUpToken"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "paymentInstrumentId":{
+                                                            "type":"string",
+                                                            "description":"The new payment instrument id to be used for payments.",
+                                                            "example":"20192"
+                                                        },
+                                                        "stepUpToken":{
+                                                            "type":"string",
+                                                            "description":"The step-up token to be used for payments.",
+                                                            "example":"2d053b14-7c7a-447f-99b7-7618d6182f34"
+                                                        }
+                                                    },
+                                                    "description":"The JSON response structure of tokenizing an Apple Pay instrument.",
+                                                    "example":{
+                                                        "paymentInstrumentId":"20192",
+                                                        "stepUpToken":"2d053b14-7c7a-447f-99b7-7618d6182f34"
+                                                    }
+                                                }
+                                            },
+                                            "required": ["applePay"]
+                                        }
+
+                                    ]
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example":{
+                            "data":{
+                                "payPal":{
+                                    "paymentInstrumentId":"90271",
+                                    "status":"UNVERIFIED_PERSISTENT",
+                                    "lastUpdated":"2017-10-26T04:56:25.046Z",
+                                    "primary":true,
+                                    "allowed":true,
+                                    "payPalId":"jane.doe@paypal.com",
+                                    "customerId":"690238314"
+                                }
+                            },
+                            "meta":{}
+                        }
+                    }
+                }
+            },
 
             "errorResponse": {
                 "description": "Generic error response.",
@@ -5464,6 +6865,168 @@
                         }
                     }
                 }
+            },
+            "openpayCompletionsErrorResponse": {
+                "description": "The JSON error response structure of the Completions endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "completionResponses": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "errorCode",
+                                                    "errorDetail",
+                                                    "errorMessage",
+                                                    "externalServiceCode",
+                                                    "externalServiceMessage",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    },
+                                                    "errorCode": {
+                                                        "type": "string",
+                                                        "description": "The error code. Only present if an error occurred during payment.",
+                                                        "example": "BI52"
+                                                    },
+                                                    "errorMessage": {
+                                                        "type": "string",
+                                                        "description": "The error message. Only present if an error occurred during payment.",
+                                                        "example": "PAYMENT TRANSACTION FAILED"
+                                                    },
+                                                    "errorDetail": {
+                                                        "type": "string",
+                                                        "description": "The error detail. Only present if an error occurred during payment.",
+                                                        "example": "We are currently experiencing technical issues with our service."
+                                                    },
+                                                    "externalServiceCode": {
+                                                        "type": "string",
+                                                        "description": "The external service code (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "0T"
+                                                    },
+                                                    "externalServiceMessage": {
+                                                        "type": "string",
+                                                        "description": "The external service message (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "INVALID COMPLETION AUTH NOT FOUND"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "example": {
+                            "httpStatusCode": 400,
+                            "errorCode": "BI52",
+                            "errorMessage": "PAYMENT TRANSACTION FAILED",
+                            "errorDetail": "We are currently experiencing technical issues with our service.",
+                            "completionResponses": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622",
+                                    "errorCode": "BI52",
+                                    "errorMessage": "PAYMENT TRANSACTION FAILED",
+                                    "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                                    "externalServiceCode": "0T",
+                                    "externalServiceMessage": "INVALID COMPLETION AUTH NOT FOUND"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "openpayVoidsErrorResponse": {
+                "description": "The JSON error response structure of the Voids endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "voidResponses": {
+                                            "type": "array",
+                                            "items": {
+                                                "required": [
+                                                    "errorCode",
+                                                    "errorDetail",
+                                                    "errorMessage",
+                                                    "externalServiceCode",
+                                                    "externalServiceMessage",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type": "object",
+                                                "properties": {
+                                                    "paymentTransactionRef": {
+                                                        "type": "string",
+                                                        "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                                                        "example": "1000000000670622"
+                                                    },
+                                                    "errorCode": {
+                                                        "type": "string",
+                                                        "description": "The error code. Only present if an error occurred during payment.",
+                                                        "example": "BI52"
+                                                    },
+                                                    "errorMessage": {
+                                                        "type": "string",
+                                                        "description": "The error message. Only present if an error occurred during payment.",
+                                                        "example": "PAYMENT TRANSACTION FAILED"
+                                                    },
+                                                    "errorDetail": {
+                                                        "type": "string",
+                                                        "description": "The error detail. Only present if an error occurred during payment.",
+                                                        "example": "We are currently experiencing technical issues with our service."
+                                                    },
+                                                    "externalServiceCode": {
+                                                        "type": "string",
+                                                        "description": "The external service code (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "0T"
+                                                    },
+                                                    "externalServiceMessage": {
+                                                        "type": "string",
+                                                        "description": "The external service message (from eg. Openpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example": "INVALID VOID AUTH NOT FOUND"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "example": {
+                            "httpStatusCode": 400,
+                            "errorCode": "BI52",
+                            "errorMessage": "PAYMENT TRANSACTION FAILED",
+                            "errorDetail": "We are currently experiencing technical issues with our service.",
+                            "voidResponses": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622",
+                                    "errorCode": "BI52",
+                                    "errorMessage": "PAYMENT TRANSACTION FAILED",
+                                    "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                                    "externalServiceCode": "0T",
+                                    "externalServiceMessage": "INVALID VOID AUTH NOT FOUND"
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         },
         "securitySchemes":{
@@ -5642,9 +7205,16 @@
                                                     }
                                                 }
                                             },
+                                            "skipRollback": {
+                                                "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                                                "type": "boolean"
+                                            },
                                             "clientReference":{
                                                 "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
                                                 "type":"string"
+                                            },
+                                            "preferences": {
+                                                "$ref": "#/components/schemas/preferencePayments"
                                             }
                                         }
                                     },
@@ -5790,9 +7360,16 @@
                                                     }
                                                 }
                                             },
+                                            "skipRollback": {
+                                                "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                                                "type": "boolean"
+                                            },
                                             "clientReference":{
                                                 "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
                                                 "type":"string"
+                                            },
+                                            "preferences": {
+                                                "$ref": "#/components/schemas/preferencePayments"
                                             }
                                         }
                                     },
@@ -6492,6 +8069,256 @@
                 "responses": {
                     "204": {
                         "description": "Ts and Cs successfully accepted.  No content returned"
+                    }
+                }
+            }
+        },
+        "/customer/instruments":{
+            "get":{
+                "summary":"Get Payment Instruments",
+                "operationId":"getCustomerPaymentInstruments",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Get the list of payment instruments currently configured for the customer.  Returns an array of instrument records that can be used to execute payments",
+                "tags":[
+                    "Customer"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getCustomerPaymentInstrumentsResponse"
+                    }
+                }
+            },
+            "post":{
+                "summary":"Initiate Instrument Addition",
+                "operationId":"initiatePaymentInstrumentAddition",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Initiate the addition of a new payment instrument for this customer.  This API returns a URL to be used to access the DigiPay IFrame based interface to request the customer to enter a payment instrument details.",
+                "tags":[
+                    "Customer"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody":{
+                    "$ref":"#/components/requestBodies/initiatePaymentInstrumentAdditionRequest",
+                    "required":true
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/initiatePaymentInstrumentAdditionResponse"
+                    }
+                }
+            }
+        },
+        "/customer/instruments/{paymentInstrumentId}":{
+            "get":{
+                "summary":"Get Payment Instrument",
+                "operationId":"getCustomerPaymentInstrument",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Get the specified payment instrument of the customer. Returns the payment instrument data and optionally the sensitive data (encrypted in the response) of an instrument record",
+                "tags":[
+                    "Customer"
+                ],
+                "parameters":[
+                    {
+                        "in":"path",
+                        "name":"paymentInstrumentId",
+                        "description":"The ID of the specific instrument",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "example":"712029a1-c0aa-41bc-a810-3d42424c5834"
+                    },
+                    {
+                        "in":"query",
+                        "name":"publicKey",
+                        "description":"The optional ephemeral public key used to encrypt sensitive instrument data and include ('cipherText' in the 'meta' object) that encrypted data in the response sent back to the consumer. If this parameter is omitted the sensitive data is NOT returned in the response to the consumer.",
+                        "required":false,
+                        "schema":{
+                            "type":"string",
+                            "example":"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEbLF8"
+                        }
+                    },
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getCustomerPaymentInstrumentResponse"
+                    }
+                }
+            },
+            "delete":{
+                "summary":"Delete a payment instrument",
+                "operationId":"deletePaymentInstrument",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Delete an existing payment instrument",
+                "tags":[
+                    "Customer"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in":"path",
+                        "name":"paymentInstrumentId",
+                        "description":"The ID of the specific instrument",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "204":{
+                        "description":"Payment Instrument successfully deleted.  No content returned"
+                    }
+                }
+            }
+        },
+        "/customer/instruments/balance":{
+            "post":{
+                "tags":[
+                    "Customer",
+                    "XXXXTO_DIGIPAY"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody": {
+                    "$ref":"#/components/requestBodies/instrumentsBalanceRequest"
+                },
+                "responses":{
+                    "200":{
+                        "description":"Success",
+                        "$ref":"#/components/responses/instrumentsBalanceResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
+                    }
+                },
+                "summary":"Instruments Balance",
+                "description":"Get the balance and expiryinfo for the provided instruments. This API is rate limited to 5 requests per minute per shopper id."
+            }
+        },
+        "/customer/instruments/tokenize":{
+            "post":{
+                "summary":"Tokenize Instrument",
+                "description":"Create a paymment intrument id for a provided instrument.",
+                "tags":[
+                    "Customer"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody": {
+                    "$ref":"#/components/requestBodies/tokenizeInstrumentRequest"
+                },
+                "responses":{
+                    "200":{
+                        "description":"Success",
+                        "$ref":"#/components/responses/tokenizeInstrumentResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
                     }
                 }
             }
@@ -7533,7 +9360,7 @@
                     "XXXXTO_DIGIPAY"
                 ],
                 "summary":"Openpay Refunds",
-                "description":"Refund Openpay payments. This API is IP restricted to allow unauthenticated server side calls.",
+                "description":"Refund Openpay payments.",
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
                     { "$ref": "#/components/parameters/authKeyParam" },
@@ -7581,6 +9408,126 @@
                     "504":{
                         "description":"The request timed out.",
                         "$ref": "#/components/responses/errorResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/openpay/completions":{
+            "post":{
+                "tags":[
+                    "Merchant",
+                    "XXXXTO_DIGIPAY"
+                ],
+                "summary":"Openpay Completions",
+                "description":"Complete pre-authed Openpay payments.",
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody":{
+                    "$ref":"#/components/requestBodies/openpayCompletionsRequest",
+                    "required":true
+                },
+                "responses":{
+                    "200":{
+                        "description":"Success",
+                        "$ref":"#/components/responses/openpayCompletionsResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/openpayCompletionsErrorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/openpayCompletionsErrorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/openpayCompletionsErrorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/openpayCompletionsErrorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/openpay/voids":{
+            "post":{
+                "tags":[
+                    "Merchant",
+                    "XXXXTO_DIGIPAY"
+                ],
+                "summary":"Openpay Voids",
+                "description":"Void (cancel) pre-authed Openpay payments.",
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody":{
+                    "$ref":"#/components/requestBodies/openpayVoidsRequest",
+                    "required":true
+                },
+                "responses":{
+                    "200":{
+                        "description":"Success",
+                        "$ref":"#/components/responses/openpayVoidsResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/openpayVoidsErrorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/openpayVoidsErrorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/openpayVoidsErrorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/openpayVoidsErrorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
                     }
                 }
             }
