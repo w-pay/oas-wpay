@@ -3026,6 +3026,106 @@
                         }
                     }
                 }
+            },
+            "transactionHistoryRequest":{
+                "description":"The JSON request structure of the Transaction History endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema":{
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "description":"Mandatory data object containing request",
+                                    "type":"object",
+                                    "required":[
+                                        "transactionTypes"
+                                    ],
+                                    "properties":{
+                                        "transactionTypes":{
+                                            "type":"array",
+                                            "description":"The container transaction types to include in the results.",
+                                            "items":{
+                                                "type":"string",
+                                                "enum":[
+                                                    "PREAUTH",
+                                                    "PURCHASE",
+                                                    "COMPLETION",
+                                                    "VOID",
+                                                    "REFUND"
+                                                ]
+                                            }
+                                        },
+                                        "paymentInstrumentIds":{
+                                            "type":"array",
+                                            "description":"The ids of the payment instruments to include in the results.",
+                                            "items":{
+                                                "type":"string",
+                                                "example":"90731"
+                                            }
+                                        },
+                                        "clientReference":{
+                                            "type":"string",
+                                            "description":"A merchant application specific reference number to include in the results.",
+                                            "example":"T5ESYRPWJKPHF54"
+                                        },
+                                        "transactionRef":{
+                                            "type":"string",
+                                            "description":"A container reference number to include in the results.",
+                                            "example":"1000000000670621"
+                                        },
+                                        "orderNumber":{
+                                            "type":"string",
+                                            "description":"A merchant order number to include in the results.",
+                                            "example":"20170505090"
+                                        },
+                                        "startDate":{
+                                            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+                                            "type":"string",
+                                            "description":"Limit transactions included in the results FROM this timestamp. The timestamp format is ISO8601.",
+                                            "example":"2017-01-01T00:00:00.000+1100"
+                                        },
+                                        "endDate":{
+                                            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+                                            "type":"string",
+                                            "description":"Limit transactions included in the results TO this timestamp . The timestamp format is ISO8601.",
+                                            "example":"2017-12-31T23:59:59.999+1100"
+                                        },
+                                        "maxRecords":{
+                                            "type":"number",
+                                            "description":"The max number of transactions to include in the results.",
+                                            "example":2
+                                        }
+                                    }
+                                },
+                                "meta":{}
+                            }
+                        },
+                        "example":{
+                            "data":{
+                                "transactionTypes":[
+                                    "PREAUTH",
+                                    "PURCHASE"
+                                ],
+                                "paymentInstrumentIds":[
+                                    "90731",
+                                    "81054",
+                                    "90271"
+                                ],
+                                "clientReference":"T5ESYRPWJKPHF54",
+                                "transactionRef":"1000000000670621",
+                                "orderNumber":"20170505090",
+                                "startDate":"2017-01-01T00:00:00.000+1100",
+                                "endDate":"2017-12-31T23:59:59.999+1100",
+                                "maxRecords":5
+                            },
+                            "meta":{}
+                        }
+                    }
+                }
             }
         },
         "responses":{
@@ -8334,7 +8434,7 @@
             }
         },
         "/customer/transactions":{
-            "get":{
+            "post":{
                 "summary": "Get Transaction List",
                 "operationId": "getCustomerTransactions",
                 "security": [
@@ -8352,66 +8452,46 @@
                     { "$ref": "#/components/parameters/authDigestParam" },
                     { "$ref": "#/components/parameters/messageIdParam" },
                     { "$ref": "#/components/parameters/authorizationParam" },
-                    { "$ref": "#/components/parameters/versionParam" },
-                    {
-                        "in": "query",
-                        "name": "paymentRequestId",
-                        "description": "If present, limits the list of transactions to those that relate to the payment request",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "example": "f27b0189-3449-4215-ab95-31c24e775a48"
-                        }
-                    },
-                    {
-                        "in": "query",
-                        "name": "start-time",
-                        "description": "If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "date-time",
-                            "example": "2017-11-06T19:38:09.890+11:00"
-                        }
-                    },
-                    {
-                        "in": "query",
-                        "name": "end-time",
-                        "description": "If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "date-time",
-                            "example": "2017-11-06T19:38:09.890+11:00"
-                        }
-                    },
-                    {
-                        "in": "query",
-                        "name": "page-size",
-                        "description": "The number of records to return for this page.  Defaults to 25 if absent",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "default": 25,
-                            "minimum": 1,
-                            "maximum": 500
-                        }
-                    },
-                    {
-                        "in": "query",
-                        "name": "page",
-                        "description": "The page of results to return with 1 indicating the first page.  Defaults to 1 if absent",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "default": 1,
-                            "minimum": 1
-                        }
-                    }
+                    { "$ref": "#/components/parameters/versionParam" }
                 ],
+                "requestBody": {
+                    "$ref":"#/components/requestBodies/transactionHistoryRequest"
+                },
                 "responses":{
                     "200":{
                         "$ref":"#/components/responses/getCustomerPaymentInstrumentResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
                     }
                 }
             }
