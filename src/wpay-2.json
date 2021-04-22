@@ -1326,6 +1326,16 @@
                     "type": "string",
                     "x-example": "1"
                 }
+            },
+            "contentTypeParam": {
+                "name": "content-type",
+                "description":"The MIME type of the body of the request.",
+                "in": "header",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "x-example": "application/json"
+                }
             }
         },
         "requestBodies": {
@@ -8319,6 +8329,89 @@
                     "504":{
                         "description":"The request timed out.",
                         "$ref":"#/components/responses/errorResponse"
+                    }
+                }
+            }
+        },
+        "/customer/transactions":{
+            "get":{
+                "summary": "Get Transaction List",
+                "operationId": "getCustomerTransactions",
+                "security": [
+                    { "ApiKeyAuth": [], "bearerAuth": [] }
+                ],
+                "description": "Get a list of the previously executed transactions for the customer.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant",
+                "tags": [
+                    "Customer",
+                    "XXXXTO_DIGIPAY"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/contentTypeParam" },
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in": "query",
+                        "name": "paymentRequestId",
+                        "description": "If present, limits the list of transactions to those that relate to the payment request",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "f27b0189-3449-4215-ab95-31c24e775a48"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "start-time",
+                        "description": "If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2017-11-06T19:38:09.890+11:00"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "end-time",
+                        "description": "If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2017-11-06T19:38:09.890+11:00"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "page-size",
+                        "description": "The number of records to return for this page.  Defaults to 25 if absent",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 25,
+                            "minimum": 1,
+                            "maximum": 500
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "The page of results to return with 1 indicating the first page.  Defaults to 1 if absent",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getCustomerPaymentInstrumentResponse"
                     }
                 }
             }
