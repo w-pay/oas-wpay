@@ -8496,6 +8496,72 @@
                 }
             }
         },
+        "/customer/transactions/{transactionId}":{
+            "get":{
+                "summary":"Get Transaction Details",
+                "operationId": "getCustomerTransactionDetails",
+                "security": [
+                    { "ApiKeyAuth": [], "bearerAuth": [] }
+                ],
+                "description":"Get the details for a specific transaction previously executed by the customer.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant",
+                "tags":[
+                    "Customer",
+                    "XXXXTO_DIGIPAY"
+                ],
+                "parameters": [
+                    {
+                        "in":"path",
+                        "name":"transactionId",
+                        "description":"The ID of the specific transaction",
+                        "required":true,
+                        "schema":{
+                            "type":"string",
+                            "example":"75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
+                        }
+                    },
+                    { "$ref": "#/components/parameters/contentTypeParam" },
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getCustomerTransactionDetailsResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
+                    }
+                }
+            }
+        },
 
         "/merchant/wallets": {
             "post": {
