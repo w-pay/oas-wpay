@@ -3126,6 +3126,389 @@
                         }
                     }
                 }
+            },
+            "immediatePaymentRequest":{
+                "description":"The JSON request structure of the Immediate Payment endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema":{
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "required":[
+                                        "clientReference",
+                                        "orderNumber",
+                                        "payments",
+                                        "transactionType"
+                                    ],
+                                    "type":"object",
+                                    "properties":{
+                                        "transactionType":{
+                                            "type":"object",
+                                            "properties":{
+                                                "creditCard":{
+                                                    "type":"string",
+                                                    "description":"The container transaction type to use for credit card instruments. This property is only required if the payments request contains credit card instruments.",
+                                                    "enum":[
+                                                        "PREAUTH",
+                                                        "PURCHASE"
+                                                    ]
+                                                },
+                                                "giftCard":{
+                                                    "type":"string",
+                                                    "description":"The container transaction type to use for gift card instruments. This property is only required if the payments request contains gift card instruments.",
+                                                    "enum":[
+                                                        "PREAUTH",
+                                                        "PURCHASE"
+                                                    ]
+                                                },
+                                                "payPal":{
+                                                    "type":"string",
+                                                    "description":"The container transaction type to use for paypal instruments. This property is only required if the payments request contains paypal instruments. Only PURCHASE is currently supported for paypal instruments.",
+                                                    "enum":[
+                                                        "PURCHASE"
+                                                    ]
+                                                },
+                                                "googlePay":{
+                                                    "required":[
+                                                        "creditCard",
+                                                        "debitCard"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "creditCard":{
+                                                            "type":"string",
+                                                            "description":"The container transaction type to use for google pay credit card instruments.",
+                                                            "enum":[
+                                                                "PREAUTH",
+                                                                "PURCHASE"
+                                                            ]
+                                                        },
+                                                        "debitCard":{
+                                                            "type":"string",
+                                                            "description":"The container transaction type to use for google pay debit card instruments. Only PURCHASE is currently supported for google pay debit card instruments.",
+                                                            "enum":[
+                                                                "PURCHASE"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "description":"This object is only required if the payments request contains google pay instruments."
+                                                },
+                                                "applePay":{
+                                                    "required":[
+                                                        "creditCard",
+                                                        "debitCard"
+                                                    ],
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "creditCard":{
+                                                            "type":"string",
+                                                            "description":"The container transaction type to use for apple pay credit card instruments.",
+                                                            "enum":[
+                                                                "PREAUTH",
+                                                                "PURCHASE"
+                                                            ]
+                                                        },
+                                                        "debitCard":{
+                                                            "type":"string",
+                                                            "description":"The container transaction type to use for apple pay debit card instruments. Only PURCHASE is currently supported for apple pay debit card instruments.",
+                                                            "enum":[
+                                                                "PURCHASE"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "description":"This object is only required if the payments request contains apple pay instruments."
+                                                }
+                                            }
+                                        },
+                                        "clientReference":{
+                                            "type":"string",
+                                            "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                                            "example":"T5ESYRPWJKPHF54"
+                                        },
+                                        "orderNumber":{
+                                            "type":"string",
+                                            "description":"The merchant order number of the transaction.",
+                                            "example":"20170505090"
+                                        },
+                                        "shippingAddress":{
+                                            "required":[
+                                                "countryCode",
+                                                "firstName",
+                                                "lastName",
+                                                "postalCode",
+                                                "stateOrTerritory",
+                                                "streetAddress",
+                                                "suburb"
+                                            ],
+                                            "type":"object",
+                                            "properties":{
+                                                "firstName":{
+                                                    "type":"string",
+                                                    "description":"The recipient's first name.",
+                                                    "example":"Francois"
+                                                },
+                                                "lastName":{
+                                                    "type":"string",
+                                                    "description":"The recipient's last name.",
+                                                    "example":"van der Merwe"
+                                                },
+                                                "email":{
+                                                    "type":"string",
+                                                    "description":"The recipient’s email address.",
+                                                    "example":"fvandermerwe@woolworths.com.au"
+                                                },
+                                                "company":{
+                                                    "type":"string",
+                                                    "description":"The recipient's company name.",
+                                                    "example":"Woolworths Limited"
+                                                },
+                                                "extendedAddress":{
+                                                    "type":"string",
+                                                    "description":"The recipient's extended address line.",
+                                                    "example":"Level 1"
+                                                },
+                                                "streetAddress":{
+                                                    "type":"string",
+                                                    "description":"The recipient's street address line.",
+                                                    "example":"22 River Oak Circuit"
+                                                },
+                                                "suburb":{
+                                                    "type":"string",
+                                                    "description":"The recipient's suburb.",
+                                                    "example":"Kellyville"
+                                                },
+                                                "stateOrTerritory":{
+                                                    "type":"string",
+                                                    "description":"The recipient's abbreviated state or territory.",
+                                                    "example":"NSW"
+                                                },
+                                                "postalCode":{
+                                                    "type":"string",
+                                                    "description":"The recipient's postal code",
+                                                    "example":"2155"
+                                                },
+                                                "countryCode":{
+                                                    "type":"string",
+                                                    "description":"The recipient's Alpha-2 (2-character) ISO-3166-1 country code.",
+                                                    "example":"AU"
+                                                }
+                                            },
+                                            "description":"This object is only required if the payments request contains paypal instruments."
+                                        },
+                                        "payments":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "paymentInstrumentId",
+                                                    "paymentToken",
+                                                    "amount"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The payment instrument id from the card capture iframe response or the list payment instruments response. This property can be omitted if the payment token property is present.",
+                                                        "example":"90731"
+                                                    },
+                                                    "paymentToken":{
+                                                        "type":"string",
+                                                        "description":"The payment token from the card capture iframe response or the list payment instruments response. This property can be omitted if the payment instrument id property is present.",
+                                                        "example":"712029a1-c0aa-41bc-a810-3d42424c5834"
+                                                    },
+                                                    "amount":{
+                                                        "type":"number",
+                                                        "description":"The amount you want to pay with the payment instrument.",
+                                                        "example":20.5
+                                                    },
+                                                    "stepUpToken":{
+                                                        "type":"string",
+                                                        "description":"The step-up token is used to track additional credit card information (eg. CVV and expiry) attached to the payment instrument. It's only valid for a predefined time and if an expired step-up token is used during payment, the payment for that instrument will fail and the user will have to get a new step-up token before retrying the payment. A step-up token is returned in the response of a credit card iframe. This property is currently only required for credit card instruments and only if specific credit card information (eg. CVV and expiry) is required during payment.",
+                                                        "example":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                                                    },
+                                                    "passcode":{
+                                                        "type":"string",
+                                                        "description":"The passcode is used to send additional information (eg. gift card PIN) for the payment instrument. This property is currently only required for gift card instruments and only if the gift card PIN is required during payment. This property should NOT be used with credit card instruments (see stepUpToken).",
+                                                        "example":"1425"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "extendedMerchantData":{
+                                            "type":"array",
+                                            "description":"This object is only required if the payments request contains paypal instruments.",
+                                            "items":{
+                                                "required":[
+                                                    "field",
+                                                    "value"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "field":{
+                                                        "type":"string",
+                                                        "description":"The name of the extended merchant data field.",
+                                                        "enum":[
+                                                            "correlationId"
+                                                        ]
+                                                    },
+                                                    "value":{
+                                                        "type":"string",
+                                                        "description":"The value of the extended merchant data field.",
+                                                        "example":"23f585945be2f"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "storeData":{
+                                            "required":[
+                                                "rrn",
+                                                "storeId",
+                                                "transactionTimestamp"
+                                            ],
+                                            "type":"object",
+                                            "properties":{
+                                                "storeId":{
+                                                    "type":"string",
+                                                    "description":"The in-store payment transaction store id.",
+                                                    "example":"4952110"
+                                                },
+                                                "rrn":{
+                                                    "maxLength":12,
+                                                    "minLength":12,
+                                                    "type":"string",
+                                                    "description":"The in-store payment transaction store id. This is a 12 digit \"0\" [zero] padded numeric string.",
+                                                    "example":"000000006564"
+                                                },
+                                                "transactionTimestamp":{
+                                                    "type":"number",
+                                                    "description":"The in-store payment transaction timestamp. The timestamp format is milliseconds since epoch.",
+                                                    "example":1528264660639
+                                                }
+                                            },
+                                            "description":"This object is only required if the payments request is for an in-store (R10) payment transaction."
+                                        },
+                                        "fraudPayload":{
+                                            "required":[
+                                                "format",
+                                                "message",
+                                                "provider",
+                                                "responseFormat",
+                                                "version"
+                                            ],
+                                            "type":"object",
+                                            "properties":{
+                                                "provider":{
+                                                    "type":"string",
+                                                    "description":"The fraud check provider.",
+                                                    "example":"cybersource"
+                                                },
+                                                "version":{
+                                                    "type":"string",
+                                                    "description":"The fraud check version.",
+                                                    "example":"CyberSourceTransaction_1.101"
+                                                },
+                                                "format":{
+                                                    "type":"string",
+                                                    "description":"The fraud check message format.",
+                                                    "enum":[
+                                                        "ZIP_BASE_64_ENCODED",
+                                                        "XML"
+                                                    ]
+                                                },
+                                                "responseFormat":{
+                                                    "type":"string",
+                                                    "description":"The fraud check response message format.",
+                                                    "enum":[
+                                                        "ZIP_BASE_64_ENCODED",
+                                                        "XML"
+                                                    ]
+                                                },
+                                                "message":{
+                                                    "type":"string",
+                                                    "description":"The fraud check message.",
+                                                    "example":"GzbOxpLagX6iFEb7td61cZyA="
+                                                }
+                                            },
+                                            "description":"Set to null to skip the cybersource fraud check."
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "example":{
+                            "transactionType":{
+                                "creditCard":"PREAUTH",
+                                "giftCard":"PURCHASE",
+                                "payPal":"PURCHASE",
+                                "googlePay":{
+                                    "creditCard":"PREAUTH",
+                                    "debitCard":"PURCHASE"
+                                },
+                                "applePay":{
+                                    "creditCard":"PREAUTH",
+                                    "debitCard":"PURCHASE"
+                                }
+                            },
+                            "clientReference":"T5ESYRPWJKPHF54",
+                            "orderNumber":"20170505090",
+                            "shippingAddress":{
+                                "firstName":"Francois",
+                                "lastName":"van der Merwe",
+                                "email":"fvandermerwe@woolworths.com.au",
+                                "company":"Woolworths Limited",
+                                "extendedAddress":"Level 1",
+                                "streetAddress":"22 River Oak Circuit",
+                                "suburb":"Kellyville",
+                                "stateOrTerritory":"NSW",
+                                "postalCode":"2155",
+                                "countryCode":"AU"
+                            },
+                            "payments":[
+                                {
+                                    "paymentInstrumentId":"90731",
+                                    "amount":20.5,
+                                    "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                                },
+                                {
+                                    "paymentToken":"712029a1-c0aa-41bc-a810-3d42424c5834",
+                                    "amount":20.5,
+                                    "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                                },
+                                {
+                                    "paymentInstrumentId":"81054",
+                                    "amount":1,
+                                    "passcode":"1425"
+                                },
+                                {
+                                    "paymentInstrumentId":"90271",
+                                    "amount":15
+                                }
+                            ],
+                            "extendedMerchantData":[
+                                {
+                                    "field":"correlationId",
+                                    "value":"23f585945be2f"
+                                }
+                            ],
+                            "storeData":{
+                                "storeId":"4952110",
+                                "rrn":"000000006564",
+                                "transactionTimestamp":1528264660639
+                            },
+                            "fraudPayload":{
+                                "provider":"cybersource",
+                                "version":"CyberSourceTransaction_1.101",
+                                "format":"ZIP_BASE_64_ENCODED",
+                                "responseFormat":"ZIP_BASE_64_ENCODED",
+                                "message":"GzbOxpLagX6iFEb7td61cZyA="
+                            }
+                        }
+                    }
+                }
             }
         },
         "responses":{
@@ -6272,6 +6655,761 @@
                     }
                 }
             },
+            "immediatePaymentSuccessResponse":{
+                "description": "The JSON response structure of the Tokenize Instrument endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required":[
+                                        "androidPay",
+                                        "applePay",
+                                        "creditCards",
+                                        "fraudResponse",
+                                        "giftCards",
+                                        "googlePay",
+                                        "partialSuccess",
+                                        "payPal",
+                                        "transactionReceipt",
+                                        "unknown"
+                                    ],
+                                    "type":"object",
+                                    "properties":{
+                                        "transactionReceipt":{
+                                            "type":"string",
+                                            "description":"Container reference in the transaction logs. This number uniquely identifies the whole/grouped transaction in the container.",
+                                            "example":"1000000000670621"
+                                        },
+                                        "partialSuccess":{
+                                            "type":"boolean",
+                                            "description":"A flag to indicate if a split payment was only partially successful, ie. at least 1 of the payment instruments had a successful payment result.",
+                                            "example":true
+                                        },
+                                        "fraudResponse":{
+                                            "required":[
+                                                "clientId",
+                                                "decision",
+                                                "reasonCode"
+                                            ],
+                                            "type":"object",
+                                            "properties":{
+                                                "clientId":{
+                                                    "type":"string",
+                                                    "description":"The fraud check client id. Will be null if the fraud check was skipped.",
+                                                    "example":"5017321752216948403009"
+                                                },
+                                                "reasonCode":{
+                                                    "type":"string",
+                                                    "description":"The fraud check reason code. Will be null if the fraud check was skipped.",
+                                                    "example":"480"
+                                                },
+                                                "decision":{
+                                                    "type":"string",
+                                                    "description":"The fraud check decision. Will be null if the fraud check was skipped.",
+                                                    "example":"REVIEW"
+                                                }
+                                            }
+                                        },
+                                        "creditCards":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "errorCode",
+                                                    "errorDetail",
+                                                    "errorMessage",
+                                                    "paymentInstrumentId",
+                                                    "paymentToken",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The credit card payment instrument id.",
+                                                        "example":"90731"
+                                                    },
+                                                    "paymentToken":{
+                                                        "type":"string",
+                                                        "description":"The credit card payment token. The payment token is a unique identifier for the payment instrument.",
+                                                        "example":"712029a1-c0aa-41bc-a810-3d42424c5834"
+                                                    },
+                                                    "paymentTransactionRef":{
+                                                        "type":"string",
+                                                        "description":"Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                                                        "example":"1000000000670622"
+                                                    },
+                                                    "errorCode":{
+                                                        "type":"string",
+                                                        "description":"The error code. Only present if an error occurred during payment.",
+                                                        "example":"UN99"
+                                                    },
+                                                    "errorMessage":{
+                                                        "type":"string",
+                                                        "description":"The error message. Only present if an error occurred during payment.",
+                                                        "example":"UNEXPECTED SYSTEM FAILURE"
+                                                    },
+                                                    "errorDetail":{
+                                                        "type":"string",
+                                                        "description":"The error detail. Only present if an error occurred during payment.",
+                                                        "example":"We are currently experiencing technical issues with our service."
+                                                    },
+                                                    "stepUp":{
+                                                        "required":[
+                                                            "mandatory",
+                                                            "type",
+                                                            "url"
+                                                        ],
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "type":{
+                                                                "type":"string",
+                                                                "description":"The type of the step up action. For credit cards this will be CAPTURE_CVV which identifies that the consumer must capture the CVV prior to payment.",
+                                                                "example":"CAPTURE_CVV"
+                                                            },
+                                                            "mandatory":{
+                                                                "type":"boolean",
+                                                                "description":"A flag to indicate if this step up (action) is mandatory.",
+                                                                "example":true
+                                                            },
+                                                            "url":{
+                                                                "type":"string",
+                                                                "description":"The URL of an iframe. This iframe is used to capture a credit card expiry and CVV or CVV only. The URL will automatically switch between expiry and CVV or CVV only endpoints based on the container requirement.",
+                                                                "example":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/cvv/2f890821-e2c1-4dbb-aabf-dcaed3885923/90731"
+                                                            }
+                                                        },
+                                                        "description":"Only present if an error occurred during payment."
+                                                    },
+                                                    "receiptData":{
+                                                        "required":[
+                                                            "cardSuffix",
+                                                            "expiryMonth",
+                                                            "expiryYear",
+                                                            "scheme"
+                                                        ],
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "cardSuffix":{
+                                                                "type":"string",
+                                                                "description":"The suffix (last 4 digits) of the credit card number used in the WebPay transaction.",
+                                                                "example":"6106"
+                                                            },
+                                                            "scheme":{
+                                                                "type":"string",
+                                                                "description":"The credit card scheme.",
+                                                                "example":"MASTERCARD"
+                                                            },
+                                                            "expiryMonth":{
+                                                                "type":"string",
+                                                                "description":"The month of the expiry date of the credit card.",
+                                                                "example":"05"
+                                                            },
+                                                            "expiryYear":{
+                                                                "type":"string",
+                                                                "description":"The year of the expiry date of the credit card.",
+                                                                "example":"21"
+                                                            }
+                                                        },
+                                                        "description":"This object is only included in the response if it is enabled in the consumers API configuration."
+                                                    },
+                                                    "extendedTransactionData":{
+                                                        "type":"array",
+                                                        "description":"This array is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "items":{
+                                                            "required":[
+                                                                "field",
+                                                                "value"
+                                                            ],
+                                                            "type":"object",
+                                                            "properties":{
+                                                                "field":{
+                                                                    "type":"string",
+                                                                    "description":"The name of the extended transaction data field. The 'token' field is only included in the response if it is enabled in the consumers API configuration.",
+                                                                    "enum":[
+                                                                        "bin",
+                                                                        "stan",
+                                                                        "rrn",
+                                                                        "token",
+                                                                        "mid",
+                                                                        "terminalId"
+                                                                    ]
+                                                                },
+                                                                "value":{
+                                                                    "type":"string",
+                                                                    "description":"The value of the extended transaction data field.",
+                                                                    "example":"401200"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "externalServiceCode":{
+                                                        "type":"string",
+                                                        "description":"The external service code (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example":"00"
+                                                    },
+                                                    "externalServiceMessage":{
+                                                        "type":"string",
+                                                        "description":"The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example":"APPROVED"
+                                                    },
+                                                    "handlingInstructions":{
+                                                        "required":[
+                                                            "instructionCode",
+                                                            "instructionMessage"
+                                                        ],
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "instructionCode":{
+                                                                "type":"string",
+                                                                "description":"The handling instruction code.",
+                                                                "enum":[
+                                                                    "100",
+                                                                    "110",
+                                                                    "120"
+                                                                ]
+                                                            },
+                                                            "instructionMessage":{
+                                                                "type":"string",
+                                                                "description":"The handling instruction message.",
+                                                                "example":"Immediate Completion"
+                                                            }
+                                                        },
+                                                        "description":"Special handling instructions that have to be executed after a payment. Only present if no error occurred during payment."
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "giftCards":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "errorCode",
+                                                    "errorDetail",
+                                                    "errorMessage",
+                                                    "paymentInstrumentId",
+                                                    "paymentToken",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The gift card payment instrument id.",
+                                                        "example":"81054"
+                                                    },
+                                                    "paymentToken":{
+                                                        "type":"string",
+                                                        "description":"The gift card payment token. The payment token is a unique identifier for the payment instrument.",
+                                                        "example":"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c"
+                                                    },
+                                                    "paymentTransactionRef":{
+                                                        "type":"string",
+                                                        "description":"Container reference in the transaction logs. This number uniquely identifies the gift card transaction in the container.",
+                                                        "example":"1000000000670623"
+                                                    },
+                                                    "errorCode":{
+                                                        "type":"string",
+                                                        "description":"The error code. Only present if an error occurred during payment.",
+                                                        "example":"UN99"
+                                                    },
+                                                    "errorMessage":{
+                                                        "type":"string",
+                                                        "description":"The error message. Only present if an error occurred during payment.",
+                                                        "example":"UNEXPECTED SYSTEM FAILURE"
+                                                    },
+                                                    "errorDetail":{
+                                                        "type":"string",
+                                                        "description":"The error detail. Only present if an error occurred during payment.",
+                                                        "example":"We are currently experiencing technical issues with our service."
+                                                    },
+                                                    "stepUp":{
+                                                        "required":[
+                                                            "mandatory",
+                                                            "type",
+                                                            "url"
+                                                        ],
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "type":{
+                                                                "type":"string",
+                                                                "description":"The type of the step up action. For gift cards this will be REQUIRE_PASSCODE which identifies that the consumer must capture the PIN prior to payment.",
+                                                                "example":"REQUIRE_PASSCODE"
+                                                            },
+                                                            "mandatory":{
+                                                                "type":"boolean",
+                                                                "description":"A flag to indicate if this step up (action) is mandatory.",
+                                                                "example":true
+                                                            },
+                                                            "url":{
+                                                                "type":"string",
+                                                                "description":"TBD",
+                                                                "example":"https://uat.woolworthspay.com.au/container-ws/tbd"
+                                                            }
+                                                        }
+                                                    },
+                                                    "receiptData":{
+                                                        "required":[
+                                                            "cardSuffix"
+                                                        ],
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "cardSuffix":{
+                                                                "type":"string",
+                                                                "description":"The suffix (last 4 digits) of the gift card number used in the WEX transaction.",
+                                                                "example":"2517"
+                                                            }
+                                                        },
+                                                        "description":"This object is only included in the response if it is enabled in the consumers API configuration."
+                                                    },
+                                                    "externalServiceCode":{
+                                                        "type":"string",
+                                                        "description":"The external service code (from eg. WEX). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example":"00"
+                                                    },
+                                                    "externalServiceMessage":{
+                                                        "type":"string",
+                                                        "description":"The external service message (from eg. WEX). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example":"APPROVED"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "payPal":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "errorCode",
+                                                    "errorDetail",
+                                                    "errorMessage",
+                                                    "paymentInstrumentId",
+                                                    "paymentToken",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The paypal payment instrument id.",
+                                                        "example":"90271"
+                                                    },
+                                                    "paymentToken":{
+                                                        "type":"string",
+                                                        "description":"The paypal payment token. The payment token is a unique identifier for the payment instrument.",
+                                                        "example":"15f774d0-e42e-11e9-a359-2a2ae2dbcce4"
+                                                    },
+                                                    "paymentTransactionRef":{
+                                                        "type":"string",
+                                                        "description":"Container reference in the transaction logs. This number uniquely identifies the paypal transaction in the container.",
+                                                        "example":"1000000000670624"
+                                                    },
+                                                    "errorCode":{
+                                                        "type":"string",
+                                                        "description":"The error code. Only present if an error occurred during payment.",
+                                                        "example":"UN99"
+                                                    },
+                                                    "errorMessage":{
+                                                        "type":"string",
+                                                        "description":"The error message. Only present if an error occurred during payment.",
+                                                        "example":"UNEXPECTED SYSTEM FAILURE"
+                                                    },
+                                                    "errorDetail":{
+                                                        "type":"string",
+                                                        "description":"The error detail. Only present if an error occurred during payment.",
+                                                        "example":"We are currently experiencing technical issues with our service."
+                                                    },
+                                                    "receiptData":{
+                                                        "required":[
+                                                            "customerId",
+                                                            "payPalId"
+                                                        ],
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "payPalId":{
+                                                                "type":"string",
+                                                                "description":"The Paypal email id.",
+                                                                "example":"jane.doe@paypal.com"
+                                                            },
+                                                            "customerId":{
+                                                                "type":"string",
+                                                                "description":"The Paypal customer id.",
+                                                                "example":"690238314"
+                                                            }
+                                                        },
+                                                        "description":"This object is only included in the response if it is enabled in the consumers API configuration."
+                                                    },
+                                                    "externalServiceCode":{
+                                                        "type":"string",
+                                                        "description":"The external service code (from eg. PayPal). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example":"00"
+                                                    },
+                                                    "externalServiceMessage":{
+                                                        "type":"string",
+                                                        "description":"The external service message (from eg. PayPal). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example":"APPROVED"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "androidPay":{
+                                            "type":"array",
+                                            "description":"Android Pay has been replaced by Google Pay. This property has been retained for backward compatibility and will always be an empty array.",
+                                            "items":{
+                                                "type":"object",
+                                                "properties":{
+
+                                                },
+                                                "example":"[]"
+                                            }
+                                        },
+                                        "googlePay":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "errorCode",
+                                                    "errorDetail",
+                                                    "errorMessage",
+                                                    "paymentInstrumentId",
+                                                    "paymentToken",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The google pay payment instrument id.",
+                                                        "example":"90953"
+                                                    },
+                                                    "paymentToken":{
+                                                        "type":"string",
+                                                        "description":"The google pay payment token. The payment token is a unique identifier for the payment instrument.",
+                                                        "example":"76a4c2f1-7620-4bc4-8f4f-01c1467ea318"
+                                                    },
+                                                    "paymentTransactionRef":{
+                                                        "type":"string",
+                                                        "description":"Container reference in the transaction logs. This number uniquely identifies the google pay transaction in the container.",
+                                                        "example":"1000000000670625"
+                                                    },
+                                                    "errorCode":{
+                                                        "type":"string",
+                                                        "description":"The error code. Only present if an error occurred during payment.",
+                                                        "example":"UN99"
+                                                    },
+                                                    "errorMessage":{
+                                                        "type":"string",
+                                                        "description":"The error message. Only present if an error occurred during payment.",
+                                                        "example":"UNEXPECTED SYSTEM FAILURE"
+                                                    },
+                                                    "errorDetail":{
+                                                        "type":"string",
+                                                        "description":"The error detail. Only present if an error occurred during payment.",
+                                                        "example":"We are currently experiencing technical issues with our service."
+                                                    },
+                                                    "stepUp":{
+                                                        "required":[
+                                                            "mandatory",
+                                                            "type",
+                                                            "url"
+                                                        ],
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "type":{
+                                                                "type":"string",
+                                                                "description":"The type of the step up action. For google pay this will be REFRESH_TOKEN.",
+                                                                "example":"REFRESH_TOKEN"
+                                                            },
+                                                            "mandatory":{
+                                                                "type":"boolean",
+                                                                "description":"A flag to indicate if this step up (action) is mandatory.",
+                                                                "example":true
+                                                            },
+                                                            "url":{
+                                                                "type":"string",
+                                                                "description":"The URL of the endpoint to use to update the google pay token.",
+                                                                "example":"https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/googlepay/tokenize/90953"
+                                                            }
+                                                        }
+                                                    },
+                                                    "extendedTransactionData":{
+                                                        "type":"array",
+                                                        "description":"This array is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "items":{
+                                                            "required":[
+                                                                "field",
+                                                                "value"
+                                                            ],
+                                                            "type":"object",
+                                                            "properties":{
+                                                                "field":{
+                                                                    "type":"string",
+                                                                    "description":"The name of the extended transaction data field.",
+                                                                    "enum":[
+                                                                        "bin"
+                                                                    ]
+                                                                },
+                                                                "value":{
+                                                                    "type":"string",
+                                                                    "description":"The value of the extended transaction data field.",
+                                                                    "example":"376445"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "externalServiceCode":{
+                                                        "type":"string",
+                                                        "description":"The external service code (from eg. Google Pay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example":"100"
+                                                    },
+                                                    "externalServiceMessage":{
+                                                        "type":"string",
+                                                        "description":"The external service message (from eg. Google Pay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example":"ACCEPT"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "applePay":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "errorCode",
+                                                    "errorDetail",
+                                                    "errorMessage",
+                                                    "paymentInstrumentId",
+                                                    "paymentToken",
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The apple pay payment instrument id.",
+                                                        "example":"90375"
+                                                    },
+                                                    "paymentToken":{
+                                                        "type":"string",
+                                                        "description":"The apple pay payment token. The payment token is a unique identifier for the payment instrument.",
+                                                        "example":"64dee650-e42e-11e9-81b4-2a2ae2dbcce4"
+                                                    },
+                                                    "paymentTransactionRef":{
+                                                        "type":"string",
+                                                        "description":"Container reference in the transaction logs. This number uniquely identifies the apple pay transaction in the container.",
+                                                        "example":"1000000000670626"
+                                                    },
+                                                    "errorCode":{
+                                                        "type":"string",
+                                                        "description":"The error code. Only present if an error occurred during payment.",
+                                                        "example":"UN99"
+                                                    },
+                                                    "errorMessage":{
+                                                        "type":"string",
+                                                        "description":"The error message. Only present if an error occurred during payment.",
+                                                        "example":"UNEXPECTED SYSTEM FAILURE"
+                                                    },
+                                                    "errorDetail":{
+                                                        "type":"string",
+                                                        "description":"The error detail. Only present if an error occurred during payment.",
+                                                        "example":"We are currently experiencing technical issues with our service."
+                                                    },
+                                                    "stepUp":{
+                                                        "required":[
+                                                            "mandatory",
+                                                            "type",
+                                                            "url"
+                                                        ],
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "type":{
+                                                                "type":"string",
+                                                                "description":"The type of the step up action. For apple pay this will be REFRESH_TOKEN.",
+                                                                "example":"REFRESH_TOKEN"
+                                                            },
+                                                            "mandatory":{
+                                                                "type":"boolean",
+                                                                "description":"A flag to indicate if this step up (action) is mandatory.",
+                                                                "example":true
+                                                            },
+                                                            "url":{
+                                                                "type":"string",
+                                                                "description":"The URL of the endpoint to use to update the apple pay token.",
+                                                                "example":"https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/applepay/tokenize/90375"
+                                                            }
+                                                        }
+                                                    },
+                                                    "externalServiceCode":{
+                                                        "type":"string",
+                                                        "description":"The external service code (from eg. Apple Pay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example":"00"
+                                                    },
+                                                    "externalServiceMessage":{
+                                                        "type":"string",
+                                                        "description":"The external service message (from eg. Apple Pay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                                        "example":"APPROVED"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "unknown":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "errorCode",
+                                                    "errorDetail",
+                                                    "errorMessage",
+                                                    "paymentInstrumentId",
+                                                    "paymentToken"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The unknown payment instrument id.",
+                                                        "example":"90945"
+                                                    },
+                                                    "paymentToken":{
+                                                        "type":"string",
+                                                        "description":"The payment token. The payment token is a unique identifier for the payment instrument. Will be null if the payment instrument is not valid.",
+                                                        "example":null
+                                                    },
+                                                    "errorCode":{
+                                                        "type":"string",
+                                                        "description":"The error code. Only present if an error occurred during payment.",
+                                                        "example":"UN99"
+                                                    },
+                                                    "errorMessage":{
+                                                        "type":"string",
+                                                        "description":"The error message. Only present if an error occurred during payment.",
+                                                        "example":"UNEXPECTED SYSTEM FAILURE"
+                                                    },
+                                                    "errorDetail":{
+                                                        "type":"string",
+                                                        "description":"The error detail. Only present if an error occurred during payment.",
+                                                        "example":"We are currently experiencing technical issues with our service."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "description":"The JSON success response structure of the Payments endpoint."
+                                },
+                                "meta":{}
+                            }
+                        },
+                        "example":{
+                            "data":{    
+                                "transactionReceipt": "1000000000670621",
+                                "partialSuccess": false,
+                                "fraudResponse": {
+                                    "clientId": "5017321752216948403009",
+                                    "reasonCode": "480",
+                                    "decision": "REVIEW"    
+                                },    
+                                "creditCards": [
+                                    {
+                                        "paymentInstrumentId": "90731",
+                                        "paymentToken": "712029a1-c0aa-41bc-a810-3d42424c5834",
+                                        "paymentTransactionRef": "1000000000670622",
+                                        "receiptData": {
+                                            "cardSuffix": "6106",
+                                            "scheme": "MASTERCARD",
+                                            "expiryMonth": "05",
+                                            "expiryYear": "21"
+                                        },
+                                        "extendedTransactionData": [
+                                            {
+                                                "field": "bin",
+                                                "value": "401200"
+                                            },
+                                            {
+                                                "field": "stan",
+                                                "value": "001675"
+                                            },
+                                            {
+                                                "field": "rrn",
+                                                "value": "000000000076"
+                                            },
+                                            {
+                                                "field": "token",
+                                                "value": "40120080000200000928"
+                                            },
+                                            {
+                                                "field": "mid",
+                                                "value": "611000602006135"
+                                            },
+                                            {
+                                                "field": "terminalId",
+                                                "value": "W6135100"
+                                            }
+                                        ],
+                                        "externalServiceCode": "00",
+                                        "externalServiceMessage": "APPROVED",
+                                        "handlingInstructions": {
+                                            "instructionCode": "110",
+                                            "instructionMessage": "Immediate Completion"
+                                        }
+                                    }    
+                                ],    
+                                "giftCards": [
+                                    {
+                                        "paymentInstrumentId": "81054",
+                                        "paymentToken": "ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
+                                        "paymentTransactionRef": "1000000000670623",
+                                        "receiptData": {
+                                            "cardSuffix": "2517"
+                                        },
+                                        "externalServiceCode": "00",
+                                        "externalServiceMessage": "APPROVED"
+                                    }
+                                ],    
+                                "payPal": [
+                                    {
+                                        "paymentInstrumentId": "90271",
+                                        "paymentToken": "15f774d0-e42e-11e9-a359-2a2ae2dbcce4",
+                                        "paymentTransactionRef": "1000000000670624",
+                                        "receiptData":{
+                                            "payPalId": "jane.doe@paypal.com",
+                                            "customerId": "690238314"
+                                        },
+                                        "externalServiceCode": "00",
+                                        "externalServiceMessage": "APPROVED"
+                                    }
+                                ],
+                                "androidPay": [],
+                                "googlePay": [
+                                    {
+                                        "paymentInstrumentId": "90953",
+                                        "paymentToken": "76a4c2f1-7620-4bc4-8f4f-01c1467ea318",
+                                        "paymentTransactionRef": "1000000000670625",
+                                        "extendedTransactionData": [    
+                                            {        
+                                                "field": "bin",        
+                                                "value": "376445"    
+                                            }
+                                        ],
+                                        "externalServiceCode": "100",
+                                        "externalServiceMessage": "ACCEPT"
+                                    }    
+                                ],    
+                                "applePay": [        
+                                    {
+                                        "paymentInstrumentId": "90375",
+                                        "paymentToken": "64dee650-e42e-11e9-81b4-2a2ae2dbcce4",
+                                        "paymentTransactionRef": "1000000000670626",
+                                        "externalServiceCode": "00",
+                                        "externalServiceMessage": "APPROVED"
+                                    }    
+                                ],    
+                                "unknown": []
+                            },
+                            "meta": {}
+                        }
+                    }
+                }
+            },
 
             "errorResponse": {
                 "description": "Generic error response.",
@@ -8530,6 +9668,69 @@
                 "responses":{
                     "200":{
                         "$ref":"#/components/responses/getCustomerTransactionDetailsResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
+                    }
+                }
+            }
+        },
+        "/customer/payments":{
+            "post":{
+                "summary":"Immediate Customer Payments",
+                "operationId": "makeImmediateCustomerPayments",
+                "security": [
+                    { "ApiKeyAuth": [], "bearerAuth": [] }
+                ],
+                "description":"Make payments to a merchant using payment intruments. This endpoint establishes a payment request and then makes a payment against it.",
+                "tags": [
+                    "Customer",
+                    "XXXXTO_DIGIPAY"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/contentTypeParam" },
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody": {
+                    "$ref":"#/components/requestBodies/immediatePaymentRequest"
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/immediatePaymentSuccessResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/errorResponse"
                     },
                     "401":{
                         "description":"Invalid API Key or Invalid Token or Expired Token.",
