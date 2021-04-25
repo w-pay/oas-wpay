@@ -169,6 +169,18 @@
                     }
                 }
             },
+            "preferencesMerchant":{
+                "description":"Available preference settings for a merchant",
+                "type":"object",
+                "properties":{
+                    "allowedPaymentMethods":{
+                        "$ref":"#/components/schemas/allowedPaymentMethods"
+                    },
+                    "general":{
+                        "$ref":"#/components/schemas/preferenceGroup"
+                    }
+                }
+            },
             "preferencePayments":{
                 "description":"Payment preferences for a customer",
                 "type":"object",
@@ -233,6 +245,287 @@
                     "additionalProperties":{
                         "description":"A single preference setting",
                         "type":"string"
+                    }
+                }
+            },
+            "allowedPaymentMethods":{
+                "required":[
+                    "applePay"
+                ],
+                "type":"object",
+                "properties":{
+                    "giftCard":{
+                        "required":[
+                            "allowedBins",
+                            "pinAlwaysRequired",
+                            "serviceStatus"
+                        ],
+                        "type":"object",
+                        "properties":{
+                            "allowedBins":{
+                                "type":"array",
+                                "description":"The gift card bin numbers that are allowed for the relevant merchant. This does not indicate sub-bins, ie. exact gift card programs.",
+                                "items":{
+                                    "type":"string",
+                                    "example":"628000"
+                                }
+                            },
+                            "serviceStatus":{
+                                "type":"string",
+                                "description":"This property indicates the status of the gift card service in the container.",
+                                "enum":[
+                                    "ENABLED",
+                                    "DISABLED"
+                                ]
+                            },
+                            "pinAlwaysRequired":{
+                                "type":"boolean",
+                                "description":"Flag to indicate if the pin is always required for gift card transactions.",
+                                "example":false
+                            }
+                        },
+                        "description":"The presence of this object in the response indicates that a gift card is an allowed payment method and instrument in the container for the relevant merchant."
+                    },
+                    "creditCard":{
+                        "required":[
+                            "allowedNetworks",
+                            "allowedTransactionTypes",
+                            "serviceStatus"
+                        ],
+                        "type":"object",
+                        "properties":{
+                            "allowedNetworks":{
+                                "type":"array",
+                                "description":"The allowed networks (schemes) for credit card transactions.",
+                                "items":{
+                                    "type":"string",
+                                    "example":"MASTERCARD"
+                                }
+                            },
+                            "allowedTransactionTypes":{
+                                "type":"array",
+                                "description":"The allowed transaction types for credit card transactions.",
+                                "items":{
+                                    "type":"string",
+                                    "enum":[
+                                        "PREAUTH",
+                                        "PURCHASE"
+                                    ]
+                                }
+                            },
+                            "serviceStatus":{
+                                "type":"string",
+                                "description":"This property indicates the status of the credit card service in the container.",
+                                "enum":[
+                                    "ENABLED",
+                                    "DISABLED"
+                                ]
+                            }
+                        },
+                        "description":"The presence of this object in the response indicates that a credit card is an allowed payment method and instrument in the container for the relevant merchant."
+                    },
+                    "payPal":{
+                        "required":[
+                            "clientToken",
+                            "serviceStatus"
+                        ],
+                        "type":"object",
+                        "properties":{
+                            "clientToken":{
+                                "type":"string",
+                                "description":"The paypal client token used for configuration and authorization of paypal transactions.",
+                                "example":"eyJ2ZXJzaW9usIn1vIjoib2ZmIn0="
+                            },
+                            "serviceStatus":{
+                                "type":"string",
+                                "description":"This property indicates the status of the paypal service in the container.",
+                                "enum":[
+                                    "ENABLED",
+                                    "DISABLED"
+                                ]
+                            }
+                        },
+                        "description":"The presence of this object in the response indicates that paypal is an allowed payment method and instrument in the container for the relevant merchant."
+                    },
+                    "googlePay":{
+                        "required":[
+                            "creditCard",
+                            "debitCard",
+                            "merchantId",
+                            "merchantName",
+                            "publicKey",
+                            "publicKeyExpiry",
+                            "publicKeyHash",
+                            "serviceStatus"
+                        ],
+                        "type":"object",
+                        "properties":{
+                            "publicKey":{
+                                "type":"string",
+                                "description":"The public key required by the Google Pay wallet.",
+                                "example":"5HjfYVMvcLN3CakMj3yVzVlYAQ=="
+                            },
+                            "publicKeyHash":{
+                                "type":"string",
+                                "description":"The public key hash required by the Google Pay wallet.",
+                                "example":"7S7yCA0TpuZ6hoYrdMzZhMQ="
+                            },
+                            "publicKeyExpiry":{
+                                "type":"number",
+                                "description":"The expiry timestamp of the public key hash. The timestamp format is milliseconds since epoch.",
+                                "example":1600491347369
+                            },
+                            "merchantId":{
+                                "type":"string",
+                                "description":"The merchant id required by the Google Pay wallet.",
+                                "example":"11111"
+                            },
+                            "merchantName":{
+                                "type":"string",
+                                "description":"The merchant name required by the Google Pay wallet.",
+                                "example":"DUMMY"
+                            },
+                            "creditCard":{
+                                "required":[
+                                    "allowedNetworks",
+                                    "allowedTransactionTypes"
+                                ],
+                                "type":"object",
+                                "properties":{
+                                    "allowedNetworks":{
+                                        "type":"array",
+                                        "description":"The allowed networks (schemes) for credit card transactions.",
+                                        "items":{
+                                            "type":"string",
+                                            "example":"MASTERCARD"
+                                        }
+                                    },
+                                    "allowedTransactionTypes":{
+                                        "type":"array",
+                                        "description":"The allowed transaction types for credit card transactions.",
+                                        "items":{
+                                            "type":"string",
+                                            "enum":[
+                                                "PREAUTH",
+                                                "PURCHASE"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            "debitCard":{
+                                "required":[
+                                    "allowedNetworks",
+                                    "allowedTransactionTypes"
+                                ],
+                                "type":"object",
+                                "properties":{
+                                    "allowedNetworks":{
+                                        "type":"array",
+                                        "description":"The allowed networks (schemes) for debit card transactions.",
+                                        "items":{
+                                            "type":"string",
+                                            "example":"VISA"
+                                        }
+                                    },
+                                    "allowedTransactionTypes":{
+                                        "type":"array",
+                                        "description":"The allowed transaction types for debit card transactions.",
+                                        "items":{
+                                            "type":"string",
+                                            "enum":[
+                                                "PREAUTH",
+                                                "PURCHASE"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            "serviceStatus":{
+                                "type":"string",
+                                "description":"This property indicates the status of the google pay service in the container.",
+                                "enum":[
+                                    "ENABLED",
+                                    "DISABLED"
+                                ]
+                            }
+                        },
+                        "description":"The presence of this object in the response indicates that google pay is an allowed payment method and instrument in the container for the relevant merchant."
+                    },
+                    "applePay":{
+                        "required":[
+                            "creditCard",
+                            "debitCard",
+                            "serviceStatus"
+                        ],
+                        "type":"object",
+                        "properties":{
+                            "creditCard":{
+                                "required":[
+                                    "allowedNetworks",
+                                    "allowedTransactionTypes"
+                                ],
+                                "type":"object",
+                                "properties":{
+                                    "allowedNetworks":{
+                                        "type":"array",
+                                        "description":"The allowed networks (schemes) for credit card transactions.",
+                                        "items":{
+                                            "type":"string",
+                                            "example":"MASTERCARD"
+                                        }
+                                    },
+                                    "allowedTransactionTypes":{
+                                        "type":"array",
+                                        "description":"The allowed transaction types for credit card transactions.",
+                                        "items":{
+                                            "type":"string",
+                                            "enum":[
+                                                "PREAUTH",
+                                                "PURCHASE"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            "debitCard":{
+                                "required":[
+                                    "allowedNetworks",
+                                    "allowedTransactionTypes"
+                                ],
+                                "type":"object",
+                                "properties":{
+                                    "allowedNetworks":{
+                                        "type":"array",
+                                        "description":"The allowed networks (schemes) for debit card transactions.",
+                                        "items":{
+                                            "type":"string",
+                                            "example":"VISA"
+                                        }
+                                    },
+                                    "allowedTransactionTypes":{
+                                        "type":"array",
+                                        "description":"The allowed transaction types for debit card transactions.",
+                                        "items":{
+                                            "type":"string",
+                                            "enum":[
+                                                "PREAUTH",
+                                                "PURCHASE"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            "serviceStatus":{
+                                "type":"string",
+                                "description":"This property indicates the status of the apple pay service in the container.",
+                                "enum":[
+                                    "ENABLED",
+                                    "DISABLED"
+                                ]
+                            }
+                        },
+                        "description":"The presence of this object in the response indicates that apple pay is an allowed payment method and instrument in the container for the relevant merchant."
                     }
                 }
             },
@@ -3509,6 +3802,70 @@
                         }
                     }
                 }
+            },
+            "setMerchantPreferencesRequest":{
+                "description":"Request payload containing the details of the preferences to update.  Preferences not included will be left unchanged.  An empty value implies removal of the preference",
+                "required":true,
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "title":"merchantPreferences",
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "$ref":"#/components/schemas/preferenceGroup"
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "framesRequest":{
+                "description":"The JSON request structure of the Frames endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema":{
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "required":[
+                                        "clientReference"
+                                    ],
+                                    "type":"object",
+                                    "properties":{
+                                        "clientReference":{
+                                            "type":"string",
+                                            "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                                            "example":"JRIQ6EOK2NEQ6BY"
+                                        }
+                                    },
+                                    "description":"The JSON request structure of the Initiate Card Capture endpoint.",
+                                    "example":{
+                                        "clientReference":"JRIQ6EOK2NEQ6BY"
+                                    }
+                                },
+                                "meta":{}
+                            }
+                        },
+                        "example":{
+                            "data":{
+                                "clientReference":"JRIQ6EOK2NEQ6BY"
+                            },
+                            "meta":{}
+                        }
+                    }
+                }
             }
         },
         "responses":{
@@ -4463,7 +4820,7 @@
                             ],
                             "properties":{
                                 "data":{
-                                    "$ref":"#/components/schemas/preferenceGroup"
+                                    "$ref":"#/components/schemas/preferencesMerchant"
                                 },
                                 "meta":{
                                     "$ref":"#/components/schemas/meta"
@@ -4474,6 +4831,84 @@
                             "MerchantPreferences":{
                                 "value":{
                                     "data":{
+                                        "allowedPaymentMethods":{
+                                            "giftCard":{
+                                                "allowedBins":[
+                                                    "628000"
+                                                ],
+                                                "serviceStatus":"ENABLED",
+                                                "pinAlwaysRequired":false
+                                            },
+                                            "creditCard":{
+                                                "allowedNetworks":[
+                                                    "AMEX",
+                                                    "MASTERCARD",
+                                                    "JCB",
+                                                    "VISA",
+                                                    "DINERS"
+                                                ],
+                                                "allowedTransactionTypes":[
+                                                    "PREAUTH",
+                                                    "PURCHASE"
+                                                ],
+                                                "serviceStatus":"ENABLED"
+                                            },
+                                            "payPal":{
+                                                "clientToken":"eyJ2ZXJzaW9uIjoyLCJhdXRob3Jpem=",
+                                                "serviceStatus":"ENABLED"
+                                            },
+                                            "googlePay":{
+                                                "publicKey":"5HjfYVMvcLN3CakMj3yVzVlYAQ==",
+                                                "publicKeyHash":"7S7yCA0TpuZ6hoYrdMzZhMQ=",
+                                                "publicKeyExpiry":1600491347369,
+                                                "merchantId":"11111",
+                                                "merchantName":"DUMMY",
+                                                "creditCard":{
+                                                    "allowedNetworks":[
+                                                        "AMEX",
+                                                        "MASTERCARD",
+                                                        "VISA"
+                                                    ],
+                                                    "allowedTransactionTypes":[
+                                                        "PURCHASE",
+                                                        "PREAUTH"
+                                                    ]
+                                                },
+                                                "debitCard":{
+                                                    "allowedNetworks":[
+                    
+                                                    ],
+                                                    "allowedTransactionTypes":[
+                                                        "PURCHASE",
+                                                        "PREAUTH"
+                                                    ]
+                                                },
+                                                "serviceStatus":"ENABLED"
+                                            },
+                                            "applePay":{
+                                                "creditCard":{
+                                                    "allowedNetworks":[
+                                                        "AMEX",
+                                                        "MASTERCARD",
+                                                        "VISA"
+                                                    ],
+                                                    "allowedTransactionTypes":[
+                                                        "PREAUTH",
+                                                        "PURCHASE"
+                                                    ]
+                                                },
+                                                "debitCard":{
+                                                    "allowedNetworks":[
+                    
+                                                    ],
+                                                    "allowedTransactionTypes":[
+                                                        "PREAUTH",
+                                                        "PURCHASE"
+                                                    ]
+                                                },
+                                                "serviceStatus":"ENABLED"
+                                            }
+                                        },
                                         "qrTemplates":{
                                             "PAYMENT_REQUEST":"${QR_HTTP_SCHEME}://${QR_HOST_NAME}:${QR_HOST_PORT}/wow/v1/pay/dev4/instore/customer/qr/${QR_ID}",
                                             "PAYMENT_SESSION":"${SESSION_HTTP_SCHEME}://${SESSION_HOST_NAME}/phone/session/${QR_ID}"
@@ -7404,6 +7839,55 @@
                                     }    
                                 ],    
                                 "unknown": []
+                            },
+                            "meta": {}
+                        }
+                    }
+                }
+            },
+            "framesResponse": {
+                "description": "The JSON success response structure of the Frames endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required":[
+                                        "cardCaptureURL"
+                                    ],
+                                    "type":"object",
+                                    "properties":{
+                                        "cardCaptureURL":{
+                                            "type":"string",
+                                            "description":"The URL of an iframe. This iframe is used to capture a credit card number, expiry and CVV.",
+                                            "example":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/7038dda0-5928-4656-b051-b6c2ba20a8b7"
+                                        },
+                                        "transactionRef":{
+                                            "type":"string",
+                                            "description":"Container reference in the transaction logs. This number uniquely identifies the transaction in the container.",
+                                            "example":"1000000000661300"
+                                        }
+                                    },
+                                    "description":"The JSON response structure of the Initiate Card Capture endpoint.",
+                                    "example":{
+                                        "cardCaptureURL":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/7038dda0-5928-4656-b051-b6c2ba20a8b7",
+                                        "transactionRef":"1000000000661300"
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "data":{
+                                "cardCaptureURL":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/7038dda0-5928-4656-b051-b6c2ba20a8b7",
+                                "transactionRef":"1000000000661300"
                             },
                             "meta": {}
                         }
@@ -10970,6 +11454,215 @@
                         "$ref":"#/components/responses/errorResponse"
                     }
                 }
+            }
+        },
+
+        "/merchant/transactions":{
+            "get":{
+                "summary":"Get Transaction List",
+                "operationId":"getMerchantTransactions",
+                "description":"Get a list of the previously executed transactions with the merchant.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in":"query",
+                        "name":"start-time",
+                        "description":"If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned",
+                        "required":false,
+                        "schema":{
+                            "type":"string",
+                            "format":"date-time",
+                            "example":"2017-11-06T19:38:09.890+11:00"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"end-time",
+                        "description":"If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned",
+                        "required":false,
+                        "schema":{
+                            "type":"string",
+                            "format":"date-time",
+                            "example":"2017-11-06T19:38:09.890+11:00"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"page-size",
+                        "description":"The number of records to return for this page.  Defaults to 25 if absent",
+                        "required":false,
+                        "schema":{
+                            "type":"integer",
+                            "default":25,
+                            "minimum":1,
+                            "maximum":500
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"page",
+                        "description":"The page of results to return with 1 indicating the first page.  Defaults to 1 if absent",
+                        "required":false,
+                        "schema":{
+                            "type":"integer",
+                            "default":1,
+                            "minimum":1
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getMerchantTransactionsResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/transactions/{transactionId}":{
+            "get":{
+                "summary":"Get Transaction Details",
+                "operationId":"getMerchantTransactionDetails",
+                "description":"Get the details for a specific transaction previously executed with the merchant.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in":"path",
+                        "name":"transactionId",
+                        "description":"The ID of the specific transaction",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getMerchantTransactionDetailsResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/preferences":{
+            "get":{
+                "summary":"Get Preferences",
+                "operationId":"getMerchantPreferences",
+                "description":"Get the preferences previously set by the merchant",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getMerchantPreferencesResponse"
+                    }
+                }
+            },
+            "post":{
+                "summary":"Set Preferences",
+                "operationId":"setMerchantPreferences",
+                "description":"Change the preferences for the merchant",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody":{
+                    "$ref":"#/components/requestBodies/setMerchantPreferencesRequest",
+                    "required":true
+                },
+                "responses":{
+                    "204":{
+                        "description":"Preferences successfully updated.  No content returned"
+                    }
+                }
+            }
+        },
+
+        "/frames":{
+            "post":{
+                "tags":[
+                    "Wallet Management"
+                ],
+                "parameters": [
+                        { "$ref": "#/components/parameters/apiKeyParam" },
+                        { "$ref": "#/components/parameters/authKeyParam" },
+                        { "$ref": "#/components/parameters/authDigestParam" },
+                        { "$ref": "#/components/parameters/messageIdParam" },
+                        { "$ref": "#/components/parameters/authorizationParam" },
+                        { "$ref": "#/components/parameters/versionParam" }
+                    ],
+                "requestBody":{
+                    "$ref":"#/components/requestBodies/framesRequest",
+                    "required":true
+                },
+                "responses":{
+                    "200":{
+                        "description":"Success",
+                        "$ref":"#/components/responses/framesResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
+                    }
+                },
+                "summary":"Frames",
+                "description":"Get a credit card detials input iframe (URL) for the consumer."
             }
         }
     }
