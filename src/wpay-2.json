@@ -3047,8 +3047,7 @@
                                             "properties": {
                                                 "paypal":{
                                                     "required":[
-                                                        "nonce",
-                                                        "primary"
+                                                        "nonce"
                                                     ],
                                                     "type":"object",
                                                     "properties":{
@@ -3059,7 +3058,7 @@
                                                         },
                                                         "primary":{
                                                             "type":"boolean",
-                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument.",
+                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument. This field is required for an authenticated wallet user but not valid for a guest user.",
                                                             "example":true
                                                         }
                                                     },
@@ -3077,9 +3076,7 @@
                                                 "giftcard":{
                                                     "required":[
                                                         "cardNumber",
-                                                        "pinCode",
-                                                        "primary",
-                                                        "save"
+                                                        "pinCode"
                                                     ],
                                                     "type":"object",
                                                     "properties":{
@@ -3095,12 +3092,12 @@
                                                         },
                                                         "primary":{
                                                             "type":"boolean",
-                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument.",
+                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument. This field is required for an authenticated wallet user but not valid for a guest user.",
                                                             "example":true
                                                         },
                                                         "save":{
                                                             "type":"boolean",
-                                                            "description":"A flag to indicate if this payment instrument has to be saved in the container or tokenized for one-off use.",
+                                                            "description":"A flag to indicate if this payment instrument has to be saved in the container or tokenized for one-off use. This field is required for an authenticated wallet user but not valid for a guest user.",
                                                             "example":true
                                                         }
                                                     },
@@ -3123,7 +3120,6 @@
                                                         "encryptedMessage",
                                                         "ephemeralPublicKey",
                                                         "instrumentType",
-                                                        "primary",
                                                         "publicKeyHash",
                                                         "tag"
                                                     ],
@@ -3156,7 +3152,7 @@
                                                         },
                                                         "primary":{
                                                             "type":"boolean",
-                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument.",
+                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument. This field is required for an authenticated wallet user but not valid for a guest user.",
                                                             "example":true
                                                         },
                                                         "comment":{
@@ -3224,7 +3220,6 @@
                                                         "data",
                                                         "ephemeralPublicKey",
                                                         "instrumentType",
-                                                        "primary",
                                                         "publicKeyHash",
                                                         "signature",
                                                         "transactionId",
@@ -3269,7 +3264,7 @@
                                                         },
                                                         "primary":{
                                                             "type":"boolean",
-                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument.",
+                                                            "description":"A flag to indicate if this payment instrument has to be set as the primary instrument. This field is required for an authenticated wallet user but not valid for a guest user.",
                                                             "example":true
                                                         },
                                                         "comment":{
