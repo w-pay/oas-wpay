@@ -3394,7 +3394,9 @@
                                         }
                                     }
                                 },
-                                "meta":{}
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
                             }
                         },
                         "example":{
@@ -3855,7 +3857,9 @@
                                         "clientReference":"JRIQ6EOK2NEQ6BY"
                                     }
                                 },
-                                "meta":{}
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
                             }
                         },
                         "example":{
@@ -3863,6 +3867,211 @@
                                 "clientReference":"JRIQ6EOK2NEQ6BY"
                             },
                             "meta":{}
+                        }
+                    }
+                }
+            },
+            "giftcardsBalanceRequest":{
+                "description":"The JSON request structure of the Giftcards Balance endpoint.",
+                "required":true,
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "type":"object",
+                                    "oneOf": [
+                                        {
+                                            "required": [ "giftCards" ]
+                                        },
+                                        {
+                                            "required": [ "giftCardInstruments" ]
+                                        }
+                                    ],
+                                    "properties":{
+                                        "giftCards":{
+                                            "type":"array",
+                                            "description":"Use this array if the endpoint is being called with \"cardNumber\" and \"pinCode\" request properties.",
+                                            "items":{
+                                                "required":[
+                                                    "cardNumber",
+                                                    "pinCode"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "cardNumber":{
+                                                        "type":"string",
+                                                        "description":"The gift card number.",
+                                                        "example":"6280003090920742517"
+                                                    },
+                                                    "pinCode":{
+                                                        "type":"string",
+                                                        "description":"The gift card pin code.",
+                                                        "example":"3196"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "giftCardInstruments":{
+                                            "type":"array",
+                                            "description":"Use this array if the endpoint is being called with \"paymentInstrumentId\" request properties.",
+                                            "items":{
+                                                "required":[
+                                                    "paymentInstrumentId"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The gift card payment instrument id.",
+                                                        "example":"81054"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example":{
+                            "data":{    
+                                "giftCards": [
+                                    {
+                                        "cardNumber": "6280003090926286519",
+                                        "pinCode": "9101" 
+                                    },
+                                    {
+                                        "cardNumber": "6280005550028790195",
+                                        "pinCode": "4697"
+                                    }    
+                                ]
+                            },
+                            "meta": {}
+                        }
+                    }
+                }
+
+            },
+            "refundRequest":{
+                "description":"Request payload containing the refund reason and instructions",
+                "required":true,
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "title":"refundMerchantTransactionRequest",
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "description":"Mandatory data object containing response",
+                                    "type":"object",
+                                    "required":[
+                                        "reason"
+                                    ],
+                                    "properties":{
+                                        "reason":{
+                                            "description":"The reason for the refund, or other message logged with the transaction",
+                                            "type":"string"
+                                        },
+                                        "clientReference":{
+                                            "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
+                                            "type":"string"
+                                        },
+                                        "subTransactions": {
+                                            "description": "List of payments and amounts to refund. Can be used to refund to multiple payment instruments or to issue partial refunds. If subTransactions is not supplied the entire transaction will be refunded.",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "required": [
+                                                    "subTransactionRef",
+                                                    "amount"
+                                                ],
+                                                "properties": {
+                                                    "subTransactionRef": {
+                                                        "description": "The payment reference for this sub transaction.",
+                                                        "type": "string"
+                                                    },
+                                                    "amount": {
+                                                        "description": "The amount to be refunded as part of this transaction.",
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "chargePaymentAgreementRequest":{
+                "description": "Request payload containing the details of the payment agreement to be charged",
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "title": "merchantChargePaymentAgreementRequest",
+                            "type": "object",
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "properties": {
+                                "data": {
+                                    "description": "Mandatory data object containing request",
+                                    "type": "object",
+                                    "required": [
+                                        "amount",
+                                        "clientReference",
+                                        "orderNumber",
+                                        "paymentToken",
+                                        "transactionType"
+                                    ],
+                                    "properties": {
+                                        "paymentToken": {
+                                            "description": "The payment token of the payment agreement. The payment token is a unique identifier for the payment agreement",
+                                            "type": "string"
+                                        },
+                                        "amount": {
+                                            "description": "",
+                                            "type": "number"
+                                        },
+                                        "clientReference": {
+                                            "description": "A merchant application specific reference number for the transaction.",
+                                            "type": "string"
+                                        },
+                                        "orderNumber": {
+                                            "description": "A merchant order number for the transaction.",
+                                            "type": "string"
+                                        },
+                                        "transactionType": {
+                                            "$ref": "#/components/schemas/transactionType"
+                                        },
+                                        "customerRef": {
+                                            "description": "A merchant application specific reference number for the customer.",
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
                         }
                     }
                 }
@@ -5345,6 +5554,173 @@
 
                                         },
                                         "transactionId":"0756eaaf-34cf-456f-a870-6da2bf4761a9"
+                                    },
+                                    "meta":{
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "getMerchantPaymentInstrumentsResponse":{
+                "description":"Successful response",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "title":"getMerchantPaymentInstrumentsResults",
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "description":"Mandatory data object containing response",
+                                    "type":"object",
+                                    "required":[
+                                        "creditCards",
+                                        "giftCards"
+                                    ],
+                                    "properties":{
+                                        "creditCards":{
+                                            "type":"array",
+                                            "items":{
+                                                "$ref":"#/components/schemas/creditCard"
+                                            }
+                                        },
+                                        "giftCards":{
+                                            "type":"array",
+                                            "items":{
+                                                "$ref":"#/components/schemas/giftCard"
+                                            }
+                                        },
+                                        "everydayPay":{
+                                            "description":"A list of payment instruments stored in the customers everydayPay wallet",
+                                            "type":"object",
+                                            "required":[
+                                                "creditCards",
+                                                "giftCards"
+                                            ],
+                                            "properties":{
+                                                "creditCards":{
+                                                    "type":"array",
+                                                    "items":{
+                                                        "$ref":"#/components/schemas/creditCard"
+                                                    }
+                                                },
+                                                "giftCards":{
+                                                    "type":"array",
+                                                    "items":{
+                                                        "$ref":"#/components/schemas/giftCard"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "examples":{
+                            "SampleInstruments":{
+                                "value":{
+                                    "data":{
+                                        "creditCards":[
+                                            {
+                                                "allowed":true,
+                                                "cardName":"My Card",
+                                                "cardSuffix":"6106",
+                                                "cvvValidated":true,
+                                                "expired":true,
+                                                "expiryMonth":"05",
+                                                "expiryYear":"21",
+                                                "lastUpdated":"2017-11-06T19:38:09.890+11:00",
+                                                "lastUsed":"2017-11-06T19:38:09.890+11:00",
+                                                "createdOn":"2017-11-06T08:38:09.890Z",
+                                                "paymentInstrumentId":"90731",
+                                                "paymentToken":"712029a1-c0aa-41bc-a810-3d42424c5834",
+                                                "primary":true,
+                                                "requiresCVV":true,
+                                                "scheme":"MASTERCARD",
+                                                "status":"VERIFIED",
+                                                "stepUp":{
+                                                    "mandatory":true,
+                                                    "type":"CAPTURE_CVV",
+                                                    "url":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/cvvExpiry/353629ec-4cb5-4fc3-ab47-8c9c3f117ab8/90731"
+                                                },
+                                                "updateURL":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/cvvExpiry/353629ec-4cb5-4fc3-ab47-8c9c3f117ab8/90731"
+                                            }
+                                        ],
+                                        "giftCards":[
+                                            {
+                                                "allowed":true,
+                                                "cardSuffix":"2517",
+                                                "lastUpdated":"2017-11-06T19:38:09.860+11:00",
+                                                "lastUsed":"2017-10-12T13:25:49.770+11:00",
+                                                "createdOn":"2017-11-06T08:38:09.890Z",
+                                                "paymentInstrumentId":"81054",
+                                                "paymentToken":"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
+                                                "primary":true,
+                                                "programName":"WISH Gift Card",
+                                                "status":"UNVERIFIED_PERSISTENT",
+                                                "stepUp":{
+                                                    "mandatory":true,
+                                                    "type":"REQUIRE_PASSCODE",
+                                                    "url":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/cvvExpiry/353629ec-4cb5-4fc3-ab47-8c9c3f117ab8/90731"
+                                                }
+                                            }
+                                        ],
+                                        "everydayPay":{
+                                            "creditCards":[
+                                                {
+                                                    "allowed":true,
+                                                    "cardName":"My Card",
+                                                    "cardSuffix":"6106",
+                                                    "cvvValidated":true,
+                                                    "expired":true,
+                                                    "expiryMonth":"05",
+                                                    "expiryYear":"21",
+                                                    "lastUpdated":"2017-11-06T19:38:09.890+11:00",
+                                                    "lastUsed":"2017-11-06T19:38:09.890+11:00",
+                                                    "createdOn":"2017-11-06T08:38:09.890Z",
+                                                    "paymentInstrumentId":"90731",
+                                                    "paymentToken":"712029a1-c0aa-41bc-a810-3d42424c5834",
+                                                    "primary":true,
+                                                    "requiresCVV":true,
+                                                    "scheme":"MASTERCARD",
+                                                    "status":"VERIFIED",
+                                                    "stepUp":{
+                                                        "mandatory":true,
+                                                        "type":"CAPTURE_CVV",
+                                                        "url":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/cvvExpiry/353629ec-4cb5-4fc3-ab47-8c9c3f117ab8/90731"
+                                                    },
+                                                    "updateURL":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/cvvExpiry/353629ec-4cb5-4fc3-ab47-8c9c3f117ab8/90731"
+                                                }
+                                            ],
+                                            "giftCards":[
+                                                {
+                                                    "allowed":true,
+                                                    "cardSuffix":"2517",
+                                                    "lastUpdated":"2017-11-06T19:38:09.860+11:00",
+                                                    "lastUsed":"2017-10-12T13:25:49.770+11:00",
+                                                    "createdOn":"2017-11-06T08:38:09.890Z",
+                                                    "paymentInstrumentId":"81054",
+                                                    "paymentToken":"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
+                                                    "primary":true,
+                                                    "programName":"WISH Gift Card",
+                                                    "status":"UNVERIFIED_PERSISTENT",
+                                                    "stepUp":{
+                                                        "mandatory":true,
+                                                        "type":"REQUIRE_PASSCODE",
+                                                        "url":"https://uat.woolworthspay.com.au/container-ws/getCaptureFrame/cvvExpiry/353629ec-4cb5-4fc3-ab47-8c9c3f117ab8/90731"
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     "meta":{
 
@@ -7731,7 +8107,9 @@
                                     },
                                     "description":"The JSON success response structure of the Payments endpoint."
                                 },
-                                "meta":{}
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
                             }
                         },
                         "example":{
@@ -7890,6 +8268,96 @@
                                 "transactionRef":"1000000000661300"
                             },
                             "meta": {}
+                        }
+                    }
+                }
+            },
+            "giftcardsBalanceResponse":{
+                "description":"The JSON response structure of the Giftcards Balance endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type":"object",
+                                    "properties":{
+                                        "giftCardBalances":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "balance",
+                                                    "expired",
+                                                    "expiryDay",
+                                                    "expiryMonth",
+                                                    "expiryYear"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "cardNumber":{
+                                                        "type":"string",
+                                                        "description":"The gift card number. This property will only be returned if the endpoint was called with the \"cardNumber\" and \"pinCode\" request properties.",
+                                                        "example":"6280003090920742517"
+                                                    },
+                                                    "paymentInstrumentId":{
+                                                        "type":"string",
+                                                        "description":"The gift card payment instrument id. This property will only be returned if the endpoint was called with the \"paymentInstrumentId\" request property.",
+                                                        "example":"81054"
+                                                    },
+                                                    "balance":{
+                                                        "type":"number",
+                                                        "description":"The current available balance of the gift card.",
+                                                        "example":333.38
+                                                    },
+                                                    "expiryDay":{
+                                                        "type":"string",
+                                                        "description":"The day of the expiry date of the gift card.",
+                                                        "example":"31"
+                                                    },
+                                                    "expiryMonth":{
+                                                        "type":"string",
+                                                        "description":"The month of the expiry date of the gift card.",
+                                                        "example":"03"
+                                                    },
+                                                    "expiryYear":{
+                                                        "type":"string",
+                                                        "description":"The year of the expiry date of the gift card.",
+                                                        "example":"2018"
+                                                    },
+                                                    "expired":{
+                                                        "type":"boolean",
+                                                        "description":"A flag to indicate if the gift card is expired.",
+                                                        "example":true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example":{
+                            "data":{
+                                "giftCardBalances":[
+                                    {
+                                        "cardNumber":"6280003090920742517",
+                                        "paymentInstrumentId":"81054",
+                                        "balance":333.38,
+                                        "expiryDay":"31",
+                                        "expiryMonth":"03",
+                                        "expiryYear":"2018",
+                                        "expired":false
+                                    }
+                                ]
+                            },
+                            "meta":{}
                         }
                     }
                 }
@@ -10306,6 +10774,255 @@
                 "description": "Delete a consumers wallet. This API is IP restricted to allow unauthenticated server side calls."
             }
         },
+        "/merchant/wallets/{walletId}/instruments": {
+            "get":{
+                "summary":"Get Payment Instruments for a particular wallet",
+                "operationId":"getMerchantPaymentInstruments",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Get the list of payment instruments currently configured for a wallet. Returns an array of instrument records that can be used to execute payments",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters":[
+                    { "$ref":"#/components/parameters/contentTypeParam" },
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in":"header",
+                        "name":"X-Everyday-Pay-Wallet",
+                        "description":"Includes everyday pay wallet in the list of payment instruments",
+                        "schema":{
+                            "type":"boolean",
+                            "default":false
+                        },
+                        "required":false
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getMerchantPaymentInstrumentsResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
+                    }
+                }
+            },
+            "post":{
+                "summary":"Initiate Instrument Addition",
+                "operationId":"initiatePaymentInstrumentAddition",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Initiate the addition of a new payment instrument for this wallet.  This API returns a URL to be used to access the DigiPay IFrame based interface to request the customer to enter a payment instrument details.",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters":[
+                    { "$ref":"#/components/parameters/contentTypeParam" },
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in":"header",
+                        "name":"X-Everyday-Pay-Wallet",
+                        "description":"Includes everyday pay wallet in the list of payment instruments",
+                        "schema":{
+                            "type":"boolean",
+                            "default":false
+                        },
+                        "required":false
+                    }
+                ],
+                "requestBody":{
+                    "$ref":"#/components/requestBodies/initiatePaymentInstrumentAdditionRequest",
+                    "required":true
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/initiatePaymentInstrumentAdditionResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/wallets/{walletId}/instruments/balance": {
+            "post":{
+                "summary":"Gift Cards Balance",
+                "operationId": "getGiftCardBalance",
+                "security": [
+                    { "ApiKeyAuth": [], "bearerAuth": [] }
+                ],
+                "description":"Get the balance and expiryinfo for the provided gift cards. This API is rate limited to 5 requests per minute per shopper id.",
+                "tags": [
+                    "Merchant",
+                    "XXXXTO_DIGIPAY"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/contentTypeParam" },
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody": {
+                    "$ref":"#/components/requestBodies/giftcardsBalanceRequest"
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/giftcardsBalanceResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or Invalid Token or Expired Token.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref":"#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref":"#/components/responses/errorResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/wallets/{walletId}/instruments/{paymentInstrumentId}": {
+            "delete":{
+                "summary":"Delete a payment instrument",
+                "operationId":"deletePaymentInstrument",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Delete an existing payment instrument",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/contentTypeParam" },
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in":"header",
+                        "name":"X-Everyday-Pay-Wallet",
+                        "description":"The payment instrument to be deleted is in the everyday pay wallet",
+                        "schema":{
+                            "type":"boolean",
+                            "default":false
+                        },
+                        "required":false
+                    },
+                    {
+                        "in":"path",
+                        "name":"paymentInstrumentId",
+                        "description":"The ID of the specific instrument",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "204":{
+                        "description":"Payment Instrument successfully deleted.  No content returned"
+                    },
+                    "400": {
+                        "description": "Missing or invalid request payload or value.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "401": {
+                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "404": {
+                        "description": "Invalid API Route.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "500": {
+                        "description": "An unknown error occurred.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "501": {
+                        "description": "A Business Validation error occurred.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "502": {
+                        "description": "An Internal System error occurred.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "503": {
+                        "description": "The Service is currently unavailable.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "504": {
+                        "description": "The request timed out.",
+                        "$ref": "#/components/responses/errorResponse"
+                    }
+                }
+            }
+        },
         "/merchant/wallets/{walletId}/instruments/verify":{
             "post":{
                 "tags":[
@@ -10958,6 +11675,274 @@
                 "description": "Create a new payment agreement which will be added to the users wallet after validating the payment instrument. This API is IP restricted to allow unauthenticated server side calls."
             }
         },
+        "/merchant/payments/agreements/{paymentAgreementId}":{
+            "post": {
+                "summary": "Update Payment Agreement",
+                "description": "Update an existing payment agreement and validate the payment instrument if changed.",
+                "tags": [
+                    "Merchant",
+                    "XXXXTO_DIGIPAY"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in": "header",
+                        "name": "X-Merchant-ID",
+                        "schema": {
+                            "type": "string",
+                            "example": "10001"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "path",
+                        "name": "paymentAgreementId",
+                        "description": "The ID of the specific payment agreement",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/updatePaymentAgreementRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "$ref": "#/components/responses/paymentAgreementResponse"
+                    },
+                    "400": {
+                        "description": "Missing or invalid request payload or value.",
+                        "$ref": "#/components/responses/paymentAgreementErrorResponse"
+                    },
+                    "401": {
+                        "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "404": {
+                        "description": "Invalid API Route.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "500": {
+                        "description": "An unknown error occurred.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "501": {
+                        "description": "A Business Validation error occurred.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "502": {
+                        "description": "An Internal System error occurred.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "503": {
+                        "description": "The Service is currently unavailable.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "504": {
+                        "description": "The request timed out.",
+                        "$ref": "#/components/responses/errorResponse"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Charge Payment Agreement",
+                "operationId": "chargeMerchantPaymentAgreement",
+                "description": "Charge a payment agreement",
+                "tags": [
+                    "Merchant"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in": "header",
+                        "name": "X-Merchant-ID",
+                        "schema": {
+                            "type": "string",
+                            "example": "10001"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "path",
+                        "name": "paymentAgreementId",
+                        "description": "The ID of the specific payment agreement",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/chargePaymentAgreementRequest"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/chargePaymentAgreementResponse"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete Payment Agreement",
+                "operationId": "deleteMerchantPaymentAgreement",
+                "description": "Delete an existing payment agreement.",
+                "tags": [
+                    "Merchant"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in": "header",
+                        "name": "X-Merchant-ID",
+                        "schema": {
+                            "type": "string",
+                            "example": "10001"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "path",
+                        "name": "paymentAgreementId",
+                        "description": "The ID of the specific payment agreement",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Payment request has been successfully deleted. No content returned"
+                    },
+                    "422": {
+                        "description": "The payment agreement specified doesn't exist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/merchant/transactions":{
+            "get":{
+                "summary":"Get Transaction List",
+                "operationId":"getMerchantTransactions",
+                "description":"Get a list of the previously executed transactions with the merchant.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in":"query",
+                        "name":"start-time",
+                        "description":"If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned",
+                        "required":false,
+                        "schema":{
+                            "type":"string",
+                            "format":"date-time",
+                            "example":"2017-11-06T19:38:09.890+11:00"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"end-time",
+                        "description":"If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned",
+                        "required":false,
+                        "schema":{
+                            "type":"string",
+                            "format":"date-time",
+                            "example":"2017-11-06T19:38:09.890+11:00"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"page-size",
+                        "description":"The number of records to return for this page.  Defaults to 25 if absent",
+                        "required":false,
+                        "schema":{
+                            "type":"integer",
+                            "default":25,
+                            "minimum":1,
+                            "maximum":500
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"page",
+                        "description":"The page of results to return with 1 indicating the first page.  Defaults to 1 if absent",
+                        "required":false,
+                        "schema":{
+                            "type":"integer",
+                            "default":1,
+                            "minimum":1
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getMerchantTransactionsResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/transactions/{transactionId}":{
+            "get":{
+                "summary":"Get Transaction Details",
+                "operationId":"getMerchantTransactionDetails",
+                "description":"Get the details for a specific transaction previously executed with the merchant.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in":"path",
+                        "name":"transactionId",
+                        "description":"The ID of the specific transaction",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getMerchantTransactionDetailsResponse"
+                    }
+                }
+            }
+        },
         "/merchant/transactions/{transactionId}/completion":{
             "post":{
                 "tags":[
@@ -11058,6 +12043,76 @@
                     "200":{
                         "description":"Success",
                         "$ref": "#/components/responses/voidsResponse"
+                    },
+                    "400":{
+                        "description":"Missing or invalid request payload or value.",
+                        "$ref": "#/components/responses/voidsErrorResponse"
+                    },
+                    "401":{
+                        "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "404":{
+                        "description":"Invalid API Route.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "500":{
+                        "description":"An unknown error occurred.",
+                        "$ref": "#/components/responses/voidsErrorResponse"
+                    },
+                    "501":{
+                        "description":"A Business Validation error occurred.",
+                        "$ref": "#/components/responses/voidsErrorResponse"
+                    },
+                    "502":{
+                        "description":"An Internal System error occurred.",
+                        "$ref": "#/components/responses/voidsErrorResponse"
+                    },
+                    "503":{
+                        "description":"The Service is currently unavailable.",
+                        "$ref": "#/components/responses/errorResponse"
+                    },
+                    "504":{
+                        "description":"The request timed out.",
+                        "$ref": "#/components/responses/errorResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/transactions/{transactionId}/refund":{
+            "post":{
+                "summary":"Refund Transaction",
+                "operationId":"refundMerchantTransaction",
+                "description":"Refund a previously executed transaction",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters":[
+                    {
+                        "in":"header",
+                        "name":"X-Merchant-ID",
+                        "schema":{
+                            "type":"string",
+                            "example":"10001"
+                        },
+                        "required":true
+                    },
+                    {
+                        "in":"path",
+                        "name":"transactionId",
+                        "description":"The ID of the specific transaction to reverse",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "$ref": "#/components/requestBodies/refundRequest"
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/refundMerchantTransactionResponse"
                     },
                     "400":{
                         "description":"Missing or invalid request payload or value.",
@@ -11457,106 +12512,7 @@
             }
         },
 
-        "/merchant/transactions":{
-            "get":{
-                "summary":"Get Transaction List",
-                "operationId":"getMerchantTransactions",
-                "description":"Get a list of the previously executed transactions with the merchant.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant",
-                "tags":[
-                    "Merchant"
-                ],
-                "parameters":[
-                    { "$ref": "#/components/parameters/apiKeyParam" },
-                    { "$ref": "#/components/parameters/authKeyParam" },
-                    { "$ref": "#/components/parameters/authDigestParam" },
-                    { "$ref": "#/components/parameters/messageIdParam" },
-                    { "$ref": "#/components/parameters/authorizationParam" },
-                    { "$ref": "#/components/parameters/versionParam" },
-                    {
-                        "in":"query",
-                        "name":"start-time",
-                        "description":"If present, the date/time to limit transactions returned.  Transactions older than this time will not be returned",
-                        "required":false,
-                        "schema":{
-                            "type":"string",
-                            "format":"date-time",
-                            "example":"2017-11-06T19:38:09.890+11:00"
-                        }
-                    },
-                    {
-                        "in":"query",
-                        "name":"end-time",
-                        "description":"If present, the date/time to limit transactions returned.  Transactions newer than this time will not be returned",
-                        "required":false,
-                        "schema":{
-                            "type":"string",
-                            "format":"date-time",
-                            "example":"2017-11-06T19:38:09.890+11:00"
-                        }
-                    },
-                    {
-                        "in":"query",
-                        "name":"page-size",
-                        "description":"The number of records to return for this page.  Defaults to 25 if absent",
-                        "required":false,
-                        "schema":{
-                            "type":"integer",
-                            "default":25,
-                            "minimum":1,
-                            "maximum":500
-                        }
-                    },
-                    {
-                        "in":"query",
-                        "name":"page",
-                        "description":"The page of results to return with 1 indicating the first page.  Defaults to 1 if absent",
-                        "required":false,
-                        "schema":{
-                            "type":"integer",
-                            "default":1,
-                            "minimum":1
-                        }
-                    }
-                ],
-                "responses":{
-                    "200":{
-                        "$ref":"#/components/responses/getMerchantTransactionsResponse"
-                    }
-                }
-            }
-        },
-        "/merchant/transactions/{transactionId}":{
-            "get":{
-                "summary":"Get Transaction Details",
-                "operationId":"getMerchantTransactionDetails",
-                "description":"Get the details for a specific transaction previously executed with the merchant.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant",
-                "tags":[
-                    "Merchant"
-                ],
-                "parameters":[
-                    { "$ref": "#/components/parameters/apiKeyParam" },
-                    { "$ref": "#/components/parameters/authKeyParam" },
-                    { "$ref": "#/components/parameters/authDigestParam" },
-                    { "$ref": "#/components/parameters/messageIdParam" },
-                    { "$ref": "#/components/parameters/authorizationParam" },
-                    { "$ref": "#/components/parameters/versionParam" },
-                    {
-                        "in":"path",
-                        "name":"transactionId",
-                        "description":"The ID of the specific transaction",
-                        "required":true,
-                        "schema":{
-                            "type":"string"
-                        }
-                    }
-                ],
-                "responses":{
-                    "200":{
-                        "$ref":"#/components/responses/getMerchantTransactionDetailsResponse"
-                    }
-                }
-            }
-        },
+
         "/merchant/preferences":{
             "get":{
                 "summary":"Get Preferences",
