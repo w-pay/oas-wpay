@@ -1,3 +1,3 @@
 # TODO notes
 
-* Decompose swagger
+* Decompose swagger for v2

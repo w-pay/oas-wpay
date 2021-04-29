@@ -9340,16 +9340,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Everyday-Pay-Wallet",
-                        "description": "The makes instruments available in the everyday pay wallet available for payments",
-                        "schema": {
-                            "type": "boolean",
-                            "default": false
-                        },
-                        "required": false
                     }
                 ],
                 "requestBody":{
@@ -9494,17 +9484,8 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "in": "header",
-                        "name": "X-Everyday-Pay-Wallet",
-                        "description": "The makes instruments available in the everyday pay wallet available for payments",
-                        "schema": {
-                            "type": "boolean",
-                            "default": false
-                    },
-                    "required": false
-                }],
+                    }
+                ],
                 "requestBody":{
                     "description":"Request payload containing instruments to use for the payment",
                     "required":true,
@@ -10692,8 +10673,7 @@
         "/merchant/wallets": {
             "post": {
                 "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -10767,14 +10747,13 @@
                     { "$ref": "#/components/parameters/authorizationParam" },
                     { "$ref": "#/components/parameters/versionParam" },
                     {
-                        "in":"header",
-                        "name":"X-Everyday-Pay-Wallet",
-                        "description":"Includes everyday pay wallet in the list of payment instruments",
+                        "in":"path",
+                        "name":"walletId",
+                        "description":"The ID of the specific wallet to obtain instruments for",
+                        "required":true,
                         "schema":{
-                            "type":"boolean",
-                            "default":false
-                        },
-                        "required":false
+                            "type":"string"
+                        }
                     }
                 ],
                 "responses":{
@@ -10817,7 +10796,7 @@
             },
             "post":{
                 "summary":"Initiate Instrument Addition",
-                "operationId":"initiatePaymentInstrumentAddition",
+                "operationId":"initiatePaymentInstrumentAdditionMerchant",
                 "security":[
                     { "ApiKeyAuth":[], "bearerAuth":[] }
                 ],
@@ -10834,14 +10813,13 @@
                     { "$ref": "#/components/parameters/authorizationParam" },
                     { "$ref": "#/components/parameters/versionParam" },
                     {
-                        "in":"header",
-                        "name":"X-Everyday-Pay-Wallet",
-                        "description":"Includes everyday pay wallet in the list of payment instruments",
+                        "in":"path",
+                        "name":"walletId",
+                        "description":"The ID of the specific wallet to add an instrument to",
+                        "required":true,
                         "schema":{
-                            "type":"boolean",
-                            "default":false
-                        },
-                        "required":false
+                            "type":"string"
+                        }
                     }
                 ],
                 "requestBody":{
@@ -10864,8 +10842,7 @@
                 ],
                 "description":"Get the balance and expiryinfo for the provided gift cards. This API is rate limited to 5 requests per minute per shopper id.",
                 "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/contentTypeParam" },
@@ -10874,7 +10851,16 @@
                     { "$ref": "#/components/parameters/authDigestParam" },
                     { "$ref": "#/components/parameters/messageIdParam" },
                     { "$ref": "#/components/parameters/authorizationParam" },
-                    { "$ref": "#/components/parameters/versionParam" }
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in":"path",
+                        "name":"walletId",
+                        "description":"The ID of the specific wallet to get balances for",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
                 ],
                 "requestBody": {
                     "$ref":"#/components/requestBodies/giftcardsBalanceRequest"
@@ -10921,7 +10907,7 @@
         "/merchant/wallets/{walletId}/instruments/{paymentInstrumentId}": {
             "delete":{
                 "summary":"Delete a payment instrument",
-                "operationId":"deletePaymentInstrument",
+                "operationId":"deletePaymentInstrumentMerchant",
                 "security":[
                     { "ApiKeyAuth":[], "bearerAuth":[] }
                 ],
@@ -10938,14 +10924,13 @@
                     { "$ref": "#/components/parameters/authorizationParam" },
                     { "$ref": "#/components/parameters/versionParam" },
                     {
-                        "in":"header",
-                        "name":"X-Everyday-Pay-Wallet",
-                        "description":"The payment instrument to be deleted is in the everyday pay wallet",
+                        "in":"path",
+                        "name":"walletId",
+                        "description":"The ID of the specific wallet",
+                        "required":true,
                         "schema":{
-                            "type":"boolean",
-                            "default":false
-                        },
-                        "required":false
+                            "type":"string"
+                        }
                     },
                     {
                         "in":"path",
@@ -11581,8 +11566,7 @@
         "/merchant/payments/agreements": {
             "post": {
                 "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -11642,8 +11626,7 @@
                 "summary": "Update Payment Agreement",
                 "description": "Update an existing payment agreement and validate the payment instrument if changed.",
                 "tags": [
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
