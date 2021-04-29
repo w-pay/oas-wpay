@@ -9247,8 +9247,7 @@
                 ],
                 "description":"Get the details for a specific payment from a QR Code ID so that the customer can pay using it",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9287,8 +9286,7 @@
                 ],
                 "description":"Get the details for a specific payment request so that the customer can pay using it",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9325,8 +9323,7 @@
                 ],
                 "description":"Pay a specific payment using the instrument details provided",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9441,8 +9438,7 @@
                 ],
                 "description":"Get the payment session associated with the qrId",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9481,8 +9477,7 @@
                 ],
                 "description":"Pre-Approve a payment session to make a payment using the instrument details provided",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9587,8 +9582,7 @@
                 "operationId":"deleteCustomerPaymentSession",
                 "description":"Deletes a payment session by setting its expiration date/time to now",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9621,8 +9615,7 @@
                 ],
                 "description":"Get the details of a payment session",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9659,8 +9652,7 @@
                 ],
                 "description":"Update the payment session details",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9727,8 +9719,7 @@
         "/customer/instruments/verify":{
             "post":{
                 "tags":[
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
+                    "Customer"
                 ],
                 "summary":"Verify Payment Instruments",
                 "description":"Verify if a provided payment instrument is valid and optionally perform a fraud check on the instrument.",
@@ -9792,8 +9783,7 @@
                 ],
                 "description":"Get the preferences previously set by the customer or merchant (depending on calling identity)",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9817,8 +9807,7 @@
                 ],
                 "description":"Change the preferences for the customer or merchant (depending on calling identity)",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9868,8 +9857,7 @@
                 ],
                 "description": "Get a list of payment agreements",
                 "tags": [
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9896,8 +9884,7 @@
                 ],
                 "description": "Create an new payment agreement",
                 "tags": [
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -9977,8 +9964,7 @@
                 ],
                 "description": "Get a specific payment agreements",
                 "tags": [
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -10011,8 +9997,7 @@
                 ],
                 "description": "Update an existing payment agreement",
                 "tags": [
-                    "Customer",
-                    "XXXXTO_WALLET"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -10091,8 +10076,7 @@
             },
             "delete": {
                 "tags": [
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -10164,8 +10148,7 @@
                 ],
                 "description": "Get the terms and conditions agreed to by the customer",
                 "tags": [
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -10210,8 +10193,7 @@
                 ],
                 "description": "Customer accepts terms and conditions",
                 "tags": [
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -10404,8 +10386,7 @@
         "/customer/instruments/balance":{
             "post":{
                 "tags":[
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
+                    "Customer"
                 ],
                 "parameters":[
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -10527,8 +10508,7 @@
                 ],
                 "description": "Get a list of the previously executed transactions for the customer.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant",
                 "tags": [
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/contentTypeParam" },
@@ -10590,8 +10570,7 @@
                 ],
                 "description":"Get the details for a specific transaction previously executed by the customer.  Note that amounts are relative to the merchant.  A positive amount is a positive amount transferred to a merchant",
                 "tags":[
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
+                    "Customer"
                 ],
                 "parameters": [
                     {
@@ -10656,8 +10635,7 @@
                 ],
                 "description":"Make payments to a merchant using payment intruments. This endpoint establishes a payment request and then makes a payment against it.",
                 "tags": [
-                    "Customer",
-                    "XXXXTO_DIGIPAY"
+                    "Customer"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/contentTypeParam" },
@@ -11021,8 +10999,7 @@
         "/merchant/wallets/{walletId}/instruments/verify":{
             "post":{
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "summary":"Verify Payment Instruments",
                 "description":"Verify if a provided payment instrument is valid and optionally perform a fraud check on the instrument.",
@@ -11089,8 +11066,7 @@
         "/merchant/wallets/{walletId}/instruments/import":{
             "post":{
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "summary":"Import Payment Instruments",
                 "description":"Import a consumers credit cards (from WebPay) and paypal accounts to a new wallet. This API is IP restricted to allow unauthenticated server side calls.",
@@ -11160,8 +11136,7 @@
                 "operationId":"createPaymentRequestQRCode",
                 "description":"Create a new QR code for an existing payment request",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -11247,8 +11222,7 @@
                 "operationId":"getPaymentRequestQRCodeContent",
                 "description":"Obtain the content or an image for an existing QR code.  If requested content type is application/json then a payload will be returned.  if requested content is image/png an image will be returned",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -11282,8 +11256,7 @@
                 "operationId":"cancelPaymentRequestQRCode",
                 "description":"Cancel an existing QC code.  Effectively expires the QR code",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters":[
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -11320,8 +11293,7 @@
                 "operationId":"getMerchantPaymentDetails",
                 "description":"Get the details for a specific payment.  Provides all types of payments and all payment content",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -11355,8 +11327,7 @@
                 "operationId":"deleteMerchantPaymentRequest",
                 "description":"Cancel an existing payment by setting the expiration date/time to now and setting the remaining uses to 0.  Will only be successful if the payment is still pending.  Completed payments need to be refunded using the dedicated API for that purpose",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -11392,8 +11363,7 @@
                 "operationId":"createPaymentSession",
                 "description":"Create a new payment session",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -11480,8 +11450,7 @@
                 "operationId":"getPaymentSession",
                 "description":"Get the details of a payment session",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -11515,8 +11484,7 @@
                 "operationId":"merchantUpdatePaymentSession",
                 "description":"Update the payment session details",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -11584,8 +11552,7 @@
                 "operationId":"deletePaymentSession",
                 "description":"Deletes a payment session by setting its expiration date/time to now",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -11941,8 +11908,7 @@
         "/merchant/transactions/{transactionId}/completion":{
             "post":{
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "summary":"Completions",
                 "description":"Complete pre-authed payments. This API is IP restricted to allow unauthenticated server side calls.",
@@ -12009,8 +11975,7 @@
         "/merchant/transactions/{transactionId}/void":{
             "post":{
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "summary":"Voids",
                 "description":"Void (cancel) pre-authed payments. This API is IP restricted to allow unauthenticated server side calls.",
@@ -12150,8 +12115,7 @@
                 "operationId":"getMerchantSchemas",
                 "description":"Get the list of currently usable schema previously added for the merchant",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -12172,8 +12136,7 @@
                 "operationId":"createMerchantSchema",
                 "description":"Add a new schema that can be used in schema based payloads for this merchant",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -12240,8 +12203,7 @@
                 "operationId":"getMerchantSchemaDetails",
                 "description":"Get the list of currently usable schema previously added for the merchant",
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_WALLET"
+                    "Merchant"
                 ],
                 "parameters": [
                     { "$ref": "#/components/parameters/apiKeyParam" },
@@ -12271,8 +12233,7 @@
         "/merchant/openpay/payments":{
             "post":{
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "summary":"Openpay Payments",
                 "description":"Make payments to a merchant using Openpay payment tokens.",
@@ -12330,8 +12291,7 @@
         "/merchant/openpay/refunds":{
             "post":{
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "summary":"Openpay Refunds",
                 "description":"Refund Openpay payments.",
@@ -12389,8 +12349,7 @@
         "/merchant/openpay/completions":{
             "post":{
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "summary":"Openpay Completions",
                 "description":"Complete pre-authed Openpay payments.",
@@ -12449,8 +12408,7 @@
         "/merchant/openpay/voids":{
             "post":{
                 "tags":[
-                    "Merchant",
-                    "XXXXTO_DIGIPAY"
+                    "Merchant"
                 ],
                 "summary":"Openpay Voids",
                 "description":"Void (cancel) pre-authed Openpay payments.",
@@ -12560,7 +12518,7 @@
         "/frames":{
             "post":{
                 "tags":[
-                    "Wallet Management"
+                    "Customer"
                 ],
                 "parameters": [
                         { "$ref": "#/components/parameters/apiKeyParam" },
