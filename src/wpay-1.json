@@ -3,7 +3,7 @@
     "info":{
         "title":"Wpay APIs",
         "description":"Wpay APIs for payments and gifting",
-        "version":"1.0.3"
+        "version":"1.0.4"
     },
     "servers":[
         {
@@ -13849,9 +13849,6 @@
                 "type":"object",
                 "properties":{
                     "allowedPaymentMethods":{
-                        "required":[
-                            "applePay"
-                        ],
                         "type":"object",
                         "properties":{
                             "giftCard":{
@@ -14126,6 +14123,35 @@
                                     }
                                 },
                                 "description":"The presence of this object in the response indicates that apple pay is an allowed payment method and instrument in the container for the relevant merchant."
+                            },
+                            "paymentAgreement":{
+                                "required":[
+                                    "allowedInstrumentTypes",
+                                    "serviceStatus"
+                                ],
+                                "type":"object",
+                                "properties":{
+                                    "allowedInstrumentTypes":{
+                                        "type":"array",
+                                        "description":"The allowed instrument types that can be used as the funding source of a payment agreement.",
+                                        "items":{
+                                            "type":"string",
+                                            "enum":[
+                                                "CREDIT_CARD",
+                                                "PAYPAL"
+                                            ]
+                                        }
+                                    },
+                                    "serviceStatus":{
+                                        "type":"string",
+                                        "description":"This property indicates the status of the payment agreement service in the container.",
+                                        "enum":[
+                                            "ENABLED",
+                                            "DISABLED"
+                                        ]
+                                    }
+                                },
+                                "description":"The presence of this object in the response indicates that payment agreements are allowed in the container for the relevant merchant."
                             }
                         }
                     }
@@ -14207,6 +14233,13 @@
                                     "PURCHASE"
                                 ]
                             },
+                            "serviceStatus":"ENABLED"
+                        },
+                        "paymentAgreement": {
+                            "allowedInstrumentTypes":[
+                                "CREDIT_CARD",
+                                "PAYPAL"
+                            ],
                             "serviceStatus":"ENABLED"
                         }
                     }
@@ -14694,7 +14727,7 @@
                     },
                     "extendedMerchantData":{
                         "type":"array",
-                        "description":"This object is only required if the payments request contains paypal instruments.",
+                        "description":"This array is only required if the payments request contains paypal instruments.",
                         "items":{
                             "required":[
                                 "field",
@@ -14744,6 +14777,58 @@
                             }
                         },
                         "description":"This object is only required if the payments request is for an in-store (R10) payment transaction."
+                    },
+                    "basketData":{
+                        "type":"array",
+                        "description":"This array is only required if an implicit restricted product validation (RPVS) is required during the execution of the payment for the relevant merchant. A merchant can be opted-out of this restricted product validation via configuration.",
+                        "items":{
+                            "required":[
+                                "itemId",
+                                "category",
+                                "subcategory"
+                            ],
+                            "type":"object",
+                            "properties":{
+                                "itemId":{
+                                    "type":"string",
+                                    "description":"The item id, article id or SKU. Required if 'category' is not present.",
+                                    "example":"105609"
+                                },
+                                "category":{
+                                    "type":"string",
+                                    "description":"The items category code. Required if 'itemId' is not present or, if 'subcategory' is present.",
+                                    "example":"Dairy"
+                                },
+                                "subcategory":{
+                                    "type":"string",
+                                    "description":"The items subcategory code. Requires 'category' to be present.",
+                                    "example":"Condiment"
+                                },
+                                "description":{
+                                    "type":"string",
+                                    "description":"The item, category or subcategory description.",
+                                    "example":"Woolworths Sour Cream"
+                                },
+                                "quantity":{
+                                    "type":"number",
+                                    "description":"The item quantity.",
+                                    "example":2
+                                },
+                                "price":{
+                                    "type":"number",
+                                    "description":"The item price.",
+                                    "example":2.25
+                                },
+                                "currency":{
+                                    "type":"string",
+                                    "description":"The country currency code.",
+                                    "enum":[
+                                        "AUD",
+                                        "NZD"
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "fraudPayload":{
                         "required":[
@@ -14851,6 +14936,39 @@
                         "rrn":"000000006564",
                         "transactionTimestamp":1528264660639
                     },
+                    "basketData":[
+                        {
+                            "itemId":"999084",
+                            "description":"Marlboro Gold Cigarettes",
+                            "quantity":1,
+                            "price":27.50,
+                            "currency":"AUD"
+                        },
+                        {
+                            "category":"Alcohol",
+                            "description":"Distilled Spirits",
+                            "quantity":1,
+                            "price":48.00,
+                            "currency":"AUD"
+                        },
+                        {
+                            "category":"Infant",
+                            "subcategory":"Baby Formula",
+                            "description":"Powder or liquid baby formula",
+                            "quantity":2,
+                            "price":17.95,
+                            "currency":"AUD"
+                        },
+                        {
+                            "itemId":"105609",
+                            "category":"Dairy",
+                            "subcategory":"Condiment",
+                            "description":"Woolworths Sour Cream",
+                            "quantity":2,
+                            "price":2.25,
+                            "currency":"AUD"
+                        }
+                    ],
                     "fraudPayload":{
                         "provider":"cybersource",
                         "version":"CyberSourceTransaction_1.101",
