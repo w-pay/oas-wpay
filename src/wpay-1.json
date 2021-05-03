@@ -17092,6 +17092,71 @@
                         },
                         "description":"The customer's billing address."
                     },
+                    "shippingAddress":{
+                        "required":[
+                            "countryCode",
+                            "firstName",
+                            "lastName",
+                            "postalCode",
+                            "stateOrTerritory",
+                            "streetAddress",
+                            "suburb"
+                        ],
+                        "type":"object",
+                        "properties":{
+                            "firstName":{
+                                "type":"string",
+                                "description":"The customer's first name.",
+                                "example":"Francois"
+                            },
+                            "lastName":{
+                                "type":"string",
+                                "description":"The customer's last name.",
+                                "example":"van der Merwe"
+                            },
+                            "email":{
+                                "type":"string",
+                                "description":"The customer’s email address.",
+                                "example":"fvandermerwe@woolworths.com.au"
+                            },
+                            "company":{
+                                "type":"string",
+                                "description":"The customer's company name.",
+                                "example":"Woolworths Limited"
+                            },
+                            "extendedAddress":{
+                                "type":"string",
+                                "description":"The customer's extended address line.",
+                                "example":"Level 1"
+                            },
+                            "streetAddress":{
+                                "type":"string",
+                                "description":"The customer's street address line.",
+                                "example":"22 River Oak Circuit"
+                            },
+                            "suburb":{
+                                "type":"string",
+                                "description":"The customer's suburb.",
+                                "example":"Kellyville"
+                            },
+                            "stateOrTerritory":{
+                                "type":"string",
+                                "description":"The customer's abbreviated state or territory.",
+                                "example":"NSW"
+                            },
+                            "postalCode":{
+                                "type":"string",
+                                "description":"The customer's postal code.",
+                                "example":"2155"
+                            },
+                            "countryCode":{
+                                "type":"string",
+                                "description":"The customer's Alpha-2 (2-character) ISO-3166-1 country code.",
+                                "example":"AU"
+                            }
+                        },
+                        "description":"The customer's shipping address."
+                    },
                     "paymentAgreement":{
                         "required":[
                             "chargeAmount",
@@ -17216,6 +17281,18 @@
                         "postalCode":"2155",
                         "countryCode":"AU"
                     },
+                    "shippingAddress":{
+                        "firstName":"Francois",
+                        "lastName":"van der Merwe",
+                        "email":"fvandermerwe@woolworths.com.au",
+                        "company":"Woolworths Limited",
+                        "extendedAddress":"Level 1",
+                        "streetAddress":"22 River Oak Circuit",
+                        "suburb":"Kellyville",
+                        "stateOrTerritory":"NSW",
+                        "postalCode":"2155",
+                        "countryCode":"AU"
+                    },
                     "paymentAgreement":{
                         "type":"RECURRING",
                         "paymentInstrumentId":"90731",
@@ -17316,6 +17393,71 @@
                         },
                         "description":"The customer's billing address."
                     },
+                    "shippingAddress":{
+                        "required":[
+                            "countryCode",
+                            "firstName",
+                            "lastName",
+                            "postalCode",
+                            "stateOrTerritory",
+                            "streetAddress",
+                            "suburb"
+                        ],
+                        "type":"object",
+                        "properties":{
+                            "firstName":{
+                                "type":"string",
+                                "description":"The customer's first name.",
+                                "example":"Francois"
+                            },
+                            "lastName":{
+                                "type":"string",
+                                "description":"The customer's last name.",
+                                "example":"van der Merwe"
+                            },
+                            "email":{
+                                "type":"string",
+                                "description":"The customer’s email address.",
+                                "example":"fvandermerwe@woolworths.com.au"
+                            },
+                            "company":{
+                                "type":"string",
+                                "description":"The customer's company name.",
+                                "example":"Woolworths Limited"
+                            },
+                            "extendedAddress":{
+                                "type":"string",
+                                "description":"The customer's extended address line.",
+                                "example":"Level 1"
+                            },
+                            "streetAddress":{
+                                "type":"string",
+                                "description":"The customer's street address line.",
+                                "example":"22 River Oak Circuit"
+                            },
+                            "suburb":{
+                                "type":"string",
+                                "description":"The customer's suburb.",
+                                "example":"Kellyville"
+                            },
+                            "stateOrTerritory":{
+                                "type":"string",
+                                "description":"The customer's abbreviated state or territory.",
+                                "example":"NSW"
+                            },
+                            "postalCode":{
+                                "type":"string",
+                                "description":"The customer's postal code.",
+                                "example":"2155"
+                            },
+                            "countryCode":{
+                                "type":"string",
+                                "description":"The customer's Alpha-2 (2-character) ISO-3166-1 country code.",
+                                "example":"AU"
+                            }
+                        },
+                        "description":"The customer's shipping address."
+                    },
                     "paymentAgreement":{
                         "type":"object",
                         "properties":{
@@ -17407,6 +17549,18 @@
                     "clientReference":"T5ESYRPWJKPHF54",
                     "customerRef":"654321",
                     "billingAddress":{
+                        "firstName":"Francois",
+                        "lastName":"van der Merwe",
+                        "email":"fvandermerwe@woolworths.com.au",
+                        "company":"Woolworths Limited",
+                        "extendedAddress":"Level 1",
+                        "streetAddress":"22 River Oak Circuit",
+                        "suburb":"Kellyville",
+                        "stateOrTerritory":"NSW",
+                        "postalCode":"2155",
+                        "countryCode":"AU"
+                    },
+                    "shippingAddress":{
                         "firstName":"Francois",
                         "lastName":"van der Merwe",
                         "email":"fvandermerwe@woolworths.com.au",
@@ -18029,6 +18183,11 @@
                         "description":"The merchant order number of the transaction.",
                         "example":"20170505090"
                     },
+                    "customerPurchaseOrder":{
+                        "type":"string",
+                        "description":"The customer purchase order number of the transaction.",
+                        "example":"PO-2637804560"
+                    },
                     "channel":{
                         "type":"string",
                         "description":"The channel from which this charge is originating, eg. Online, In-Store.",
@@ -18099,6 +18258,7 @@
                     "clientReference":"T5ESYRPWJKPHF54",
                     "customerRef":"654321",
                     "orderNumber":"20170505090",
+                    "customerPurchaseOrder":"PO-2637804560",
                     "channel":"Online",
                     "tradingAccountId":"Jt4jeXZ1CcmZCTKkHAuN",
                     "merchantTransactedAt":"2020-06-19T14:30:00.000+1100",
