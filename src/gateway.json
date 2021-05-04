@@ -1,0 +1,773 @@
+{
+    "openapi":"3.0.3",
+    "info":{
+        "title":"Gateway APIs",
+        "description":"Gateway APIs for payments and wallet management",
+        "version":"1.0.0"
+    },
+    "servers":[
+        {
+            "url":"https://dev.wpay.com.au/wow/v1/pay/gateway",
+            "description":"Development environment"
+        },
+        {
+            "url":"https://test.wpay.com.au/wow/v1/pay/gateway",
+            "description":"System test environment"
+        },
+        {
+            "url":"https://uat.wpay.com.au/wow/v1/pay/gateway",
+            "description":"User acceptance environment"
+        },
+        {
+            "url":"https://api.wpay.com.au/wow/v1/pay/gateway",
+            "description":"Production environment"
+        },
+        {
+            "url":"https://capi.wpay.com.au/wow/v1/pay/gateway",
+            "description":"Critical production environment"
+        }
+    ],
+    "security":[
+        {
+            "ApiKeyAuth":[]
+        }
+    ],
+    "tags":[
+        {
+            "name":"Customer"
+        },
+        {
+            "name":"Merchant"
+        }
+    ],
+    "components":{
+        "schemas":{
+            "error":{
+                "description":"The details of an error that has occurred",
+                "required":[
+                    "httpStatusCode",
+                    "errorCode",
+                    "errorMessage",
+                    "errorDetail"
+                ],
+                "type":"object",
+                "properties":{
+                    "httpStatusCode":{
+                        "description":"The http status code (4xx and 5xx HTTP status codes)",
+                        "type":"number",
+                        "example":500
+                    },
+                    "errorCode":{
+                        "description":"The error code",
+                        "type":"string",
+                        "example":"AP99"
+                    },
+                    "errorMessage":{
+                        "description":"The error message",
+                        "type":"string",
+                        "example":"Internal Server Error"
+                    },
+                    "errorDetail":{
+                        "description":"The error detail",
+                        "type":"string",
+                        "example":"Oops! An error has occurred: ScriptExecutionFailed"
+                    }
+                },
+                "example":{
+                    "httpStatusCode":500,
+                    "errorCode":"AP99",
+                    "errorMessage":"Internal Server Error",
+                    "errorDetail":"Oops! An error has occurred: ScriptExecutionFailed"
+                }
+            },
+            "meta":{
+                "description":"Object to contain any metadata",
+                "type":"object",
+                "additionalProperties":true
+            },
+            "metaPaginated":{
+                "description":"Meta Object containing pagination information",
+                "type":"object",
+                "required":[
+                    "recordCount",
+                    "totalRecords"
+                ],
+                "properties":{
+                    "recordCount":{
+                        "description":"The number of records returned in the result set",
+                        "type":"integer",
+                        "minimum":0
+                    },
+                    "totalRecords":{
+                        "description":"The number of records in total in the full query set",
+                        "type":"integer",
+                        "minimum":0
+                    }
+                }
+            },
+            "metaChallenge":{
+                "description":"Meta Object containing responses to a step up challenges",
+                "type":"object",
+                "properties":{
+                    "challengeResponses":{
+                        "description":"The collection of challenges",
+                        "type":"array",
+                        "items":{
+                            "description":"The response to a step up challenge (e.g. credit card step up or gift card passcode)",
+                            "type":"object",
+                            "required":[
+                                "instrumentId",
+                                "type",
+                                "token"
+                            ],
+                            "properties":{
+                                "instrumentId":{
+                                    "description":"The instrument id related to the step up challenge",
+                                    "type":"string"
+                                },
+                                "type":{
+                                    "description":"The type of token that has been provided",
+                                    "type":"string",
+                                    "enum":[
+                                        "STEP_UP",
+                                        "PASSCODE"
+                                    ]
+                                },
+                                "token":{
+                                    "description":"The value requested by the challenge",
+                                    "type":"string"
+                                },
+                                "reference":{
+                                    "description":"An optional reference that could be used for audit tracing",
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "metaEncrypted":{
+                "description":"Meta Object containing encrypted information",
+                "type":"object",
+                "properties":{
+                    "cipherText":{
+                        "description":"An encrypted JSON object containing sensitive data",
+                        "type":"string",
+                        "example":"INLh2cH2MtnTKQ1RxwwWQHiXUZ2B04KhXMFh1P1fMYYvy2rSKygl1Ew"
+                    }
+                }
+            },
+            "billingAddress": {
+                "required": [
+                  "countryCode",
+                  "firstName",
+                  "lastName",
+                  "postalCode",
+                  "stateOrTerritory",
+                  "streetAddress",
+                  "suburb"
+                ],
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "description": "The customer's first name.",
+                    "example": "Francois"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "description": "The customer's last name.",
+                    "example": "van der Merwe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "The customer’s email address.",
+                    "example": "fvandermerwe@woolworths.com.au"
+                  },
+                  "company": {
+                    "type": "string",
+                    "description": "The customer's company name.",
+                    "example": "Woolworths Limited"
+                  },
+                  "extendedAddress": {
+                    "type": "string",
+                    "description": "The customer's extended address line.",
+                    "example": "Level 1"
+                  },
+                  "streetAddress": {
+                    "type": "string",
+                    "description": "The customer's street address line.",
+                    "example": "22 River Oak Circuit"
+                  },
+                  "suburb": {
+                    "type": "string",
+                    "description": "The customer's suburb.",
+                    "example": "Kellyville"
+                  },
+                  "stateOrTerritory": {
+                    "type": "string",
+                    "description": "The customer's abbreviated state or territory.",
+                    "example": "NSW"
+                  },
+                  "postalCode": {
+                    "type": "string",
+                    "description": "The customer's postal code.",
+                    "example": "2155"
+                  },
+                  "countryCode": {
+                    "type": "string",
+                    "description": "The customer's Alpha-2 (2-character) ISO-3166-1 country code.",
+                    "example": "AU"
+                  }
+                },
+                "description": "The customer's billing address."
+            }
+        },
+        "parameters": {
+            "apiKeyParam": {
+                "name": "x-api-key",
+                "description": "You are required to use this header, to provide the API key, if this endpoint is being called directly from a web browser based site/page using client side code (eg. via javascript using AJAX).",
+                "in": "header",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "x-example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+                }
+            },
+            "authKeyParam": {
+                "name": "a-auth-key",
+                "description": "You are required to use this header, to provide the base64 encoded API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server.",
+                "in": "header",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "x-example": "OHR1Ull5TVk53NjI5Ng=="
+                }
+            },
+            "authDigestParam": {
+                "name": "x-auth-digest",
+                "description": "You are required to use this header, to provide the encrypted API key, if this endpoint is being called from an app (eg. mobile apps) in which case the client secret key can be stored securely on the device, or the calls are made from a server (eg. web server) in which case the client secret key can be stores securely on the server. The API key is encrypted with the client secret key.",
+                "in": "header",
+                "required": false,
+                "schema": {
+                    "type": "string",
+                    "x-example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
+                }
+            },
+            "messageIdParam": {
+                "name": "x-message-id",
+                "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in OR generated for the request.",
+                "in": "header",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "x-example": "f23c096b2e816da158fdf1ad839298e2"
+                }
+            },
+            "authorizationParam": {
+                "name": "authorization",
+                "description": "The access token is obtained from the auth/login endpoint after a user is authenticated. This token is a bearer token.",
+                "in": "header",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "x-example": "Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
+                }
+            },
+            "versionParam": {
+                "name": "x-v",
+                "description": "The version of the end point requested for this invocation.",
+                "in": "header",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "x-example": "1"
+                }
+            }
+        },
+        "requestBodies": {
+            "verifyPaymentInstrumentsRequest": {
+                "description": "The JSON request structure of the Verify Payment Instruments endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required":[
+                                        "clientReference",
+                                        "paymentInstruments"
+                                    ],
+                                    "type":"object",
+                                    "properties":{
+                                        "clientReference":{
+                                            "type":"string",
+                                            "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                                            "example":"T5ESYRPWJKPHF54"
+                                        },
+                                        "paymentInstruments":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "paymentToken"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentToken":{
+                                                        "type":"string",
+                                                        "description":"The payment token.",
+                                                        "example":"f63fbfa8-0a2f-48a6-9162-6b102161a05b"
+                                                    },
+                                                    "stepUpToken":{
+                                                        "type":"string",
+                                                        "description":"The step-up token is used to track additional credit card information (eg. CVV and expiry) attached to the payment instrument. It's only valid for a predefined time and if an expired step-up token is used during payment, the payment for that instrument will fail and the user will have to get a new step-up token before retrying the payment. A step-up token is returned in the response of a credit card iframe. This property is currently only required for credit card instruments and only if specific credit card information (eg. CVV and expiry) is required during payment.",
+                                                        "example":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "fraudPayload":{
+                                            "required":[
+                                                "format",
+                                                "message",
+                                                "provider",
+                                                "responseFormat",
+                                                "version"
+                                            ],
+                                            "type":"object",
+                                            "properties":{
+                                                "provider":{
+                                                    "type":"string",
+                                                    "description":"The fraud check provider.",
+                                                    "example":"cybersource"
+                                                },
+                                                "version":{
+                                                    "type":"string",
+                                                    "description":"The fraud check version.",
+                                                    "example":"CyberSourceTransaction_1.101"
+                                                },
+                                                "format":{
+                                                    "type":"string",
+                                                    "description":"The fraud check message format.",
+                                                    "enum":[
+                                                        "ZIP_BASE_64_ENCODED",
+                                                        "XML"
+                                                    ]
+                                                },
+                                                "responseFormat":{
+                                                    "type":"string",
+                                                    "description":"The fraud check response message format.",
+                                                    "enum":[
+                                                        "ZIP_BASE_64_ENCODED",
+                                                        "XML"
+                                                    ]
+                                                },
+                                                "message":{
+                                                    "type":"string",
+                                                    "description":"The fraud check message.",
+                                                    "example":"GzbOxpLagX6iFEb7td61cZyA="
+                                                }
+                                            },
+                                            "description":"Set to null to skip the fraud check."
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "clientReference": "T5ESYRPWJKPHF54",
+                            "paymentInstruments": [
+                                {
+                                    "paymentToken": "f63fbfa8-0a2f-48a6-9162-6b102161a05b",
+                                    "stepUpToken": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                                }
+                            ],
+                            "fraudPayload": {
+                                "provider": "cybersource",
+                                "version": "CyberSourceTransaction_1.101",
+                                "format": "ZIP_BASE_64_ENCODED",
+                                "responseFormat": "ZIP_BASE_64_ENCODED",
+                                "message": "GzbOxpLagX6iFEb7td61cZyA="
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses":{
+            "getGatewaySessionResponse":{
+                "description": "The JSON response structure of the Customer get Gateway Session endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required":[
+                                       "sessionId",
+                                       "status",
+                                       "merchantReference",
+                                       "type",
+                                       "merchant",
+                                       "customer"
+                                    ],
+                                    "type":"object",
+                                    "properties":{
+                                        "type":{
+                                            "type":"string",
+                                            "description":"Type of Gateway session",
+                                            "example":"PAYMENT"
+                                        },
+                                        "merchantReference":{
+                                            "type":"string",
+                                            "description":"Merchant reference for a payment or Wallet identifier for wallet management session",
+                                            "example":"20260513153215"
+                                        },
+                                        "status":{
+                                            "type":"string",
+                                            "description":"Status of the Gateway session",
+                                            "example":"NEW"
+                                        },
+                                        "sessionId":{
+                                            "type":"string",
+                                            "description":"Unique identifier for the Gateway session",
+                                            "example":"00e81b8a-a318-4a19-bcdd-53b558fae052"
+                                        },
+                                        "merchant":{
+                                            "type":"object",
+                                            "required": [
+                                                "merchantId",
+                                                "apiKey",
+                                                "merchantRequiresCvv"
+                                            ],
+                                            "properties":{
+                                                "merchantId":{
+                                                    "type":"string",
+                                                    "description": "Merchant identifier"
+                                                },
+                                                "apiKey":{
+                                                    "type":"string",
+                                                    "description": "API key used for the merchant"
+                                                },
+                                                "merchantRequiresCvv":{
+                                                    "type":"boolean",
+                                                    "description": "Value of the the CVV required override header"
+                                                }
+                                            }
+                                        },
+                                        "customer":{
+                                            "type":"object",
+                                            "properties":{
+                                                "customerId":{
+                                                    "type":"string",
+                                                    "description":"Customer identifier",
+                                                    "example":"91215a18-3461-eb11-a812-002248145c21"
+                                                },
+                                                "firstName":{
+                                                    "type":"string",
+                                                    "description":"Customer first name",
+                                                    "example":"John"
+                                                },
+                                                "lastName":{
+                                                    "type":"string",
+                                                    "description":"Customer last name",
+                                                    "example":"Smith"
+                                                },
+                                                "isGuest":{
+                                                    "type":"boolean",
+                                                    "description":"True if this customer is completing checkout as a guest"
+                                                },
+                                                "billingAdress":{
+                                                    "$ref": "#/components/schemas/billingAddress"
+                                                }
+                                            }
+                                        },
+                                        "paymentRequests":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "properties": {
+                                                    "clientReference":{
+                                                        "description":"A client reference associated with the transaction.",
+                                                        "type":"string"
+                                                    },
+                                                    "paymentRequestId": {
+                                                        "description":"The ID of the associated payment request",
+                                                        "type":"string"
+                                                    },
+                                                    "paymentRequestType": {
+                                                        "type": "string",
+                                                        "description": ""
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "transactions":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "required": [
+                                                    "merchantId",
+                                                    "transactionId",
+                                                    "type",
+                                                    "executionTime",
+                                                    "status",
+                                                    "instruments"
+                                                ],
+                                                "properties": {
+                                                    "merchantId": {
+                                                        "type": "string",
+                                                        "description": "The ID of the merchant associated with this transaction"
+                                                    },
+                                                    "transactionId": {
+                                                        "type": "string",
+                                                        "description": "The ID of the transaction"
+                                                    },
+                                                    "clientReference": {
+                                                        "type":"string",
+                                                        "description": "An optional client reference associated with the transaction."
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "description": "The type of transaction."
+                                                    },
+                                                    "executionTime":{
+                                                        "type": "string",
+                                                        "description": "Timestamp of when the transaction occurred"
+                                                    },
+                                                    "status":{
+                                                        "type":"string",
+                                                        "description": "The current status of the transactions"
+                                                    },
+                                                    "rollback":{
+                                                        "type":"string",
+                                                        "description": "The rollback state of this transaction"
+                                                    },
+                                                    "subTransactions":{
+                                                        "type": "array",
+                                                        "description": "Array of transaction responses returned by downstream processes",
+                                                        "items":{
+                                                            "type": "object"
+
+                                                        }
+                                                    },
+                                                    "refundReason":{
+                                                        "type": "string",
+                                                        "description": "The reason provided for the refund. Only provided for REFUND transactions"
+                                                    },
+                                                    "instruments":{
+                                                        "description": "The instruments used to make the payment. For refunds and cash back amounts will be negative",
+                                                        "items":{
+                                                            "type":"object",
+                                                            "properties":{
+                                                                "paymentInstrumentId":{
+                                                                    "type": "string",
+                                                                    "description": "The ID of the Payment Instrument"
+                                                                },
+                                                                "instrumentType":{
+                                                                    "type": "string",
+                                                                    "description": "The type of the payment instrument"
+                                                                },
+                                                                "transactions":{
+                                                                    "type": "array",
+                                                                    "description": "The list of transactions associated with the instrument.",
+                                                                    "items":{
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "type":{
+                                                                                "type": "string",
+                                                                                "description": "The type of transaction."
+                                                                            },
+                                                                            "executionTime":{
+                                                                                "type": "string",
+                                                                                "description": "Timestamp of when the transaction occurred"
+                                                                            },
+                                                                            "paymentTransactionRef":{
+                                                                                "type": "string",
+                                                                                "description":  "The reference for the payment"
+                                                                            },
+                                                                            "status":{
+                                                                                "type": "string",
+                                                                                "description": "The current status of the transactions"
+                                                                            },
+                                                                            "amount":{
+                                                                                "type": "number",
+                                                                                "description": "The amount charged against or refunded to this instrument"
+                                                                            }
+                                                                        }       
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "paymentAgreements":{
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "properties": {}
+                                            }
+                                        },
+                                        "cartInfo":{
+                                            "type": "object",
+                                            "description": "Information from the merchant about the cart for this purchase",
+                                            "properties": {
+                                                "checkoutId":{
+                                                    "type": "string",
+                                                    "description": "Identifier for this checkout"
+                                                },
+                                                "customerId":{
+                                                    "type": "string",
+                                                    "description": "Identifier for the customer"
+                                                },
+                                                "paymentAgreements":{
+                                                    "type": "array",
+                                                    "description": "List of any new payment agreements created as part of this payment",
+                                                    "items":{
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "amount": {
+                                                                "type": "string",
+                                                                "description": "Amount to be charged as part of this payment agreement"
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "description": "The description of the payment agreement"
+                                                            },
+                                                            "startDate": {
+                                                                "type": "string",
+                                                                "description": "Start date for the payment agreement"
+                                                            },
+                                                            "endDate": {
+                                                                "type": "string",
+                                                                "description": "End date for the payment agreement"
+                                                            },
+                                                            "frequency": {
+                                                                "type": "string",
+                                                                "description": "Frequency with which the payment agreement will be charged"
+                                                            },
+                                                            "immediateCharge": {
+                                                                "type": "boolean",
+                                                                "description": "Whether or not the payment agreement should be immediately charged"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "description": "Type of payment agreement"
+                                                            },
+                                                            "paymentAgreementRef": {
+                                                                "type": "string",
+                                                                "description": "Merchant reference for the payment agreement"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "basket":{
+                                                    "type":"array",
+                                                    "description": "List of items in the customer's shopping basket",
+                                                    "items":{
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "description": {
+                                                                "type": "string",
+                                                                "description": "Product description"
+                                                            },
+                                                            "price": {
+                                                                "type": "string",
+                                                                "description": "Product price"
+                                                            },
+                                                            "quantity": {
+                                                                "type": "number",
+                                                                "description": "Quantity of product to purchase"
+                                                            },
+                                                            "sku": {
+                                                                "type": "string",
+                                                                "description": "Product SKU identifier"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "billingAddress":{
+                                                    "$ref": "#/components/schemas/billingAddress"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes":{
+            "bearerAuth":{
+                "type":"http",
+                "scheme":"bearer"
+            },
+            "ApiKeyAuth":{
+                "type":"apiKey",
+                "in":"header",
+                "name":"X-Api-Key"
+            }
+        }
+    },
+
+    "paths":{
+        "/customer/session/{gatewaySessionId}":{
+            "get":{
+                "summary":"Retrieve Gateway session",
+                "operationId":"getCustomerGatewaySession",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Retrieve the Gateway session object for the customer",
+                "tags":[
+                    "Customer"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/walletIdParam" },
+                    {
+                        "in": "path",
+                        "name": "gatewaySessionId",
+                        "description": "The ID of the specific Gateway Session",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getGatewaySessionResponse"
+                    }
+                }
+            }
+        },
+        "/customer/pay/{gatewaySessionId}/complete":{},
+        "/customer/pay/{gatewaySessionId}/cancel":{},
+        "/customer/wallet/{gatewaySessionId}/complete":{},
+
+        "/merchant/session/{gatewaySessionId}":{},
+        "/merchant/ordermanagement/refund":{},
+        "/merchant/pay":{},
+        "/merchant/wallet":{}
+    }
+}
