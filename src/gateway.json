@@ -283,6 +283,26 @@
                     "type": "string",
                     "x-example": "1"
                 }
+            },
+            "walletIdParam": {
+                "name": "x-wallet-id",
+                "description": "This header contains the customer wallet Id",
+                "in": "header",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "example": "bb8f86af-9e7b-4659-85d5-346b5e99d500"
+                }
+            },
+            "merchantIdParam": {
+                "name": "x-merchant-id",
+                "description": "This header contains the merchant identifier",
+                "in": "header",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "example": "bb8f86af-9e7b-4659-85d5-346b5e99d500"
+                }
             }
         },
         "requestBodies": {
@@ -395,6 +415,176 @@
                                 "format": "ZIP_BASE_64_ENCODED",
                                 "responseFormat": "ZIP_BASE_64_ENCODED",
                                 "message": "GzbOxpLagX6iFEb7td61cZyA="
+                            }
+                        }
+                    }
+                }
+            },
+            "shopifyRequest": {
+                "description": "The JSON request structure of the Verify Payment Instruments endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "x_account_id",
+                                "x_amount",
+                                "x_currency",
+                                "x_reference",
+                                "x_shop_country",
+                                "x_signature",
+                                "x_test",
+                                "x_url_callback",
+                                "x_url_cancel",
+                                "x_url_complete",
+                                "x_shopify_order_id"
+                            ],      
+                            "type": "object",
+                            "description": "Shopify request format",
+                            "properties": {
+                                "x_account_id": {
+                                    "type": "string", 
+                                    "description": "This is an account identifier assigned to the merchant by the payment processor." 
+                                },
+                                "x_amount": {
+                                    "type": "string", 
+                                    "description": "Amount to be charged" 
+                                },
+                                "x_currency": {
+                                    "type": "string", 
+                                    "description": "Three character currency code" 
+                                },
+                                "x_reference": {
+                                    "type": "string", 
+                                    "description": "Unique reference of an order assigned by the merchant" 
+                                },
+                                "x_shop_country": {
+                                    "type": "string", 
+                                    "description": "Two character country code" 
+                                },
+                                "x_signature": {
+                                    "type": "string", 
+                                    "description": "Request signature to enable verifying requests using the signing mechanism" 
+                                },
+                                "x_test": { 
+                                    "type": "boolean", 
+                                    "description": "Is this a test request" 
+                                },
+                                "x_url_callback": {
+                                    "type": "string", 
+                                    "description": "URL to which a callback notification should be sent asynchronously" 
+                                },
+                                "x_url_cancel": {
+                                    "type": "string", 
+                                    "description": "URL to which customer must be redirected when they wish to quit payment flow and return to the merchant's site" 
+                                },
+                                "x_url_complete": {
+                                    "type": "string", 
+                                    "description": "URL to which customer must be redirected upon successfully completing payment flow" 
+                                },
+                                "x_transaction_type": {
+                                    "type": "string", 
+                                    "description": "You'll only get this value if you're using order management. The valid values are capture, refund, void" 
+                                },
+                                "x_customer_billing_address1": {
+                                    "type": "string", 
+                                    "description": "Customer billing address line 1" 
+                                },
+                                "x_customer_billing_address2": {
+                                    "type": "string", 
+                                    "description": "Customer billing address line 2" 
+                                },
+                                "x_customer_billing_city": {
+                                    "type": "string", 
+                                    "description": "Customer billing address city" 
+                                },
+                                "x_customer_billing_company": {
+                                    "type": "string", 
+                                    "description": "Customer billing address company" 
+                                },
+                                "x_customer_billing_country": {
+                                    "type": "string", 
+                                    "description": "Customer billing address country" 
+                                },
+                                "x_customer_billing_phone": {
+                                    "type": "string", 
+                                    "description": "Customer billing address phone" 
+                                },
+                                "x_customer_billing_state": {
+                                    "type": "string", 
+                                    "description": "Customer billing address state" 
+                                },
+                                "x_customer_billing_zip": {
+                                    "type": "string", 
+                                    "description": "Customer billing address zip code/postcode" 
+                                },
+                                "x_customer_email": {
+                                    "type": "string", 
+                                    "description": "Customer billing address email" 
+                                },
+                                "x_customer_first_name": {
+                                    "type": "string", 
+                                    "description": "Customer billing address first name" 
+                                },
+                                "x_customer_last_name": {
+                                    "type": "string", 
+                                    "description": "Customer billing address last name" 
+                                },
+                                "x_customer_phone": {
+                                    "type": "string", 
+                                    "description": "Customer billing address phone number" 
+                                },
+                                "x_customer_shipping_address1": {
+                                    "type": "string", 
+                                    "description": "Customer shipping address line 1" 
+                                },
+                                "x_customer_shipping_address2": {
+                                    "type": "string", 
+                                    "description": "Customer shipping address line 2" 
+                                },
+                                "x_customer_shipping_city": {
+                                    "type": "string", 
+                                    "description": "Customer shipping address city" 
+                                },
+                                "x_customer_shipping_company": {
+                                    "type": "string", 
+                                    "description": "Customer shipping address company" 
+                                },
+                                "x_customer_shipping_country": {
+                                    "type": "string", 
+                                    "description": "Customer shipping address country" 
+                                },
+                                "x_customer_shipping_first_name": {
+                                    "type": "string", 
+                                    "description": "Customer shipping address first name" 
+                                },
+                                "x_customer_shipping_last_name": {
+                                    "type": "string", 
+                                    "description": "Customer shipping address last name" 
+                                },
+                                "x_customer_shipping_phone": {
+                                    "type": "string", 
+                                    "description": "Customer shipping address phone" 
+                                },
+                                "x_customer_shipping_state": {
+                                    "type": "string", 
+                                    "description": "Customer shipping address state" 
+                                },
+                                "x_customer_shipping_zip": {
+                                    "type": "string", 
+                                    "description": "Customer shipping address zip/postcode" 
+                                },
+                                "x_description": {
+                                    "type": "string", 
+                                    "description": "Order description" 
+                                },
+                                "x_invoice": {
+                                    "type": "string", 
+                                    "description": "Invoice identifier" 
+                                },
+                                "x_shopify_order_id": { 
+                                    "type": "number", 
+                                    "description": "The unique identifier of the order the request originated from. This will only be present in order management requests." 
+                                }
                             }
                         }
                     }
@@ -713,7 +903,93 @@
                         }
                     }
                 }
-            }
+            },
+            "shopifyRedirectResponse":{
+                "description": "Shopify redirect response that allows the user to be redirected once an action is complete",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "redirectURL"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "redirectURL":{
+                                    "type": "string",
+                                    "description": "URL the user will be redirected to"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "shopifyResponse":{
+                "description": "Shopify redirect response that allows the user to be redirected once an action is complete",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "x_account_id",
+                                "x_amount",
+                                "x_currency",
+                                "x_gateway_reference",
+                                "x_reference", 
+                                "x_result", 
+                                "x_signature", 
+                                "x_test",
+                                "x_timestamp"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "x_account_id": {
+                                    "type": "string",
+                                    "description": "Echo request's x_account_id"
+                                },
+                                "x_amount": {
+                                    "type": "number",
+                                    "description": "Echo request's x_amount"
+                                },
+                                "x_currency": {
+                                    "type": "string",
+                                    "description": "Echo request's x_currency"
+                                },
+                                "x_gateway_reference": {
+                                    "type": "string",
+                                    "description": "Unique reference for each response issued by the payment processor."
+                                },
+                                "x_reference": {
+                                    "type": "string",
+                                    "description": "Echo request's x_reference"
+                                },
+                                "x_result": {
+                                    "type": "string",
+                                    "description": "Valid values are completed, failed, or pending"
+                                },
+                                "x_signature": {
+                                    "type": "string",
+                                    "description": "Response signature to enable verifying responses using the signing mechanism" 
+                                },
+                                "x_test": {
+                                    "type": "boolean",
+                                    "description": "Echo request's x_test"
+                                },
+                                "x_timestamp": {
+                                    "type": "string",
+                                    "description": "Time of transaction completion. UTC Time: YYYY-MM-DDTHH:MM:SSZ"
+                                },
+                                "x_message": {
+                                    "type": "string",
+                                    "description": "A custom error message displayed to the customer."
+                                },	
+                                "x_transaction_type": {
+                                    "type": "string",
+                                    "description": "If you're using order management, then the valid values are authorization, capture, void, and refund. If you aren't using order management, then this field will use the default value sale"
+                                }
+                            }
+                        }
+                    }
+                }
+            }   
         },
         "securitySchemes":{
             "bearerAuth":{
@@ -761,13 +1037,272 @@
                 }
             }
         },
-        "/customer/pay/{gatewaySessionId}/complete":{},
-        "/customer/pay/{gatewaySessionId}/cancel":{},
-        "/customer/wallet/{gatewaySessionId}/complete":{},
+        "/customer/pay/{gatewaySessionId}/complete":{
+            "post":{
+                "summary":"Complete Payment",
+                "operationId":"completeCustomerPayment",
+                "security":[
+                    { "ApiKeyAuth": [], "bearerAuth": [] }
+                ],
+                "description":"Complete a customer payment against a given Gateway session",
+                "tags":[
+                    "Customer"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/walletIdParam" },
+                    {
+                        "in": "path",
+                        "name": "gatewaySessionId",
+                        "description": "The ID of the specific Gateway Session",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "description":"Request payload containing payment or payments to be made against the provided cart",
+                    "required":true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "title":"customerPaymentDetails",
+                                "type":"object",
+                                "required":[
+                                    "data",
+                                    "meta"
+                                ],
+                                "properties":{
+                                    "data":{
+                                        "type": "object",
+                                        "required": ["paymentGroup"],
+                                        "properties": {
+                                            "paymentGroup": {
+                                                "type": "array",
+                                                "items":{
+                                                    "type": "object",
+                                                    "required": [
+                                                        "paymentRequestId",
+                                                        "primaryInstrument",
+                                                        "secondaryInstruments",
+                                                        "clientReference"
+                                                    ],
+                                                    "properties": {
+                                                        "paymentRequestId":{
+                                                            "type": "string",
+                                                            "description": "ID of the Payment Request that will be charged"
+                                                        },
+                                                        "primaryInstrument": {
+                                                            "type": "string",
+                                                            "description": "ID of the primary payment instrument"
+                                                        },
+                                                        "secondaryInstruments": {
+                                                            "type": "array",
+                                                            "items":{
+                                                                "type": "string",
+                                                                "description": "ID of any secondary payment instruments used as part of the transaction"
+                                                            }
+                                                        },
+                                                        "clientReference": {
+                                                            "type": "string",
+                                                            "description": "Client reference that will be used when logging the transaction"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "meta":{
+                                        "$ref":"#/components/schemas/metaChallenge"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/shopifyRedirectResponse"
+                    }
+                }
+            }
+        },
+        "/customer/pay/{gatewaySessionId}/cancel":{
+            "post":{
+                "summary":"Cancel Payment",
+                "operationId":"cancelCustomerPayment",
+                "security":[
+                    { "ApiKeyAuth": [], "bearerAuth": [] }
+                ],
+                "description":"Cancel a customer payment against a given Gateway session",
+                "tags":[
+                    "Customer"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/walletIdParam" },
+                    {
+                        "in": "path",
+                        "name": "gatewaySessionId",
+                        "description": "The ID of the specific Gateway Session",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/shopifyRedirectResponse"
+                    }
+                }
+            }
+        },
+        "/customer/wallet/{gatewaySessionId}/complete":{
+            "post":{
+                "summary":"Complete Wallet Management",
+                "operationId":"completeWalletManagement",
+                "security":[
+                    { "ApiKeyAuth": [], "bearerAuth": [] }
+                ],
+                "description":"Complete a customer wallet management session",
+                "tags":[
+                    "Customer"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/walletIdParam" },
+                    {
+                        "in": "path",
+                        "name": "gatewaySessionId",
+                        "description": "The ID of the specific Gateway Session",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/shopifyRedirectResponse"
+                    }
+                }
+            }
+        },
 
-        "/merchant/session/{gatewaySessionId}":{},
-        "/merchant/ordermanagement/refund":{},
-        "/merchant/pay":{},
-        "/merchant/wallet":{}
+        "/merchant/session/{gatewaySessionId}":{
+            "get":{
+                "summary":"Retrieve Gateway session",
+                "operationId":"getMerchantGatewaySession",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Retrieve the Gateway session object for the merchant",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/merchantIdParam" },
+                    {
+                        "in": "path",
+                        "name": "gatewaySessionId",
+                        "description": "The ID of the specific Gateway Session",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "$ref":"#/components/responses/getGatewaySessionResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/ordermanagement/refund":{
+            "post":{
+                "summary": "Refund a transaction",
+                "operationId": "merchantRefundTransaction",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Initiate a refund of a successfully processed transaction",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/merchantIdParam" }
+                ],
+                "requestBody":{
+                    "$ref": "#/components/requestBodies/shopifyRequest"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/shopifyResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/pay":{
+            "post":{
+                "summary": "Initiate a payment",
+                "operationId": "merchantInitiatePayment",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Initiate a payment to be completed by a customer",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/merchantIdParam" }
+                ],
+                "requestBody":{
+                    "$ref": "#/components/requestBodies/shopifyRequest"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/shopifyResponse"
+                    }
+                }
+            }
+        },
+        "/merchant/wallet":{
+            "post":{
+                "summary": "Initiate a wallet management session",
+                "operationId": "merchantInitiatePayment",
+                "security":[
+                    { "ApiKeyAuth":[], "bearerAuth":[] }
+                ],
+                "description":"Initiate a wallet management session for the customer",
+                "tags":[
+                    "Merchant"
+                ],
+                "parameters": [
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/merchantIdParam" }
+                ],
+                "requestBody":{
+                    "$ref": "#/components/requestBodies/shopifyRequest"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/shopifyResponse"
+                    }
+                }
+            }
+        }
     }
 }
