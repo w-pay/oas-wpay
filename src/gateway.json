@@ -85,26 +85,6 @@
                 "type":"object",
                 "additionalProperties":true
             },
-            "metaPaginated":{
-                "description":"Meta Object containing pagination information",
-                "type":"object",
-                "required":[
-                    "recordCount",
-                    "totalRecords"
-                ],
-                "properties":{
-                    "recordCount":{
-                        "description":"The number of records returned in the result set",
-                        "type":"integer",
-                        "minimum":0
-                    },
-                    "totalRecords":{
-                        "description":"The number of records in total in the full query set",
-                        "type":"integer",
-                        "minimum":0
-                    }
-                }
-            },
             "metaChallenge":{
                 "description":"Meta Object containing responses to a step up challenges",
                 "type":"object",
@@ -143,17 +123,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "metaEncrypted":{
-                "description":"Meta Object containing encrypted information",
-                "type":"object",
-                "properties":{
-                    "cipherText":{
-                        "description":"An encrypted JSON object containing sensitive data",
-                        "type":"string",
-                        "example":"INLh2cH2MtnTKQ1RxwwWQHiXUZ2B04KhXMFh1P1fMYYvy2rSKygl1Ew"
                     }
                 }
             },
@@ -584,6 +553,66 @@
                                 "x_shopify_order_id": { 
                                     "type": "number", 
                                     "description": "The unique identifier of the order the request originated from. This will only be present in order management requests." 
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "completePaymentRequest": {
+                "description":"Request payload containing payment or payments to be made against the provided cart",
+                "required":true,
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "title":"customerPaymentDetails",
+                            "type":"object",
+                            "required":[
+                                "data",
+                                "meta"
+                            ],
+                            "properties":{
+                                "data":{
+                                    "type": "object",
+                                    "description": "Request body for completing a payment request",
+                                    "properties": {
+                                        "paymentGroup": {
+                                            "type": "array",
+                                            "items":{
+                                                "type": "object",
+                                                "required": [
+                                                    "paymentRequestId",
+                                                    "primaryInstrument",
+                                                    "secondaryInstruments",
+                                                    "clientReference"
+                                                ],
+                                                "properties": {
+                                                    "paymentRequestId":{
+                                                        "type": "string",
+                                                        "description": "ID of the Payment Request that will be charged"
+                                                    },
+                                                    "primaryInstrument": {
+                                                        "type": "string",
+                                                        "description": "ID of the primary payment instrument"
+                                                    },
+                                                    "secondaryInstruments": {
+                                                        "type": "array",
+                                                        "items":{
+                                                            "type": "string",
+                                                            "description": "ID of any secondary payment instruments used as part of the transaction"
+                                                        }
+                                                    },
+                                                    "clientReference": {
+                                                        "type": "string",
+                                                        "description": "Client reference that will be used when logging the transaction"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta":{
+                                    "$ref":"#/components/schemas/metaChallenge"
                                 }
                             }
                         }
@@ -1063,64 +1092,7 @@
                     }
                 ],
                 "requestBody":{
-                    "description":"Request payload containing payment or payments to be made against the provided cart",
-                    "required":true,
-                    "content":{
-                        "application/json":{
-                            "schema":{
-                                "title":"customerPaymentDetails",
-                                "type":"object",
-                                "required":[
-                                    "data",
-                                    "meta"
-                                ],
-                                "properties":{
-                                    "data":{
-                                        "type": "object",
-                                        "required": ["paymentGroup"],
-                                        "properties": {
-                                            "paymentGroup": {
-                                                "type": "array",
-                                                "items":{
-                                                    "type": "object",
-                                                    "required": [
-                                                        "paymentRequestId",
-                                                        "primaryInstrument",
-                                                        "secondaryInstruments",
-                                                        "clientReference"
-                                                    ],
-                                                    "properties": {
-                                                        "paymentRequestId":{
-                                                            "type": "string",
-                                                            "description": "ID of the Payment Request that will be charged"
-                                                        },
-                                                        "primaryInstrument": {
-                                                            "type": "string",
-                                                            "description": "ID of the primary payment instrument"
-                                                        },
-                                                        "secondaryInstruments": {
-                                                            "type": "array",
-                                                            "items":{
-                                                                "type": "string",
-                                                                "description": "ID of any secondary payment instruments used as part of the transaction"
-                                                            }
-                                                        },
-                                                        "clientReference": {
-                                                            "type": "string",
-                                                            "description": "Client reference that will be used when logging the transaction"
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "meta":{
-                                        "$ref":"#/components/schemas/metaChallenge"
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    "$ref":"#/components/requestBodies/completePaymentRequest"
                 },
                 "responses":{
                     "200":{
