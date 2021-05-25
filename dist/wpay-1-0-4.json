@@ -2975,6 +2975,111 @@
                                         "$ref":"#/components/schemas/meta"
                                     }
                                 }
+                            },
+                            "examples": {
+                              "Example Value": {
+                                "value": {
+                                  "data": {
+                                    "merchantReferenceId": "string",
+                                    "grossAmount": 1,
+                                    "generateQR": false,
+                                    "maxUses": 1,
+                                    "timeToLivePayment": 0,
+                                    "timeToLiveQR": 0,
+                                    "specificWalletId": "string",
+                                    "basket": {
+                                      "items": [
+                                        {
+                                          "label": "string",
+                                          "description": "string",
+                                          "quantity": 0,
+                                          "unitPrice": 0,
+                                          "unitMeasure": "string",
+                                          "totalPrice": 0,
+                                          "tags": {
+                                            "additionalProp1": "string",
+                                            "additionalProp2": "string",
+                                            "additionalProp3": "string"
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "posPayload": {
+                                      "schemaId": "string",
+                                      "payload": {
+                                        "additionalProp1": {}
+                                      }
+                                    },
+                                    "merchantPayload": {
+                                      "schemaId": "string",
+                                      "payload": {
+                                        "additionalProp1": {}
+                                      }
+                                    }
+                                  },
+                                  "meta": {
+                                    "additionalProp1": {}
+                                  }
+                                }
+                              },
+                              "RPVS Payload Example": {
+                                "value": {
+                                  "data": {
+                                    "merchantReferenceId": "string",
+                                    "grossAmount": 1,
+                                    "generateQR": false,
+                                    "maxUses": 1,
+                                    "timeToLivePayment": 0,
+                                    "timeToLiveQR": 0,
+                                    "specificWalletId": "string",
+                                    "basket": {
+                                      "items": [
+                                        {
+                                          "label": "string",
+                                          "description": "string",
+                                          "quantity": 0,
+                                          "unitPrice": 0,
+                                          "unitMeasure": "string",
+                                          "totalPrice": 0,
+                                          "tags": {
+                                            "additionalProp1": "string",
+                                            "additionalProp2": "string",
+                                            "additionalProp3": "string"
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "posPayload": {
+                                      "schemaId": "string",
+                                      "payload": {
+                                        "additionalProp1": {}
+                                      }
+                                    },
+                                    "merchantPayload": {
+                                      "schemaId": "string",
+                                      "payload": {
+                                        "rpvs": {
+                                          "basket": [
+                                            {
+                                              "itemId": 1234
+                                            },
+                                            {
+                                              "category": "alcohol"
+                                            },
+                                            {
+                                              "category": "baby",
+                                              "subcategory": "formula"
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "meta": {
+                                    "additionalProp1": {}
+                                  }
+                                }
+                              }
                             }
                         }
                     }
@@ -21550,6 +21655,94 @@
                                         "totalRecords":3
                                     }
                                 }
+                            },
+                            "RPVS Validation ERROR": {
+                              "value": {
+                                "data": {
+                                  "transactions": [
+                                    {
+                                      "merchantReferenceId": "123456",
+                                      "walletId": "80856249-6847-49f8-af02-9551a039b289",
+                                      "paymentRequestId": "d98b8c61-3731-477f-a380-d3ddc80bf718",
+                                      "type": "PAYMENT",
+                                      "grossAmount": 12,
+                                      "executionTime": "2020-04-28T12:46:55.821Z",
+                                      "status": "REJECTED",
+                                      "transactionId": "0756eaaf-34cf-456f-a870-6da2bf4761a9",
+                                      "subTransactions": [
+                                        {
+                                          "errorCode": "RP-001",
+                                          "errorDetail": "Items in the basket failed RPVS validation",
+                                          "errorMessage": "PRODUCT VALIDATION FAILED",
+                                          "httpStatusCode": 403,
+                                          "paymentResponses": [
+                                            {
+                                              "errorCode": "RP-001",
+                                              "errorDetail": "Items in the basket failed RPVS validation",
+                                              "errorMessage": "PRODUCT VALIDATION FAILED",
+                                              "paymentToken": "1c936325-1a88-4910-8a97-272b1af98a79",
+                                              "paymentInstrumentId": "197627",
+                                              "paymentInstrumentType": "CREDIT_CARD",
+                                              "items": [
+                                                {
+                                                  "category": "alcohol",
+                                                  "validationErrors": [
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    },
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "category": "alcohol",
+                                                  "subcategory": "spirits",
+                                                  "validationErrors": [
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    },
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "itemId": "4569",
+                                                  "validationErrors": [
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    },
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "meta":{
+                                    "recordCount":3,
+                                    "totalRecords":3
+                                }
+                              }
                             }
                         }
                     }
@@ -21598,6 +21791,94 @@
 
                                     }
                                 }
+                            },
+                            "RPVS Validation ERROR": {
+                              "value": {
+                                "data": {
+                                  "transactions": [
+                                    {
+                                      "merchantReferenceId": "123456",
+                                      "walletId": "80856249-6847-49f8-af02-9551a039b289",
+                                      "paymentRequestId": "d98b8c61-3731-477f-a380-d3ddc80bf718",
+                                      "type": "PAYMENT",
+                                      "grossAmount": 12,
+                                      "executionTime": "2020-04-28T12:46:55.821Z",
+                                      "status": "REJECTED",
+                                      "transactionId": "0756eaaf-34cf-456f-a870-6da2bf4761a9",
+                                      "subTransactions": [
+                                        {
+                                          "errorCode": "RP-001",
+                                          "errorDetail": "Items in the basket failed RPVS validation",
+                                          "errorMessage": "PRODUCT VALIDATION FAILED",
+                                          "httpStatusCode": 403,
+                                          "paymentResponses": [
+                                            {
+                                              "errorCode": "RP-001",
+                                              "errorDetail": "Items in the basket failed RPVS validation",
+                                              "errorMessage": "PRODUCT VALIDATION FAILED",
+                                              "paymentToken": "1c936325-1a88-4910-8a97-272b1af98a79",
+                                              "paymentInstrumentId": "197627",
+                                              "paymentInstrumentType": "CREDIT_CARD",
+                                              "items": [
+                                                {
+                                                  "category": "alcohol",
+                                                  "validationErrors": [
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    },
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "category": "alcohol",
+                                                  "subcategory": "spirits",
+                                                  "validationErrors": [
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    },
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "itemId": "4569",
+                                                  "validationErrors": [
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    },
+                                                    {
+                                                      "type": "NOT_ALLOWED",
+                                                      "reasonCode": "RCNA5000",
+                                                      "reasonDescription": "Some description for RCNA5000"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "meta":{
+                                  "recordCount": 3,
+                                  "totalRecords": 3
+                                }
+                              }
                             }
                         }
                     }
