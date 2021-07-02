@@ -3,7 +3,7 @@
   "info":{
     "title":"Wpay APIs",
     "description":"Wpay APIs for payments and gifting",
-    "version":"1.0.4"
+    "version":"1.0.5"
   },
   "servers":[
     {
@@ -647,7 +647,10 @@
                     }
                   },
                   "meta":{
-                    "$ref":"#/components/schemas/metaChallenge"
+                    "allOf": [
+                        { "$ref": "#/components/schemas/metaChallenge" },
+                        { "$ref": "#/components/schemas/metaFraudPayload" }
+                    ]
                   }
                 }
               }
@@ -2062,8 +2065,11 @@
                       }
                     }
                   },
-                  "meta": {
-                    "$ref": "#/components/schemas/meta"
+                  "meta":{
+                    "allOf": [
+                        { "$ref": "#/components/schemas/metaChallenge" },
+                        { "$ref": "#/components/schemas/metaFraudPayload" }
+                    ]
                   }
                 }
               }
@@ -2188,8 +2194,11 @@
                       }
                     }
                   },
-                  "meta": {
-                    "$ref": "#/components/schemas/meta"
+                  "meta":{
+                    "allOf": [
+                        { "$ref": "#/components/schemas/metaChallenge" },
+                        { "$ref": "#/components/schemas/metaFraudPayload" }
+                    ]
                   }
                 }
               }
@@ -4384,8 +4393,11 @@
                       }
                     }
                   },
-                  "meta": {
-                    "$ref": "#/components/schemas/meta"
+                  "meta":{
+                    "allOf": [
+                        { "$ref": "#/components/schemas/metaChallenge" },
+                        { "$ref": "#/components/schemas/metaFraudPayload" }
+                    ]
                   }
                 }
               }
@@ -10625,6 +10637,53 @@
             "type":"integer",
             "minimum":0
           }
+        }
+      },
+      "metaFraudPayload":{
+        "description":"Meta object containing fraud payload to be passed to Digital Pay",
+        "type":"object",
+        "properties":{
+            "fraud":{
+                "description":"Digital Pay fraud payload",
+                "required":[
+                    "message",
+                    "provider",
+                    "format",
+                    "responseFormat",
+                    "version"
+                  ],
+                  "type":"object",
+                  "properties":{
+                    "message": {
+                        "description":"The fraud check message.",
+                        "type":"string"
+                    },
+                    "provider": {
+                        "description":"The fraud check provider.",
+                        "type":"string"
+                    },
+                    "version": {
+                        "description":"The fraud check version.",
+                        "type":"string"
+                    },
+                    "format":{
+                        "description":"The fraud check message format.",
+                        "type":"string",
+                        "enum":[
+                            "ZIP_BASE_64_ENCODED",
+                            "XML"
+                        ]
+                    },
+                    "responseFormat":{
+                        "description":"The fraud check response message format.",
+                        "type":"string",
+                        "enum":[
+                            "ZIP_BASE_64_ENCODED",
+                            "XML"
+                        ]
+                    }
+                  }
+            }
         }
       },
       "metaChallenge":{
