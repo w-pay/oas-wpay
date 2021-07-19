@@ -83,9 +83,17 @@
             "meta":{
                 "description":"Object to contain any metadata",
                 "type":"object",
-                "additionalProperties":true
-            },
-            "metaPaginated":{
+                "additionalProperties":true,
+                "properties": {
+                  "fraud": {
+                    "$ref": "#/components/schemas/metaFraudPayload"
+                  },
+                  "challengeResponses": {
+                    "$ref": "#/components/schemas/metaChallenge"
+                  }
+                }
+              },
+              "metaPaginated":{
                 "description":"Meta Object containing pagination information",
                 "type":"object",
                 "required":[
@@ -104,46 +112,81 @@
                         "minimum":0
                     }
                 }
-            },
-            "metaChallenge":{
-                "description":"Meta Object containing responses to a step up challenges",
+              },
+              "metaFraudPayload":{
+                "description":"Meta object containing fraud payload to be passed to Digital Pay",
                 "type":"object",
-                "properties":{
-                    "challengeResponses":{
-                        "description":"The collection of challenges",
-                        "type":"array",
-                        "items":{
-                            "description":"The response to a step up challenge (e.g. credit card step up or gift card passcode)",
-                            "type":"object",
-                            "required":[
-                                "instrumentId",
-                                "type",
-                                "token"
-                            ],
-                            "properties":{
-                                "instrumentId":{
-                                    "description":"The instrument id related to the step up challenge",
-                                    "type":"string"
-                                },
-                                "type":{
-                                    "description":"The type of token that has been provided",
-                                    "type":"string",
-                                    "enum":[
-                                        "STEP_UP",
-                                        "PASSCODE"
-                                    ]
-                                },
-                                "token":{
-                                    "description":"The value requested by the challenge",
-                                    "type":"string"
-                                },
-                                "reference":{
-                                    "description":"An optional reference that could be used for audit tracing",
-                                    "type":"string"
-                                }
-                            }
-                        }
+                "required":[
+                    "message",
+                    "provider",
+                    "format",
+                    "responseFormat",
+                    "version"
+                  ],
+                  "properties":{
+                    "message": {
+                        "description":"The fraud check message.",
+                        "type":"string"
+                    },
+                    "provider": {
+                        "description":"The fraud check provider.",
+                        "type":"string"
+                    },
+                    "version": {
+                        "description":"The fraud check version.",
+                        "type":"string"
+                    },
+                    "format":{
+                        "description":"The fraud check message format.",
+                        "type":"string",
+                        "enum":[
+                            "ZIP_BASE_64_ENCODED",
+                            "XML"
+                        ]
+                    },
+                    "responseFormat":{
+                        "description":"The fraud check response message format.",
+                        "type":"string",
+                        "enum":[
+                            "ZIP_BASE_64_ENCODED",
+                            "XML"
+                        ]
                     }
+                  }
+              },
+              "metaChallenge":{
+                "description":"Meta Object containing responses to a step up challenges",
+                "type":"array",
+                "items":{
+                  "description":"The response to a step up challenge (e.g. credit card step up or gift card passcode)",
+                  "type":"object",
+                  "required":[
+                    "instrumentId",
+                    "type",
+                    "token"
+                  ],
+                  "properties":{
+                    "instrumentId":{
+                      "description":"The instrument id related to the step up challenge",
+                      "type":"string"
+                    },
+                    "type":{
+                      "description":"The type of token that has been provided",
+                      "type":"string",
+                      "enum":[
+                        "STEP_UP",
+                        "PASSCODE"
+                      ]
+                    },
+                    "token":{
+                      "description":"The value requested by the challenge",
+                      "type":"string"
+                    },
+                    "reference":{
+                      "description":"An optional reference that could be used for audit tracing",
+                      "type":"string"
+                    }
+                  }
                 }
             },
             "metaEncrypted":{
@@ -10505,7 +10548,7 @@
                 },
                 "responses":{
                     "200":{
-                        "$ref":"#/components/responses/getCustomerPaymentInstrumentResponse"
+                        "$ref":"#/components/responses/getCustomerTransactionsResponse"
                     },
                     "400":{
                         "description":"Missing or invalid request payload or value.",
@@ -11269,6 +11312,271 @@
                         "description":"The QR code specified doesn't exist",
                         "$ref": "#/components/responses/errorResponse"
                     }
+                }
+            }
+        },
+        "/merchant/payments":{
+            "get":{
+                "summary":"Get Payment List",
+                "operationId":"getMerchantPayments",
+                "description":"Get a list of the payments initiated by the merchant, both pending and complete",
+                "tags":[
+                  "Merchant"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" },
+                    {
+                        "in":"query",
+                        "name":"type",
+                        "description":"The type of payment requests to return: active, inactive or both",
+                        "required":false,
+                        "schema":{
+                        "type":"string",
+                        "default":"ACTIVE",
+                        "enum":[
+                            "ACTIVE",
+                            "INACTIVE",
+                            "ALL"
+                        ],
+                        "example":"ACTIVE"
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"page-size",
+                        "description":"The number of records to return for this page.  Defaults to 25 if absent",
+                        "required":false,
+                        "schema":{
+                        "type":"integer",
+                        "default":25,
+                        "minimum":1,
+                        "maximum":500
+                        }
+                    },
+                    {
+                        "in":"query",
+                        "name":"page",
+                        "description":"The page of results to return with 1 indicating the first page.  Defaults to 1 if absent",
+                        "required":false,
+                        "schema":{
+                        "type":"integer",
+                        "default":1,
+                        "minimum":1
+                        }
+                    }
+                ],
+                "responses":{
+                  "200":{
+                    "$ref":"#/components/responses/getMerchantPaymentsResponse"
+                  }
+                }
+            },
+            "post":{
+                "summary":"Create Payment",
+                "operationId":"createPaymentRequest",
+                "description":"Create a new payment request that can then be presented to a customer for payment",
+                "tags":[
+                  "Merchant"
+                ],
+                "parameters":[
+                    { "$ref": "#/components/parameters/apiKeyParam" },
+                    { "$ref": "#/components/parameters/authKeyParam" },
+                    { "$ref": "#/components/parameters/authDigestParam" },
+                    { "$ref": "#/components/parameters/messageIdParam" },
+                    { "$ref": "#/components/parameters/authorizationParam" },
+                    { "$ref": "#/components/parameters/versionParam" }
+                ],
+                "requestBody":{
+                  "description":"Request payload containing the details of the payment to be created",
+                  "required":true,
+                  "content":{
+                    "application/json":{
+                      "schema":{
+                        "title":"merchantPaymentRequest",
+                        "type":"object",
+                        "required":[
+                          "data",
+                          "meta"
+                        ],
+                        "properties":{
+                          "data":{
+                            "description":"Mandatory data object containing response",
+                            "type":"object",
+                            "required":[
+                              "merchantReferenceId",
+                              "grossAmount"
+                            ],
+                            "properties":{
+                              "merchantReferenceId":{
+                                "description":"The unique reference for the payment as defined by the Merchant",
+                                "type":"string"
+                              },
+                              "grossAmount":{
+                                "description":"The gross amount to be paid.  Must be positive",
+                                "type":"number",
+                                "minimum":0,
+                                "exclusiveMinimum":true
+                              },
+                              "generateQR":{
+                                "description":"Flag indicating whether a QR code should be created and returned in the response",
+                                "type":"boolean",
+                                "default":false
+                              },
+                              "maxUses":{
+                                "description":"The number of times that the payment request can be used to create a payment.  Defaults to 1 if absent.  If set to 0 then the request can be used an unlimited number of times",
+                                "type":"integer",
+                                "minimum":0,
+                                "default":1
+                              },
+                              "timeToLivePayment":{
+                                "description":"The time in seconds that the payment request should remain valid.  After this time any use of the request to create a payment will fail. Default value is 0 which indicates that the code will not expire until it is deleted",
+                                "type":"integer",
+                                "minimum":0,
+                                "default":0
+                              },
+                              "timeToLiveQR":{
+                                "description":"The time in seconds that the QR code should remain valid.  After this time any use of the request to create a payment will fail. Default value is 0 which indicates that the code will not expire until it is deleted",
+                                "type":"integer",
+                                "minimum":0,
+                                "default":0
+                              },
+                              "specificWalletId":{
+                                "description":"The ID of a specific wallet for which the payment is intended.  Can be used in scenarios where a customer has previously requested that their wallet ID is retained for repeat purchase.  If supplied the payment can only be used by the intended wallet.  If absent then any wallet can create a payment against the payment request",
+                                "type":"string"
+                              },
+                              "basket":{
+                                "$ref":"#/components/schemas/basket"
+                              },
+                              "posPayload":{
+                                "$ref":"#/components/schemas/posPayload"
+                              },
+                              "merchantPayload":{
+                                "$ref":"#/components/schemas/merchantPayload"
+                              }
+                            }
+                          },
+                          "meta":{
+                            "$ref":"#/components/schemas/meta"
+                          }
+                        }
+                      },
+                      "examples": {
+                        "Example Value": {
+                          "value": {
+                            "data": {
+                              "merchantReferenceId": "string",
+                              "grossAmount": 1,
+                              "generateQR": false,
+                              "maxUses": 1,
+                              "timeToLivePayment": 0,
+                              "timeToLiveQR": 0,
+                              "specificWalletId": "string",
+                              "basket": {
+                                "items": [
+                                  {
+                                    "label": "string",
+                                    "description": "string",
+                                    "quantity": 0,
+                                    "unitPrice": 0,
+                                    "unitMeasure": "string",
+                                    "totalPrice": 0,
+                                    "tags": {
+                                      "additionalProp1": "string",
+                                      "additionalProp2": "string",
+                                      "additionalProp3": "string"
+                                    }
+                                  }
+                                ]
+                              },
+                              "posPayload": {
+                                "schemaId": "string",
+                                "payload": {
+                                  "additionalProp1": {}
+                                }
+                              },
+                              "merchantPayload": {
+                                "schemaId": "string",
+                                "payload": {
+                                  "additionalProp1": {}
+                                }
+                              }
+                            },
+                            "meta": {
+                              "additionalProp1": {}
+                            }
+                          }
+                        },
+                        "RPVS Payload Example": {
+                          "value": {
+                            "data": {
+                              "merchantReferenceId": "string",
+                              "grossAmount": 1,
+                              "generateQR": false,
+                              "maxUses": 1,
+                              "timeToLivePayment": 0,
+                              "timeToLiveQR": 0,
+                              "specificWalletId": "string",
+                              "basket": {
+                                "items": [
+                                  {
+                                    "label": "string",
+                                    "description": "string",
+                                    "quantity": 0,
+                                    "unitPrice": 0,
+                                    "unitMeasure": "string",
+                                    "totalPrice": 0,
+                                    "tags": {
+                                      "additionalProp1": "string",
+                                      "additionalProp2": "string",
+                                      "additionalProp3": "string"
+                                    }
+                                  }
+                                ]
+                              },
+                              "posPayload": {
+                                "schemaId": "string",
+                                "payload": {
+                                  "additionalProp1": {}
+                                }
+                              },
+                              "merchantPayload": {
+                                "schemaId": "string",
+                                "payload": {
+                                  "rpvs": {
+                                    "basket": [
+                                      {
+                                        "itemId": 1234
+                                      },
+                                      {
+                                        "category": "alcohol"
+                                      },
+                                      {
+                                        "category": "baby",
+                                        "subcategory": "formula"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            },
+                            "meta": {
+                              "additionalProp1": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "responses":{
+                  "200":{
+                    "$ref":"#/components/responses/createPaymentRequestResponse"
+                  }
                 }
             }
         },
