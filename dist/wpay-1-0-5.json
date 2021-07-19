@@ -593,63 +593,8 @@
           "required":true,
           "content":{
             "application/json":{
-              "schema":{
-                "title":"customerPaymentDetails",
-                "type":"object",
-                "required":[
-                  "data",
-                  "meta"
-                ],
-                "properties":{
-                  "data":{
-                    "description":"Mandatory data object containing response",
-                    "type":"object",
-                    "properties":{
-                      "primaryInstrumentId":{
-                        "description":"The Id of the primary instrument.  Will be used as the balance of the transaction.  If not present then the primary instrument from the customer preferences will be used.",
-                        "type":"string"
-                      },
-                      "secondaryInstruments":{
-                        "description":"The secondary instruments (if any) used to partially make the payment.  If not present then the primary instrument from the customer preferences will be used.  To specify that no secondary instruments should be used an empty array should be provided.",
-                        "type":"array",
-                        "items":{
-                          "description":"An instrument used for this transaction",
-                          "type":"object",
-                          "required":[
-                            "instrumentId",
-                            "amount"
-                          ],
-                          "properties":{
-                            "instrumentId":{
-                              "description":"The ID of the payment instrument",
-                              "type":"string"
-                            },
-                            "amount":{
-                              "description":"The amount to charged against this instrument.  Must be greater than zero",
-                              "type":"number",
-                              "minimum":0,
-                              "exclusiveMinimum":true
-                            }
-                          }
-                        }
-                      },
-                      "skipRollback": {
-                        "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
-                        "type": "boolean"
-                      },
-                      "clientReference":{
-                        "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
-                        "type":"string"
-                      },
-                      "preferences": {
-                        "$ref": "#/components/schemas/preferencePayments"
-                      }
-                    }
-                  },
-                  "meta":{
-                    "$ref": "#/components/schemas/meta"
-                  }
-                }
+              "schema": {
+                "$ref":"#/components/schemas/customerPaymentDetails"
               }
             }
           }
@@ -1459,63 +1404,8 @@
           "required":true,
           "content":{
             "application/json":{
-              "schema":{
-                "title":"customerPaymentDetails",
-                "type":"object",
-                "required":[
-                  "data",
-                  "meta"
-                ],
-                "properties":{
-                  "data":{
-                    "description":"Mandatory data object containing response",
-                    "type":"object",
-                    "properties":{
-                      "primaryInstrumentId":{
-                        "description":"The Id of the primary instrument.  Will be used as the balance of the transaction.  If not present then the primary instrument from the customer preferences will be used.",
-                        "type":"string"
-                      },
-                      "secondaryInstruments":{
-                        "description":"The secondary instruments (if any) used to partially make the payment.  If not present then the primary instrument from the customer preferences will be used.  To specify that no secondary instruments should be used an empty array should be provided.",
-                        "type":"array",
-                        "items":{
-                          "description":"An instrument used for this transaction",
-                          "type":"object",
-                          "required":[
-                            "instrumentId",
-                            "amount"
-                          ],
-                          "properties":{
-                            "instrumentId":{
-                              "description":"The ID of the payment instrument",
-                              "type":"string"
-                            },
-                            "amount":{
-                              "description":"The amount to charged against this instrument.  Must be greater than zero",
-                              "type":"number",
-                              "minimum":0,
-                              "exclusiveMinimum":true
-                            }
-                          }
-                        }
-                      },
-                      "skipRollback": {
-                        "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
-                        "type": "boolean"
-                      },
-                      "clientReference":{
-                        "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
-                        "type":"string"
-                      },
-                      "preferences": {
-                        "$ref": "#/components/schemas/preferencePayments"
-                      }
-                    }
-                  },
-                  "meta":{
-                    "$ref":"#/components/schemas/metaChallenge"
-                  }
-                }
+              "schema": {
+                "$ref":"#/components/schemas/customerPaymentDetails"
               }
             }
           }
@@ -20340,6 +20230,63 @@
           "description": {
             "type": "string",
             "description": "A description of the payment agreement"
+          }
+        }
+      },
+      "customerPaymentDetails": {
+        "type":"object",
+        "required":[
+          "data",
+          "meta"
+        ],
+        "properties":{
+          "data":{
+            "description":"Mandatory data object containing response",
+            "type":"object",
+            "properties":{
+              "primaryInstrumentId":{
+                "description":"The Id of the primary instrument.  Will be used as the balance of the transaction.  If not present then the primary instrument from the customer preferences will be used.",
+                "type":"string"
+              },
+              "secondaryInstruments":{
+                "description":"The secondary instruments (if any) used to partially make the payment.  If not present then the primary instrument from the customer preferences will be used.  To specify that no secondary instruments should be used an empty array should be provided.",
+                "type":"array",
+                "items":{
+                  "description":"An instrument used for this transaction",
+                  "type":"object",
+                  "required":[
+                    "instrumentId",
+                    "amount"
+                  ],
+                  "properties":{
+                    "instrumentId":{
+                      "description":"The ID of the payment instrument",
+                      "type":"string"
+                    },
+                    "amount":{
+                      "description":"The amount to charged against this instrument.  Must be greater than zero",
+                      "type":"number",
+                      "minimum":0,
+                      "exclusiveMinimum":true
+                    }
+                  }
+                }
+              },
+              "skipRollback": {
+                "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                "type": "boolean"
+              },
+              "clientReference":{
+                "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
+                "type":"string"
+              },
+              "preferences": {
+                "$ref": "#/components/schemas/preferencePayments"
+              }
+            }
+          },
+          "meta":{
+            "$ref": "#/components/schemas/meta"
           }
         }
       }
