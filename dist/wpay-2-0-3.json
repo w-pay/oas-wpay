@@ -97,20 +97,20 @@
                 "description":"Meta Object containing pagination information",
                 "type":"object",
                 "required":[
-                  "recordCount",
-                  "totalRecords"
+                    "recordCount",
+                    "totalRecords"
                 ],
                 "properties":{
-                  "recordCount":{
-                    "description":"The number of records returned in the result set",
-                    "type":"integer",
-                    "minimum":0
-                  },
-                  "totalRecords":{
-                    "description":"The number of records in total in the full query set",
-                    "type":"integer",
-                    "minimum":0
-                  }
+                    "recordCount":{
+                        "description":"The number of records returned in the result set",
+                        "type":"integer",
+                        "minimum":0
+                    },
+                    "totalRecords":{
+                        "description":"The number of records in total in the full query set",
+                        "type":"integer",
+                        "minimum":0
+                    }
                 }
               },
               "metaFraudPayload":{
@@ -188,18 +188,18 @@
                     }
                   }
                 }
-              },
-              "metaEncrypted":{
+            },
+            "metaEncrypted":{
                 "description":"Meta Object containing encrypted information",
                 "type":"object",
                 "properties":{
-                  "cipherText":{
-                    "description":"An encrypted JSON object containing sensitive data",
-                    "type":"string",
-                    "example":"INLh2cH2MtnTKQ1RxwwWQHiXUZ2B04KhXMFh1P1fMYYvy2rSKygl1Ew"
-                  }
+                    "cipherText":{
+                        "description":"An encrypted JSON object containing sensitive data",
+                        "type":"string",
+                        "example":"INLh2cH2MtnTKQ1RxwwWQHiXUZ2B04KhXMFh1P1fMYYvy2rSKygl1Ew"
+                    }
                 }
-              },
+            },
             "preferencesCustomer":{
                 "description":"Available preference settings for a customer",
                 "type":"object",
@@ -690,11 +690,14 @@
                             "description": "Information about the transaction.",
                             "properties": {
                                 "type": {
-                                    "description": "The type of transaction: PAYMENT or REFUND",
+                                    "description": "The type of transaction",
                                     "type": "string",
                                     "enum": [
                                         "PAYMENT",
-                                        "REFUND"
+                                        "REFUND",
+                                        "PREAUTH",
+                                        "COMPLETION",
+                                        "VOID"
                                     ]
                                 },
                                 "executionTime": {
@@ -875,11 +878,14 @@
                                 "example":"75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
                             },
                             "type":{
-                                "description":"The type of transaction: PAYMENT or REFUND",
+                                "description":"The type of transaction",
                                 "type":"string",
                                 "enum":[
                                     "PAYMENT",
-                                    "REFUND"
+                                    "REFUND",
+                                    "PREAUTH",
+                                    "COMPLETION",
+                                    "VOID"
                                 ]
                             },
                             "executionTime":{

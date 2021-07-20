@@ -690,11 +690,14 @@
                             "description": "Information about the transaction.",
                             "properties": {
                                 "type": {
-                                    "description": "The type of transaction: PAYMENT or REFUND",
+                                    "description": "The type of transaction",
                                     "type": "string",
                                     "enum": [
                                         "PAYMENT",
-                                        "REFUND"
+                                        "REFUND",
+                                        "PREAUTH",
+                                        "COMPLETION",
+                                        "VOID"
                                     ]
                                 },
                                 "executionTime": {
@@ -875,11 +878,14 @@
                                 "example":"75ba5b0b-7e5d-47fe-9508-29ca69fdb1d5"
                             },
                             "type":{
-                                "description":"The type of transaction: PAYMENT or REFUND",
+                                "description":"The type of transaction",
                                 "type":"string",
                                 "enum":[
                                     "PAYMENT",
-                                    "REFUND"
+                                    "REFUND",
+                                    "PREAUTH",
+                                    "COMPLETION",
+                                    "VOID"
                                 ]
                             },
                             "executionTime":{
