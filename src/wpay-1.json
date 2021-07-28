@@ -10628,6 +10628,159 @@
         },
         "x-codegen-request-body-name":"body"
       }
+    },
+    "/gifting/products/{productId}":{
+      "get":{
+        "tags":[
+          "Gifting"
+        ],
+        "summary":"Retrieve Gift Card Product Detail",
+        "description":"Obtains a list of available gift card products that can be purchased.",
+        "parameters":[
+          {
+            "name":"X-Api-Key",
+            "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+          },
+          {
+            "name":"X-Auth-Key",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name":"X-Auth-Digest",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name":"X-Message-Id",
+            "in":"header",
+            "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name":"X-JWS-Signature",
+            "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+          },
+          {
+            "in":"path",
+            "name":"productId",
+            "description":"The ID of the specific gift card product",
+            "required":true,
+            "schema":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses":{
+          "200":{
+            "$ref":"#/components/responses/giftingProductDetailSuccessResponse"
+          },
+          "400":{
+            "description":"Missing or invalid request payload or value.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "401":{
+            "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "404":{
+            "description":"Invalid API Route.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "500":{
+            "description":"An unknown error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "501":{
+            "description":"A Business Validation error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/OpenpayRefundsErrorResponse"
+                }
+              }
+            }
+          },
+          "502":{
+            "description":"An Internal System error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "503":{
+            "description":"The Service is currently unavailable.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "504":{
+            "description":"The request timed out.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name":"body"
+      }
     }
   },
   "components":{
@@ -11733,91 +11886,193 @@
             "type": "array",
             "description": "Array of products",
             "items":{
-              "required":[
-                "productId",
-                "name",
-                "processor",
-                "lastUpdateDateTime",
-                "defaultDesign"
-              ],
-              "type":"object",
-              "properties":{
-                "productId": {
-                  "description":"Unique identifier assigned to gift card program",
+              "$ref": "#/components/schemas/giftingProduct"
+            }
+          }
+        }
+      },
+      "giftingProduct": {
+        "description": "Gift card product summary data",
+        "required":[
+          "productId",
+          "name",
+          "barCodeType",
+          "lastUpdateDateTime",
+          "defaultDesign"
+        ],
+        "type":"object",
+        "properties":{
+          "productId": {
+            "description":"Unique identifier assigned to gift card program",
+            "type":"string"
+          },
+          "name": {
+            "description":"Display name of the gift card program",
+            "type":"string"
+          },
+          "barCodeType": {
+            "description":"The manner in which the barcode is displayed for optical recognition (can be used to drive CX experience flows)",
+            "type":"string",
+            "enum": [
+              "PAN",
+              "GTIN"
+            ]
+          },
+          "lastUpdateDateTime": {
+            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+            "type":"string",
+            "description":"The timestamp the gift card program was last updated. The timestamp format is ISO8601.",
+            "example":"2017-10-26T04:56:25.046Z"
+          },
+          "defaultDesign": {
+            "$ref": "#/components/schemas/giftingProductDesign"
+          },
+          "discountOffered": {
+            "$ref": "#/components/schemas/giftingProductDiscount"
+          }
+        }
+      },
+      "giftingProductDetail": {
+        "description": "Gift card product detailed data",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/giftingProduct"
+          },
+          {
+            "required":[
+              "redemptionType",
+              "minValue",
+              "maxValue",
+              "isActive",
+              "availability",
+              "designs"
+            ],
+            "type":"object",
+            "properties":{
+              "redemptionInstructions": {
+                "description":"Display instruction on where and how to redeem the product",
+                "type":"string"
+              },
+              "redemptionType": {
+                "description":"The enabled redemption channels",
+                "type":"string",
+                "enum": [
+                  "INSTORE",
+                  "ONLINE",
+                  "BOTH"
+                ]
+              },
+              "termsAndConditions": {
+                "description":"Terms and conditions text for the gift card product",
+                "type":"string"
+              },
+              "minValue": {
+                "description":"Minimum AUD value gift card able to be purchased for this product",
+                "type":"integer"
+              },
+              "maxValue": {
+                "description":"Maximum AUD value gift card able to be purchased for this product",
+                "type":"integer"
+              },
+              "expiryPeriodInDays": {
+                "description":"Expiry period for the gift card product once purchased",
+                "type":"integer"
+              },
+              "expiryPeriodText": {
+                "description":"Display text for the expiry period",
+                "type":"string"
+              },
+              "isActive": {
+                "description":"Returns true if the gift card product is active, else false. Only active programs are orderable",
+                "type":"boolean"
+              },
+              "redemptionStores": {
+                "description":"The stores in which the gift card product is able to be redeemed",
+                "type":"array",
+                "items": {
                   "type":"string"
-                },
-                "name": {
-                  "description":"Display name of the gift card program",
-                  "type":"string"
-                },
-                "processor": {
-                  "description":"The underlying processor of the gift card program",
-                  "type":"string",
-                  "enum": [
-                    "WEX",
-                    "QC"
-                  ]
-                },
-                "lastUpdateDateTime": {
-                  "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
-                  "type":"string",
-                  "description":"The timestamp the gift card program was last updated. The timestamp format is ISO8601.",
-                  "example":"2017-10-26T04:56:25.046Z"
-                },
-                "defaultDesign": {
-                  "required":[
-                    "designId",
-                    "imageUrl"
-                  ],
-                  "type":"object",
-                  "properties":{
-                    "designId": {
-                      "description":"Unique identifier of the aesthectic design of the gift card",
-                      "type":"string"
-                    },
-                    "imageUrl": {
-                      "description":"URL to the image for the gift card design",
-                      "type":"string"
-                    }
-                  }
-                },
-                "discountOffered": {
-                  "required":[
-                    "discountId",
-                    "description",
-                    "percentageDiscount"
-                  ],
-                  "type":"object",
-                  "properties":{
-                    "discountId": {
-                      "description":"Unique identifier of the discount",
-                      "type":"string"
-                    },
-                    "description": {
-                      "description":"Display description of the discount",
-                      "type":"string"
-                    },
-                    "percentageDiscount": {
-                      "description":"Percentage discount offered on the gift card",
-                      "type":"integer",
-                      "minimum":0
-                    },
-                    "startDate": {
-                      "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
-                      "type":"string",
-                      "description":"The start date of the offered discount. The timestamp format is ISO8601.",
-                      "example":"2017-10-26T00:00:00.000Z"
-                    },
-                    "endDate": {
-                      "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
-                      "type":"string",
-                      "description":"The end date of the offered discount. The timestamp format is ISO8601.",
-                      "example":"2017-10-26T00:00:00.000Z"
-                    }
-                  }
+                }
+              },
+              "availability": {
+                "description":"Digital or phyiscal availability of the gift card",
+                "type":"string",
+                "enum": [
+                  "DIGITAL",
+                  "PHYSICAL",
+                  "BOTH"
+                ]
+              },
+              "designs": {
+                "description":"Array of all alternative designs for the gift card product",
+                "type":"array",
+                "items": {
+                  "$ref": "#/components/schemas/giftingProductDesign"
                 }
               }
             }
+          }
+        ]
+      },
+      "giftingProductDesign": {
+        "description": "The aesthectic design of a gift card product",
+        "required":[
+          "designId",
+          "imageUrl",
+          "designType"
+        ],
+        "type":"object",
+        "properties":{
+          "designId": {
+            "description":"Unique (within the scope of designType) identifier of the aesthectic design of the gift card",
+            "type":"string"
+          },
+          "designType": {
+            "description":"Format of the design (note that different design types have different unique IDs)",
+            "type":"string",
+            "enum": [
+              "DIGITAL",
+              "PHYSICAL"
+            ]
+          },
+          "imageUrl": {
+            "description":"URL to the image for the gift card design",
+            "type":"string"
+          }
+        }
+      },
+      "giftingProductDiscount": {
+        "description": "A discount offered for a gift card product",
+        "required":[
+          "discountId",
+          "description",
+          "percentageDiscount"
+        ],
+        "type":"object",
+        "properties":{
+          "discountId": {
+            "description":"Unique identifier of the discount",
+            "type":"string"
+          },
+          "description": {
+            "description":"Display description of the discount",
+            "type":"string"
+          },
+          "percentageDiscount": {
+            "description":"Percentage discount offered on the gift card",
+            "type":"integer",
+            "minimum":0
+          },
+          "startDate": {
+            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+            "type":"string",
+            "description":"The start date of the offered discount. The timestamp format is ISO8601.",
+            "example":"2017-10-26T00:00:00.000Z"
+          },
+          "endDate": {
+            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+            "type":"string",
+            "description":"The end date of the offered discount. The timestamp format is ISO8601.",
+            "example":"2017-10-26T00:00:00.000Z"
           }
         }
       },
@@ -22458,6 +22713,28 @@
                       }
                     }
                   }
+                },
+                "meta":{
+                  "$ref":"#/components/schemas/metaPaginated"
+                }
+              }
+            }
+          }
+        }
+      },
+      "giftingProductDetailSuccessResponse": {
+        "description":"Successful response",
+        "content":{
+          "application/json":{
+            "schema":{
+              "type":"object",
+              "required":[
+                "data",
+                "meta"
+              ],
+              "properties":{
+                "data":{
+                  "$ref":"#/components/schemas/giftingProductDetail"
                 },
                 "meta":{
                   "$ref":"#/components/schemas/metaPaginated"
