@@ -1724,50 +1724,6 @@
                                                     }
                                                 }
                                             }
-                                        },
-                                        "fraudPayload":{
-                                            "required":[
-                                                "format",
-                                                "message",
-                                                "provider",
-                                                "responseFormat",
-                                                "version"
-                                            ],
-                                            "type":"object",
-                                            "properties":{
-                                                "provider":{
-                                                    "type":"string",
-                                                    "description":"The fraud check provider.",
-                                                    "example":"cybersource"
-                                                },
-                                                "version":{
-                                                    "type":"string",
-                                                    "description":"The fraud check version.",
-                                                    "example":"CyberSourceTransaction_1.101"
-                                                },
-                                                "format":{
-                                                    "type":"string",
-                                                    "description":"The fraud check message format.",
-                                                    "enum":[
-                                                        "ZIP_BASE_64_ENCODED",
-                                                        "XML"
-                                                    ]
-                                                },
-                                                "responseFormat":{
-                                                    "type":"string",
-                                                    "description":"The fraud check response message format.",
-                                                    "enum":[
-                                                        "ZIP_BASE_64_ENCODED",
-                                                        "XML"
-                                                    ]
-                                                },
-                                                "message":{
-                                                    "type":"string",
-                                                    "description":"The fraud check message.",
-                                                    "example":"GzbOxpLagX6iFEb7td61cZyA="
-                                                }
-                                            },
-                                            "description":"Set to null to skip the fraud check."
                                         }
                                     }
                                 },
@@ -1777,19 +1733,23 @@
                             }
                         },
                         "example": {
-                            "clientReference": "T5ESYRPWJKPHF54",
-                            "paymentInstruments": [
-                                {
-                                    "paymentToken": "f63fbfa8-0a2f-48a6-9162-6b102161a05b",
-                                    "stepUpToken": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                            "data": {
+                                "clientReference": "T5ESYRPWJKPHF54",
+                                "paymentInstruments": [
+                                    {
+                                        "paymentToken": "f63fbfa8-0a2f-48a6-9162-6b102161a05b",
+                                        "stepUpToken": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                                    }
+                                ]
+                            },
+                            "meta": {
+                                "fraud": {
+                                    "provider": "cybersource",
+                                    "version": "CyberSourceTransaction_1.101",
+                                    "format": "ZIP_BASE_64_ENCODED",
+                                    "responseFormat": "ZIP_BASE_64_ENCODED",
+                                    "message": "GzbOxpLagX6iFEb7td61cZyA="
                                 }
-                            ],
-                            "fraudPayload": {
-                                "provider": "cybersource",
-                                "version": "CyberSourceTransaction_1.101",
-                                "format": "ZIP_BASE_64_ENCODED",
-                                "responseFormat": "ZIP_BASE_64_ENCODED",
-                                "message": "GzbOxpLagX6iFEb7td61cZyA="
                             }
                         }
                     }
@@ -1955,50 +1915,6 @@
                                                     "example":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
                                                 }
                                             }
-                                        },
-                                        "fraudPayload":{
-                                            "required":[
-                                                "format",
-                                                "message",
-                                                "provider",
-                                                "responseFormat",
-                                                "version"
-                                            ],
-                                            "type":"object",
-                                            "properties":{
-                                                "provider":{
-                                                    "type":"string",
-                                                    "description":"The fraud check provider.",
-                                                    "example":"cybersource"
-                                                },
-                                                "version":{
-                                                    "type":"string",
-                                                    "description":"The fraud check version.",
-                                                    "example":"CyberSourceTransaction_1.101"
-                                                },
-                                                "format":{
-                                                    "type":"string",
-                                                    "description":"The fraud check message format.",
-                                                    "enum":[
-                                                        "ZIP_BASE_64_ENCODED",
-                                                        "XML"
-                                                    ]
-                                                },
-                                                "responseFormat":{
-                                                    "type":"string",
-                                                    "description":"The fraud check response message format.",
-                                                    "enum":[
-                                                        "ZIP_BASE_64_ENCODED",
-                                                        "XML"
-                                                    ]
-                                                },
-                                                "message":{
-                                                    "type":"string",
-                                                    "description":"The fraud check message.",
-                                                    "example":"GzbOxpLagX6iFEb7td61cZyA="
-                                                }
-                                            },
-                                            "description":"Set to null to skip the fraud check."
                                         }
                                     }
                                 },
@@ -2008,37 +1924,41 @@
                             }
                         },
                         "example": {
-                            "clientReference": "T5ESYRPWJKPHF54",
-                            "customerRef": "654321",
-                            "orderNumber": "201905070001",
-                            "billingAddress": {
-                                "firstName": "Francois",
-                                "lastName": "van der Merwe",
-                                "email": "fvandermerwe@woolworths.com.au",
-                                "company": "Woolworths Limited",
-                                "extendedAddress": "Level 1",
-                                "streetAddress": "22 River Oak Circuit",
-                                "suburb": "Kellyville",
-                                "stateOrTerritory": "NSW",
-                                "postalCode": "2155",
-                                "countryCode": "AU"
+                            "data": {
+                                "clientReference": "T5ESYRPWJKPHF54",
+                                "customerRef": "654321",
+                                "orderNumber": "201905070001",
+                                "billingAddress": {
+                                    "firstName": "Francois",
+                                    "lastName": "van der Merwe",
+                                    "email": "fvandermerwe@woolworths.com.au",
+                                    "company": "Woolworths Limited",
+                                    "extendedAddress": "Level 1",
+                                    "streetAddress": "22 River Oak Circuit",
+                                    "suburb": "Kellyville",
+                                    "stateOrTerritory": "NSW",
+                                    "postalCode": "2155",
+                                    "countryCode": "AU"
+                                },
+                                "paymentAgreement": {
+                                    "type": "RECURRING",
+                                    "paymentInstrumentId": "90731",
+                                    "startDate": "2018-09-01T00:00:00.000+1100",
+                                    "endDate": "2018-12-31T23:59:59.999+1100",
+                                    "chargeFrequency": "WEEKLY",
+                                    "chargeAmount": 25.99,
+                                    "immediateCharge": true,
+                                    "stepUpToken": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                                }
                             },
-                            "paymentAgreement": {
-                                "type": "RECURRING",
-                                "paymentInstrumentId": "90731",
-                                "startDate": "2018-09-01T00:00:00.000+1100",
-                                "endDate": "2018-12-31T23:59:59.999+1100",
-                                "chargeFrequency": "WEEKLY",
-                                "chargeAmount": 25.99,
-                                "immediateCharge": true,
-                                "stepUpToken": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
-                            },
-                            "fraudPayload": {
-                                "provider": "cybersource",
-                                "version": "CyberSourceTransaction_1.101",
-                                "format": "ZIP_BASE_64_ENCODED",
-                                "responseFormat": "ZIP_BASE_64_ENCODED",
-                                "message": "GzbOxpLagX6iFEb7td61cZyA="
+                            "meta": {
+                                "fraud": {
+                                    "provider": "cybersource",
+                                    "version": "CyberSourceTransaction_1.101",
+                                    "format": "ZIP_BASE_64_ENCODED",
+                                    "responseFormat": "ZIP_BASE_64_ENCODED",
+                                    "message": "GzbOxpLagX6iFEb7td61cZyA="
+                                }
                             }
                         }
                     }
@@ -2176,50 +2096,6 @@
                                                     "example":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
                                                 }
                                             }
-                                        },
-                                        "fraudPayload":{
-                                            "required":[
-                                                "format",
-                                                "message",
-                                                "provider",
-                                                "responseFormat",
-                                                "version"
-                                            ],
-                                            "type":"object",
-                                            "properties":{
-                                                "provider":{
-                                                    "type":"string",
-                                                    "description":"The fraud check provider.",
-                                                    "example":"cybersource"
-                                                },
-                                                "version":{
-                                                    "type":"string",
-                                                    "description":"The fraud check version.",
-                                                    "example":"CyberSourceTransaction_1.101"
-                                                },
-                                                "format":{
-                                                    "type":"string",
-                                                    "description":"The fraud check message format.",
-                                                    "enum":[
-                                                        "ZIP_BASE_64_ENCODED",
-                                                        "XML"
-                                                    ]
-                                                },
-                                                "responseFormat":{
-                                                    "type":"string",
-                                                    "description":"The fraud check response message format.",
-                                                    "enum":[
-                                                        "ZIP_BASE_64_ENCODED",
-                                                        "XML"
-                                                    ]
-                                                },
-                                                "message":{
-                                                    "type":"string",
-                                                    "description":"The fraud check message.",
-                                                    "example":"GzbOxpLagX6iFEb7td61cZyA="
-                                                }
-                                            },
-                                            "description":"Set to null to skip the fraud check. Only required if the payment agreement payment instrument id is being changed to a different payment instrument."
                                         }
                                     }
                                 },
@@ -2229,35 +2105,39 @@
                             }
                         },
                         "example": {
-                            "clientReference": "T5ESYRPWJKPHF54",
-                            "customerRef": "654321",
-                            "billingAddress": {
-                                "firstName": "Francois",
-                                "lastName": "van der Merwe",
-                                "email": "fvandermerwe@woolworths.com.au",
-                                "company": "Woolworths Limited",
-                                "extendedAddress": "Level 1",
-                                "streetAddress": "22 River Oak Circuit",
-                                "suburb": "Kellyville",
-                                "stateOrTerritory": "NSW",
-                                "postalCode": "2155",
-                                "countryCode": "AU"
+                            "data": {
+                                "clientReference": "T5ESYRPWJKPHF54",
+                                "customerRef": "654321",
+                                "billingAddress": {
+                                    "firstName": "Francois",
+                                    "lastName": "van der Merwe",
+                                    "email": "fvandermerwe@woolworths.com.au",
+                                    "company": "Woolworths Limited",
+                                    "extendedAddress": "Level 1",
+                                    "streetAddress": "22 River Oak Circuit",
+                                    "suburb": "Kellyville",
+                                    "stateOrTerritory": "NSW",
+                                    "postalCode": "2155",
+                                    "countryCode": "AU"
+                                },
+                                "paymentAgreement": {
+                                    "paymentInstrumentId": "90731",
+                                    "startDate": "2018-09-01T00:00:00.000+1100",
+                                    "endDate": "2018-12-31T23:59:59.999+1100",
+                                    "chargeFrequency": "WEEKLY",
+                                    "chargeAmount": 25.99,
+                                    "stepUpToken": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                                }
                             },
-                            "paymentAgreement": {
-                                "paymentInstrumentId": "90731",
-                                "startDate": "2018-09-01T00:00:00.000+1100",
-                                "endDate": "2018-12-31T23:59:59.999+1100",
-                                "chargeFrequency": "WEEKLY",
-                                "chargeAmount": 25.99,
-                                "stepUpToken": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
-                            },
-                            "fraudPayload": {
-                                "provider": "cybersource",
-                                "version": "CyberSourceTransaction_1.101",
-                                "format": "ZIP_BASE_64_ENCODED",
-                                "responseFormat": "ZIP_BASE_64_ENCODED",
-                                "message": "GzbOxpLagX6iFEb7td61cZyA="
-                            }
+                            "meta": {
+                                "fraud": {
+                                    "provider": "cybersource",
+                                    "version": "CyberSourceTransaction_1.101",
+                                    "format": "ZIP_BASE_64_ENCODED",
+                                    "responseFormat": "ZIP_BASE_64_ENCODED",
+                                    "message": "GzbOxpLagX6iFEb7td61cZyA="
+                                }
+                            }                             
                         }
                     }
                 }
@@ -2412,23 +2292,26 @@
                             }
                         },
                         "example": {
-                            "uid": "61ea4c7310df484d91e15cd6ad883ccb",
-                            "shopperId": "12345",
-                            "creditCards": [
-                                {
-                                    "transactionRef": "2000000009719570",
-                                    "transactionTimestamp": "2017-09-27T10:11:27.000+11:00",
-                                    "orderNumber": "20170505090",
-                                    "bin": "543048",
-                                    "cardSuffix": "4307",
-                                    "amount": 75.5
+                            "data": {
+                                "uid": "61ea4c7310df484d91e15cd6ad883ccb",
+                                "shopperId": "12345",
+                                "creditCards": [
+                                    {
+                                        "transactionRef": "2000000009719570",
+                                        "transactionTimestamp": "2017-09-27T10:11:27.000+11:00",
+                                        "orderNumber": "20170505090",
+                                        "bin": "543048",
+                                        "cardSuffix": "4307",
+                                        "amount": 75.5
+                                    }
+                                ],
+                                "payPal": {
+                                    "customerId": "690238314",
+                                    "payPalId": "jane.doe@paypal.com",
+                                    "paymentMethodToken": "I7wME6uOKgsq3fz3y52s"
                                 }
-                            ],
-                            "payPal": {
-                                "customerId": "690238314",
-                                "payPalId": "jane.doe@paypal.com",
-                                "paymentMethodToken": "I7wME6uOKgsq3fz3y52s"
-                            }
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -2492,18 +2375,21 @@
                             }
                         },
                         "example": {
-                            "clientReference": "Z3XFS8507RDC71T",
-                            "orderNumber": "20170505090",
-                            "completions": [
-                                {
-                                    "paymentTransactionRef": "1000000000670622",
-                                    "amount": 20.5
-                                },
-                                {
-                                    "paymentTransactionRef": "1000000000670623",
-                                    "amount": 10
-                                }
-                            ]
+                            "data": {
+                                "clientReference": "Z3XFS8507RDC71T",
+                                "orderNumber": "20170505090",
+                                "completions": [
+                                    {
+                                        "paymentTransactionRef": "1000000000670622",
+                                        "amount": 20.5
+                                    },
+                                    {
+                                        "paymentTransactionRef": "1000000000670623",
+                                        "amount": 10
+                                    }
+                                ]
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -2561,16 +2447,19 @@
                             }
                         },
                         "example": {
-                            "clientReference": "T8VZS5KQH0N278D",
-                            "orderNumber": "20170505090",
-                            "voids": [
-                                {
-                                    "paymentTransactionRef": "1000000000670622"
-                                },
-                                {
-                                    "paymentTransactionRef": "1000000000670623"
-                                }
-                            ]
+                            "data": {
+                                "clientReference": "T8VZS5KQH0N278D",
+                                "orderNumber": "20170505090",
+                                "voids": [
+                                    {
+                                        "paymentTransactionRef": "1000000000670622"
+                                    },
+                                    {
+                                        "paymentTransactionRef": "1000000000670623"
+                                    }
+                                ]
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -2662,15 +2551,18 @@
                             }
                         },
                         "example": {
-                            "clientReference": "V9FI6BV0BWGXO06",
-                            "orderNumber": "20170505090",
-                            "refunds": [
-                                {
-                                    "paymentTransactionRef": "1000000000670622",
-                                    "amount": 20.5,
-                                    "reason": "Item broken on delivery"
-                                }
-                            ]
+                            "data": {
+                                "clientReference": "V9FI6BV0BWGXO06",
+                                "orderNumber": "20170505090",
+                                "refunds": [
+                                    {
+                                        "paymentTransactionRef": "1000000000670622",
+                                        "amount": 20.5,
+                                        "reason": "Item broken on delivery"
+                                    }
+                                ]
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -2794,20 +2686,23 @@
                             }
                         },
                         "example": {
-                            "transactionType": {
-                                "openPay": "PURCHASE"
-                            },
-                            "clientReference": "T5ESYRPWJKPHF54",
-                            "orderNumber": "20170505090",
-                            "payments": [
-                                {
-                                    "paymentToken": "46ee5998-10cd-11ea-8d71-362b9e155667",
-                                    "amount": 20.5
+                            "data": {
+                                "transactionType": {
+                                    "openPay": "PURCHASE"
+                                },
+                                "clientReference": "T5ESYRPWJKPHF54",
+                                "orderNumber": "20170505090",
+                                "payments": [
+                                    {
+                                        "paymentToken": "46ee5998-10cd-11ea-8d71-362b9e155667",
+                                        "amount": 20.5
+                                    }
+                                ],
+                                "storeData": {
+                                    "storeId": "4952110"
                                 }
-                            ],
-                            "storeData": {
-                                "storeId": "4952110"
-                            }
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -2881,16 +2776,19 @@
                             }
                         },
                         "example": {
-                            "clientReference": "4VWPZ8676N7MUAO",
-                            "orderNumber": "20170505090",
-                            "merchantTransactedAt": "2020-06-19T18:00:00.000+1100",
-                            "completions": [
-                                {
-                                    "paymentTransactionRef": "1000000000670622",
-                                    "amount": 20.5,
-                                    "gstAmount": 1.86
-                                }
-                            ]
+                            "data": {
+                                "clientReference": "4VWPZ8676N7MUAO",
+                                "orderNumber": "20170505090",
+                                "merchantTransactedAt": "2020-06-19T18:00:00.000+1100",
+                                "completions": [
+                                    {
+                                        "paymentTransactionRef": "1000000000670622",
+                                        "amount": 20.5,
+                                        "gstAmount": 1.86
+                                    }
+                                ]
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -2947,13 +2845,16 @@
                             }
                         },
                         "example": {
-                            "clientReference": "H72YZE8JS9J7BYS",
-                            "orderNumber": "20170505090",
-                            "voids": [
-                                {
-                                    "paymentTransactionRef": "1000000000670622"
-                                }
-                            ]
+                            "data": {
+                                "clientReference": "H72YZE8JS9J7BYS",
+                                "orderNumber": "20170505090",
+                                "voids": [
+                                    {
+                                        "paymentTransactionRef": "1000000000670622"
+                                    }
+                                ]
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -3644,7 +3545,6 @@
                                             "items":{
                                                 "required":[
                                                     "paymentInstrumentId",
-                                                    "paymentToken",
                                                     "amount"
                                                 ],
                                                 "type":"object",
@@ -3654,25 +3554,10 @@
                                                         "description":"The payment instrument id from the card capture iframe response or the list payment instruments response. This property can be omitted if the payment token property is present.",
                                                         "example":"90731"
                                                     },
-                                                    "paymentToken":{
-                                                        "type":"string",
-                                                        "description":"The payment token from the card capture iframe response or the list payment instruments response. This property can be omitted if the payment instrument id property is present.",
-                                                        "example":"712029a1-c0aa-41bc-a810-3d42424c5834"
-                                                    },
                                                     "amount":{
                                                         "type":"number",
                                                         "description":"The amount you want to pay with the payment instrument.",
                                                         "example":20.5
-                                                    },
-                                                    "stepUpToken":{
-                                                        "type":"string",
-                                                        "description":"The step-up token is used to track additional credit card information (eg. CVV and expiry) attached to the payment instrument. It's only valid for a predefined time and if an expired step-up token is used during payment, the payment for that instrument will fail and the user will have to get a new step-up token before retrying the payment. A step-up token is returned in the response of a credit card iframe. This property is currently only required for credit card instruments and only if specific credit card information (eg. CVV and expiry) is required during payment.",
-                                                        "example":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
-                                                    },
-                                                    "passcode":{
-                                                        "type":"string",
-                                                        "description":"The passcode is used to send additional information (eg. gift card PIN) for the payment instrument. This property is currently only required for gift card instruments and only if the gift card PIN is required during payment. This property should NOT be used with credit card instruments (see stepUpToken).",
-                                                        "example":"1425"
                                                     }
                                                 }
                                             }
@@ -3729,121 +3614,90 @@
                                                 }
                                             },
                                             "description":"This object is only required if the payments request is for an in-store (R10) payment transaction."
-                                        },
-                                        "fraudPayload":{
-                                            "required":[
-                                                "format",
-                                                "message",
-                                                "provider",
-                                                "responseFormat",
-                                                "version"
-                                            ],
-                                            "type":"object",
-                                            "properties":{
-                                                "provider":{
-                                                    "type":"string",
-                                                    "description":"The fraud check provider.",
-                                                    "example":"cybersource"
-                                                },
-                                                "version":{
-                                                    "type":"string",
-                                                    "description":"The fraud check version.",
-                                                    "example":"CyberSourceTransaction_1.101"
-                                                },
-                                                "format":{
-                                                    "type":"string",
-                                                    "description":"The fraud check message format.",
-                                                    "enum":[
-                                                        "ZIP_BASE_64_ENCODED",
-                                                        "XML"
-                                                    ]
-                                                },
-                                                "responseFormat":{
-                                                    "type":"string",
-                                                    "description":"The fraud check response message format.",
-                                                    "enum":[
-                                                        "ZIP_BASE_64_ENCODED",
-                                                        "XML"
-                                                    ]
-                                                },
-                                                "message":{
-                                                    "type":"string",
-                                                    "description":"The fraud check message.",
-                                                    "example":"GzbOxpLagX6iFEb7td61cZyA="
-                                                }
-                                            },
-                                            "description":"Set to null to skip the cybersource fraud check."
                                         }
                                     }
+                                },
+                                "meta": {
+                                    "$ref":"#/components/schemas/meta"
                                 }
                             }
                         },
                         "example":{
-                            "transactionType":{
-                                "creditCard":"PREAUTH",
-                                "giftCard":"PURCHASE",
-                                "payPal":"PURCHASE",
-                                "googlePay":{
+                            "data": {
+                                "transactionType":{
                                     "creditCard":"PREAUTH",
-                                    "debitCard":"PURCHASE"
+                                    "giftCard":"PURCHASE",
+                                    "payPal":"PURCHASE",
+                                    "googlePay":{
+                                        "creditCard":"PREAUTH",
+                                        "debitCard":"PURCHASE"
+                                    },
+                                    "applePay":{
+                                        "creditCard":"PREAUTH",
+                                        "debitCard":"PURCHASE"
+                                    }
                                 },
-                                "applePay":{
-                                    "creditCard":"PREAUTH",
-                                    "debitCard":"PURCHASE"
+                                "clientReference":"T5ESYRPWJKPHF54",
+                                "orderNumber":"20170505090",
+                                "shippingAddress":{
+                                    "firstName":"Francois",
+                                    "lastName":"van der Merwe",
+                                    "email":"fvandermerwe@woolworths.com.au",
+                                    "company":"Woolworths Limited",
+                                    "extendedAddress":"Level 1",
+                                    "streetAddress":"22 River Oak Circuit",
+                                    "suburb":"Kellyville",
+                                    "stateOrTerritory":"NSW",
+                                    "postalCode":"2155",
+                                    "countryCode":"AU"
+                                },
+                                "payments":[
+                                    {
+                                        "paymentInstrumentId":"90731",
+                                        "amount":20.5
+                                    },
+                                    {
+                                        "paymentInstrumentId":"90731",
+                                        "amount":20.5
+                                    },
+                                    {
+                                        "paymentInstrumentId":"81054",
+                                        "amount":1
+                                    },
+                                    {
+                                        "paymentInstrumentId":"90271",
+                                        "amount":15
+                                    }
+                                ],
+                                "extendedMerchantData":[
+                                    {
+                                        "field":"correlationId",
+                                        "value":"23f585945be2f"
+                                    }
+                                ],
+                                "storeData":{
+                                    "storeId":"4952110",
+                                    "rrn":"000000006564",
+                                    "transactionTimestamp":1528264660639
                                 }
                             },
-                            "clientReference":"T5ESYRPWJKPHF54",
-                            "orderNumber":"20170505090",
-                            "shippingAddress":{
-                                "firstName":"Francois",
-                                "lastName":"van der Merwe",
-                                "email":"fvandermerwe@woolworths.com.au",
-                                "company":"Woolworths Limited",
-                                "extendedAddress":"Level 1",
-                                "streetAddress":"22 River Oak Circuit",
-                                "suburb":"Kellyville",
-                                "stateOrTerritory":"NSW",
-                                "postalCode":"2155",
-                                "countryCode":"AU"
-                            },
-                            "payments":[
-                                {
-                                    "paymentInstrumentId":"90731",
-                                    "amount":20.5,
-                                    "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                            "meta": {
+                                "fraud":{
+                                    "provider":"cybersource",
+                                    "version":"CyberSourceTransaction_1.101",
+                                    "format":"ZIP_BASE_64_ENCODED",
+                                    "responseFormat":"ZIP_BASE_64_ENCODED",
+                                    "message":"GzbOxpLagX6iFEb7td61cZyA="
                                 },
-                                {
-                                    "paymentToken":"712029a1-c0aa-41bc-a810-3d42424c5834",
-                                    "amount":20.5,
-                                    "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
-                                },
-                                {
-                                    "paymentInstrumentId":"81054",
-                                    "amount":1,
-                                    "passcode":"1425"
-                                },
-                                {
-                                    "paymentInstrumentId":"90271",
-                                    "amount":15
-                                }
-                            ],
-                            "extendedMerchantData":[
-                                {
-                                    "field":"correlationId",
-                                    "value":"23f585945be2f"
-                                }
-                            ],
-                            "storeData":{
-                                "storeId":"4952110",
-                                "rrn":"000000006564",
-                                "transactionTimestamp":1528264660639
-                            },
-                            "fraudPayload":{
-                                "provider":"cybersource",
-                                "version":"CyberSourceTransaction_1.101",
-                                "format":"ZIP_BASE_64_ENCODED",
-                                "responseFormat":"ZIP_BASE_64_ENCODED",
-                                "message":"GzbOxpLagX6iFEb7td61cZyA="
+                                "challengeResponses": [{
+                                    "instrumentId": "90731",
+                                    "type": "STEP_UP",
+                                    "token": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                                }, {
+                                    "instrumentId": "81054",
+                                    "type": "PASSCODE",
+                                    "token": "1425"
+                                }]
                             }
                         }
                     }
@@ -6072,21 +5926,24 @@
                             }
                         },
                         "example": {
-                            "transactionReceipt": "1000000009303280",
-                            "partialSuccess": false,
-                            "fraudResponse": {
-                                "clientId": "5615334856056397603065",
-                                "reasonCode": "100",
-                                "decision": "ACCEPT"
+                            "data": {
+                                "transactionReceipt": "1000000009303280",
+                                "partialSuccess": false,
+                                "fraudResponse": {
+                                    "clientId": "5615334856056397603065",
+                                    "reasonCode": "100",
+                                    "decision": "ACCEPT"
+                                },
+                                "verifyResponses": [
+                                    {
+                                        "paymentToken": "f63fbfa8-0a2f-48a6-9162-6b102161a05b",
+                                        "verifyTransactionRef": "1000000009303281",
+                                        "externalServiceCode": "00",
+                                        "externalServiceMessage": "ACCEPTED"
+                                    }
+                                ]
                             },
-                            "verifyResponses": [
-                                {
-                                    "paymentToken": "f63fbfa8-0a2f-48a6-9162-6b102161a05b",
-                                    "verifyTransactionRef": "1000000009303281",
-                                    "externalServiceCode": "00",
-                                    "externalServiceMessage": "ACCEPTED"
-                                }
-                            ]
+                            "meta": {}
                         }
                     }
                 }
@@ -6341,30 +6198,33 @@
                             }
                         },
                         "example": {
-                            "uid": "61ea4c7310df484d91e15cd6ad883ccb",
-                            "shopperId": "12345",
-                            "creditCards": [
-                                {
-                                    "transactionRef": "2000000009719570",
-                                    "transactionTimestamp": "2017-09-27T10:11:27.000+11:00",
-                                    "transactionType": "PURCHASE",
-                                    "transactionResponseCode": "00",
-                                    "transactionResponseText": "APPROVED",
-                                    "orderNumber": "20170505090",
-                                    "bin": "543048",
-                                    "cardSuffix": "4307",
-                                    "expiryMonth": "01",
-                                    "expiryYear": "19",
-                                    "amount": 75.5,
+                            "data": {
+                                "uid": "61ea4c7310df484d91e15cd6ad883ccb",
+                                "shopperId": "12345",
+                                "creditCards": [
+                                    {
+                                        "transactionRef": "2000000009719570",
+                                        "transactionTimestamp": "2017-09-27T10:11:27.000+11:00",
+                                        "transactionType": "PURCHASE",
+                                        "transactionResponseCode": "00",
+                                        "transactionResponseText": "APPROVED",
+                                        "orderNumber": "20170505090",
+                                        "bin": "543048",
+                                        "cardSuffix": "4307",
+                                        "expiryMonth": "01",
+                                        "expiryYear": "19",
+                                        "amount": 75.5,
+                                        "result": "OK"
+                                    }
+                                ],
+                                "payPal": {
+                                    "customerId": "690238314",
+                                    "payPalId": "jane.doe@paypal.com",
+                                    "paymentMethodToken": "I7wME6uOKgsq3fz3y52s",
                                     "result": "OK"
                                 }
-                            ],
-                            "payPal": {
-                                "customerId": "690238314",
-                                "payPalId": "jane.doe@paypal.com",
-                                "paymentMethodToken": "I7wME6uOKgsq3fz3y52s",
-                                "result": "OK"
-                            }
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -6652,29 +6512,32 @@
                             }
                         },
                         "example": {
-                            "transactionReceipt": "1000000000670621",
-                            "paymentResponses": [
-                                {
-                                    "paymentToken": "46ee5998-10cd-11ea-8d71-362b9e155667",
-                                    "paymentTransactionRef": "1000000000670622",
-                                    "extendedTransactionData": [
-                                        {
-                                            "field": "openPayTransactionId",
-                                            "value": "3049562340"
-                                        },
-                                        {
-                                            "field": "openPayOrderId",
-                                            "value": "100015"
-                                        },
-                                        {
-                                            "field": "openPayCreatedAt",
-                                            "value": "1539211428193"
-                                        }
-                                    ],
-                                    "externalServiceCode": "00",
-                                    "externalServiceMessage": "APPROVED"
-                                }
-                            ]
+                            "data": {
+                                "transactionReceipt": "1000000000670621",
+                                "paymentResponses": [
+                                    {
+                                        "paymentToken": "46ee5998-10cd-11ea-8d71-362b9e155667",
+                                        "paymentTransactionRef": "1000000000670622",
+                                        "extendedTransactionData": [
+                                            {
+                                                "field": "openPayTransactionId",
+                                                "value": "3049562340"
+                                            },
+                                            {
+                                                "field": "openPayOrderId",
+                                                "value": "100015"
+                                            },
+                                            {
+                                                "field": "openPayCreatedAt",
+                                                "value": "1539211428193"
+                                            }
+                                        ],
+                                        "externalServiceCode": "00",
+                                        "externalServiceMessage": "APPROVED"
+                                    }
+                                ]
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -6778,30 +6641,33 @@
                             }
                         },
                         "example": {
-                            "transactionReceipt": "1000000000670875",
-                            "refundResponses": [
-                                {
-                                    "paymentTransactionRef": "1000000000670622",
-                                    "refundTransactionRef": "1000000000670875",
-                                    "amount": 20.5,
-                                    "extendedTransactionData": [
-                                        {
-                                            "field": "openPayTransactionId",
-                                            "value": "5758989018"
-                                        },
-                                        {
-                                            "field": "openPayOrderId",
-                                            "value": "100015"
-                                        },
-                                        {
-                                            "field": "openPayCreatedAt",
-                                            "value": "1575252567219"
-                                        }
-                                    ],
-                                    "externalServiceCode": "00",
-                                    "externalServiceMessage": "APPROVED"
-                                }
-                            ]
+                            "data": {
+                                "transactionReceipt": "1000000000670875",
+                                "refundResponses": [
+                                    {
+                                        "paymentTransactionRef": "1000000000670622",
+                                        "refundTransactionRef": "1000000000670875",
+                                        "amount": 20.5,
+                                        "extendedTransactionData": [
+                                            {
+                                                "field": "openPayTransactionId",
+                                                "value": "5758989018"
+                                            },
+                                            {
+                                                "field": "openPayOrderId",
+                                                "value": "100015"
+                                            },
+                                            {
+                                                "field": "openPayCreatedAt",
+                                                "value": "1575252567219"
+                                            }
+                                        ],
+                                        "externalServiceCode": "00",
+                                        "externalServiceMessage": "APPROVED"
+                                    }
+                                ]
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -6909,46 +6775,49 @@
                             }
                         },
                         "example": {
-                            "transactionReceipt": "1000000000670747",
-                            "completionResponses": [
-                                {
-                                    "paymentTransactionRef": "1000000000670622",
-                                    "completionTransactionRef": "1000000000670747",
-                                    "amount": 20.5,
-                                    "extendedTransactionData": [
-                                        {
-                                            "field": "openPayTransactionId",
-                                            "value": "3049562340"
-                                        },
-                                        {
-                                            "field": "openPayOrderId",
-                                            "value": "100015"
-                                        },
-                                        {
-                                            "field": "openPayPaymentMethod",
-                                            "value": "openPayPaymentMethod"
-                                        },
-                                        {
-                                            "field": "openPayCreatedAt",
-                                            "value": "1592494136891"
-                                        },
-                                        {
-                                            "field": "openPayBillingAccountId",
-                                            "value": "24354657685656"
-                                        },
-                                        {
-                                            "field": "openPayBillingAccountName",
-                                            "value": "Some Business Account"
-                                        },
-                                        {
-                                            "field": "openPayBillingAccountABN",
-                                            "value": "88 000 014 675"
-                                        }
-                                    ],
-                                    "externalServiceCode": "00",
-                                    "externalServiceMessage": "APPROVED"
-                                }
-                            ]
+                            "data": {
+                                "transactionReceipt": "1000000000670747",
+                                "completionResponses": [
+                                    {
+                                        "paymentTransactionRef": "1000000000670622",
+                                        "completionTransactionRef": "1000000000670747",
+                                        "amount": 20.5,
+                                        "extendedTransactionData": [
+                                            {
+                                                "field": "openPayTransactionId",
+                                                "value": "3049562340"
+                                            },
+                                            {
+                                                "field": "openPayOrderId",
+                                                "value": "100015"
+                                            },
+                                            {
+                                                "field": "openPayPaymentMethod",
+                                                "value": "openPayPaymentMethod"
+                                            },
+                                            {
+                                                "field": "openPayCreatedAt",
+                                                "value": "1592494136891"
+                                            },
+                                            {
+                                                "field": "openPayBillingAccountId",
+                                                "value": "24354657685656"
+                                            },
+                                            {
+                                                "field": "openPayBillingAccountName",
+                                                "value": "Some Business Account"
+                                            },
+                                            {
+                                                "field": "openPayBillingAccountABN",
+                                                "value": "88 000 014 675"
+                                            }
+                                        ],
+                                        "externalServiceCode": "00",
+                                        "externalServiceMessage": "APPROVED"
+                                    }
+                                ]
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -7056,46 +6925,49 @@
                             }
                         },
                         "example": {
-                            "transactionReceipt": "1000000000670747",
-                            "voidResponses": [
-                                {
-                                    "paymentTransactionRef": "1000000000670622",
-                                    "voidTransactionRef": "1000000000670747",
-                                    "amount": 20.5,
-                                    "extendedTransactionData": [
-                                        {
-                                            "field": "openPayTransactionId",
-                                            "value": "3049562340"
-                                        },
-                                        {
-                                            "field": "openPayOrderId",
-                                            "value": "100015"
-                                        },
-                                        {
-                                            "field": "openPayPaymentMethod",
-                                            "value": "openPayPaymentMethod"
-                                        },
-                                        {
-                                            "field": "openPayCreatedAt",
-                                            "value": "1592494136891"
-                                        },
-                                        {
-                                            "field": "openPayBillingAccountId",
-                                            "value": "24354657685656"
-                                        },
-                                        {
-                                            "field": "openPayBillingAccountName",
-                                            "value": "Some Business Account"
-                                        },
-                                        {
-                                            "field": "openPayBillingAccountABN",
-                                            "value": "88 000 014 675"
-                                        }
-                                    ],
-                                    "externalServiceCode": "00",
-                                    "externalServiceMessage": "APPROVED"
-                                }
-                            ]
+                            "data": {
+                                "transactionReceipt": "1000000000670747",
+                                "voidResponses": [
+                                    {
+                                        "paymentTransactionRef": "1000000000670622",
+                                        "voidTransactionRef": "1000000000670747",
+                                        "amount": 20.5,
+                                        "extendedTransactionData": [
+                                            {
+                                                "field": "openPayTransactionId",
+                                                "value": "3049562340"
+                                            },
+                                            {
+                                                "field": "openPayOrderId",
+                                                "value": "100015"
+                                            },
+                                            {
+                                                "field": "openPayPaymentMethod",
+                                                "value": "openPayPaymentMethod"
+                                            },
+                                            {
+                                                "field": "openPayCreatedAt",
+                                                "value": "1592494136891"
+                                            },
+                                            {
+                                                "field": "openPayBillingAccountId",
+                                                "value": "24354657685656"
+                                            },
+                                            {
+                                                "field": "openPayBillingAccountName",
+                                                "value": "Some Business Account"
+                                            },
+                                            {
+                                                "field": "openPayBillingAccountABN",
+                                                "value": "88 000 014 675"
+                                            }
+                                        ],
+                                        "externalServiceCode": "00",
+                                        "externalServiceMessage": "APPROVED"
+                                    }
+                                ]
+                            },
+                            "meta": {}
                         }
                     }
                 }
@@ -9450,7 +9322,7 @@
                                         }
                                     },
                                     "meta":{
-                                        "$ref":"#/components/schemas/metaChallenge"
+                                        "$ref":"#/components/schemas/meta"
                                     }
                                 }
                             }
