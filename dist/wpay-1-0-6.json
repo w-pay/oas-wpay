@@ -593,7 +593,7 @@
           "required":true,
           "content":{
             "application/json":{
-              "schema":{
+              "schema": {
                 "$ref":"#/components/schemas/customerPaymentDetails"
               }
             }
@@ -1404,7 +1404,7 @@
           "required":true,
           "content":{
             "application/json":{
-              "schema":{
+              "schema": {
                 "$ref":"#/components/schemas/customerPaymentDetails"
               }
             }
