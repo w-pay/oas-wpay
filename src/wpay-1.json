@@ -391,6 +391,126 @@
         }
       }
     },
+    "/instore/customer/payments":{
+      "put":{
+        "summary":"Immediate Customer Payments",
+        "operationId": "makeImmediateCustomerPayments",
+        "security":[
+          {
+            "ApiKeyAuth":[],
+            "bearerAuth":[]
+          }
+        ],
+        "description":"Make payments to a merchant using payment intruments. This endpoint establishes a payment request and then makes a payment against it.",
+        "tags":[
+          "Customer"
+        ],
+        "parameters":[
+          {
+            "name":"X-Api-Key",
+            "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+          },
+          {
+            "name":"X-Auth-Key",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name":"X-Auth-Digest",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name":"X-Message-Id",
+            "in":"header",
+            "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name":"Authorization",
+            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
+          },
+          {
+            "name":"X-JWS-Signature",
+            "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible. The X-JWS-Signature header is only required if the Authorization header is not present.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+          },
+          {
+            "in":"path",
+            "name":"paymentRequestId",
+            "description":"The ID of the specific payment request",
+            "required":true,
+            "schema":{
+              "type":"string"
+            }
+          },
+          {
+            "in":"header",
+            "name":"X-Everyday-Pay-Wallet",
+            "description":"The makes instruments available in the everyday pay wallet available for payments",
+            "schema":{
+              "type":"boolean",
+              "default":false
+            },
+            "required":false
+          }
+        ],
+        "requestBody":{
+          "description":"Request payload containing instruments to use for the payment",
+          "required":true,
+          "content":{
+            "application/json":{
+              "schema":{
+                "$ref":"#/components/schemas/immediatePaymentRequest"
+              }
+            }
+          }
+        },
+        "responses":{
+          "200":{
+              "$ref":"#/components/responses/makeCustomerPaymentResponse"
+          },
+          "422":{
+            "description":"The specified Payment Request ID doesn't exist, has been used or is expired",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/instore/customer/payments/{paymentRequestId}":{
       "get":{
         "summary":"Get Payment Request details",
@@ -20231,6 +20351,143 @@
             "type": "string",
             "description": "A description of the payment agreement"
           }
+        }
+      },
+      "immediatePaymentRequest":{
+        "type":"object",
+        "required":[
+            "data",
+            "meta"
+        ],
+        "properties":{
+            "data":{
+                "required":[
+                    "clientReference",
+                    "orderNumber",
+                    "payments"
+                ],
+                "type":"object",
+                "properties":{
+                    "clientReference":{
+                        "type":"string",
+                        "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                        "example":"T5ESYRPWJKPHF54"
+                    },
+                    "orderNumber":{
+                        "type":"string",
+                        "description":"The merchant order number of the transaction.",
+                        "example":"20170505090"
+                    },
+                    "payments":{
+                        "type":"array",
+                        "items":{
+                            "required":[
+                                "paymentInstrumentId",
+                                "amount"
+                            ],
+                            "type":"object",
+                            "properties":{
+                                "paymentInstrumentId":{
+                                    "type":"string",
+                                    "description":"The payment instrument id from the card capture iframe response or the list payment instruments response. This property can be omitted if the payment token property is present.",
+                                    "example":"90731"
+                                },
+                                "amount":{
+                                    "type":"number",
+                                    "description":"The amount you want to pay with the payment instrument.",
+                                    "example":20.5
+                                }
+                            }
+                        }
+                    },
+                    "posPayload":{
+                      "$ref":"#/components/schemas/posPayload"
+                    },
+                    "merchantPayload":{
+                      "$ref":"#/components/schemas/merchantPayload"
+                    }
+                }
+            },
+            "meta": {
+                "$ref":"#/components/schemas/meta"
+            }
+        },
+        "example":{
+            "data": {
+                "transactionType":{
+                    "creditCard":"PREAUTH",
+                    "giftCard":"PURCHASE",
+                    "payPal":"PURCHASE",
+                    "googlePay":{
+                        "creditCard":"PREAUTH",
+                        "debitCard":"PURCHASE"
+                    },
+                    "applePay":{
+                        "creditCard":"PREAUTH",
+                        "debitCard":"PURCHASE"
+                    }
+                },
+                "clientReference":"T5ESYRPWJKPHF54",
+                "orderNumber":"20170505090",
+                "shippingAddress":{
+                    "firstName":"Francois",
+                    "lastName":"van der Merwe",
+                    "email":"fvandermerwe@woolworths.com.au",
+                    "company":"Woolworths Limited",
+                    "extendedAddress":"Level 1",
+                    "streetAddress":"22 River Oak Circuit",
+                    "suburb":"Kellyville",
+                    "stateOrTerritory":"NSW",
+                    "postalCode":"2155",
+                    "countryCode":"AU"
+                },
+                "primaryInstrumentId": "123456",
+                "payments":[
+                    {
+                        "paymentInstrumentId":"90731",
+                        "amount":20.5
+                    },
+                    {
+                        "paymentInstrumentId":"90731",
+                        "amount":20.5
+                    },
+                    {
+                        "paymentInstrumentId":"81054",
+                        "amount":1
+                    },
+                    {
+                        "paymentInstrumentId":"90271",
+                        "amount":15
+                    }
+                ],
+                "posPayload": {
+                  "schemaId": "0a221353-b26c-4848-9a77-4a8bcbacf229",
+                  "payload": {
+                      "storeId": "4952110",
+                      "laneId": "123",
+                      "rrn": "000000006564",
+                      "transactionTimestamp": 1528264660639
+                  }
+                }
+            },
+            "meta": {
+                "fraud":{
+                    "provider":"cybersource",
+                    "version":"CyberSourceTransaction_1.101",
+                    "format":"ZIP_BASE_64_ENCODED",
+                    "responseFormat":"ZIP_BASE_64_ENCODED",
+                    "message":"GzbOxpLagX6iFEb7td61cZyA="
+                },
+                "challengeResponses": [{
+                    "instrumentId": "90731",
+                    "type": "STEP_UP",
+                    "token": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                }, {
+                    "instrumentId": "81054",
+                    "type": "PASSCODE",
+                    "token": "1425"
+                }]
+            }
         }
       },
       "customerPaymentDetails": {
