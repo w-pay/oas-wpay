@@ -10509,7 +10509,7 @@
           {
             "in":"query",
             "name":"last-update-date-time",
-            "description":"If present, the date/time to limit products returned.  Only products changed since this time will not be returned",
+            "description":"If present, the date/time to limit products returned.  Only products changed since this time will be returned",
             "required":false,
             "schema":{
               "type":"string",
@@ -11017,17 +11017,13 @@
                   "subTotalAmount",
                   "discountAmount",
                   "totalOrderAmount",
-                  "billingAddress",
+                  "billingContact",
                   "orderItems"
                 ],
                 "type":"object",
                 "properties": {
                   "instrumentId": {
                     "description": "The instrumentId to be used for the order.  Must not be a stored gift card",
-                    "type": "string"
-                  },
-                  "deliveryEmail": {
-                    "description": "Email of the ordering customer",
                     "type": "string"
                   },
                   "referenceId": {
@@ -11046,7 +11042,7 @@
                     "description":"Net amount payable",
                     "type":"number"
                   },
-                  "billingAddress": {
+                  "billingContact": {
                     "description": "Billing address for the order",
                     "required":[
                       "firstName",
@@ -23187,20 +23183,7 @@
               ],
               "properties":{
                 "data":{
-                  "description":"Mandatory data object containing response",
-                  "type":"object",
-                  "required":[
-                    "transactions"
-                  ],
-                  "properties":{
-                    "transactions":{
-                      "description":"The resulting list of transactions.  If no results match the request then an empty array will be returned",
-                      "type":"array",
-                      "items":{
-                        "$ref":"#/components/schemas/giftingProductList"
-                      }
-                    }
-                  }
+                  "$ref":"#/components/schemas/giftingProductList"
                 },
                 "meta":{
                   "$ref":"#/components/schemas/metaPaginated"
@@ -23275,8 +23258,8 @@
                       "required":[
                         "designId",
                         "amount",
-                        "unitSalePrice",
-                        "totalSalePrice",
+                        "unitPrice",
+                        "totalPrice",
                         "quantity",
                         "isGifting"
                       ],
@@ -23290,11 +23273,11 @@
                           "description":"Face value of the gift card",
                           "type":"number"
                         },
-                        "unitSalePrice": {
+                        "unitPrice": {
                           "description":"Sale price of the gift card",
                           "type":"number"
                         },
-                        "totalSalePrice": {
+                        "totalPrice": {
                           "description":"Total order price",
                           "type":"number"
                         },
