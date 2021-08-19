@@ -11137,7 +11137,8 @@
                 "enum":[
                   "PROCESSING",
                   "APPROVED",
-                  "REJECTED"
+                  "REJECTED",
+                  "PARTIAL_SUCCESS"
                 ]
               },
               "rollback":{
@@ -20518,6 +20519,10 @@
               },
               "skipRollback": {
                 "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                "type": "boolean"
+              },
+              "allowPartialSuccess": {
+                "description": "An optional flag allowing the consumer to indicate that a partial success will not trigger a failure and rollback",
                 "type": "boolean"
               },
               "clientReference":{
