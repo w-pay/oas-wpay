@@ -20429,19 +20429,6 @@
                 },
                 "clientReference":"T5ESYRPWJKPHF54",
                 "orderNumber":"20170505090",
-                "shippingAddress":{
-                    "firstName":"Francois",
-                    "lastName":"van der Merwe",
-                    "email":"fvandermerwe@woolworths.com.au",
-                    "company":"Woolworths Limited",
-                    "extendedAddress":"Level 1",
-                    "streetAddress":"22 River Oak Circuit",
-                    "suburb":"Kellyville",
-                    "stateOrTerritory":"NSW",
-                    "postalCode":"2155",
-                    "countryCode":"AU"
-                },
-                "primaryInstrumentId": "123456",
                 "payments":[
                     {
                         "paymentInstrumentId":"90731",
