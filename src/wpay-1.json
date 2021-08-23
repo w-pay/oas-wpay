@@ -3963,7 +3963,6 @@
                             "data": {
                                 "required":[
                                     "clientReference",
-                                    "completions",
                                     "orderNumber"
                                 ],
                                 "type":"object",
@@ -4139,8 +4138,7 @@
                                 "data": {
                                     "required":[
                                         "clientReference",
-                                        "orderNumber",
-                                        "voids"
+                                        "orderNumber"
                                     ],
                                     "type":"object",
                                     "properties":{
@@ -20739,6 +20737,14 @@
                         "type":"string",
                         "description":"The merchant order number of the transaction.",
                         "example":"20170505090"
+                    },
+                    "skipRollback": {
+                      "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                      "type": "boolean"
+                    },
+                    "allowPartialSuccess": {
+                      "description": "An optional flag allowing the consumer to indicate that a partial success will not trigger a failure and rollback",
+                      "type": "boolean"
                     },
                     "payments":{
                         "type":"array",
