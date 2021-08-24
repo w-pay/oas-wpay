@@ -7,24 +7,24 @@
   },
   "servers":[
     {
-      "url":"https://dev.wpay.com.au/wow/v1/pay",
-      "description":"Development environment"
+      "url":"https://dev-api.wpay.com.au/wow/v1/pay",
+      "description":"Development Environment"
     },
     {
-      "url":"https://test.wpay.com.au/wow/v1/pay",
-      "description":"System test environment"
+      "url":"https://uat-api.wpay.com.au/wow/v1/pay",
+      "description":"User Acceptance Environment"
     },
     {
-      "url":"https://uat.wpay.com.au/wow/v1/pay",
-      "description":"User acceptance environment"
+      "url":"https://pt-api.wpay.com.au/wow/v1/pay",
+      "description":"Performance Testing Environment"
     },
     {
       "url":"https://api.wpay.com.au/wow/v1/pay",
-      "description":"Production environment"
+      "description":"Production Environment"
     },
     {
       "url":"https://capi.wpay.com.au/wow/v1/pay",
-      "description":"Critical production environment"
+      "description":"Critical Production Environment"
     }
   ],
   "security":[
