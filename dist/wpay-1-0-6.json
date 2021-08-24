@@ -2850,6 +2850,10 @@
                         "description":"The ID of a specific wallet for which the payment is intended.  Can be used in scenarios where a customer has previously requested that their wallet ID is retained for repeat purchase.  If supplied the payment can only be used by the intended wallet.  If absent then any wallet can create a payment against the payment request",
                         "type":"string"
                       },
+                      "idempotencyKey":{
+                        "description":"Unique key for a payment request. Same key needs to be passed in case of payment retries",
+                        "type":"string"
+                      },
                       "basket":{
                         "$ref":"#/components/schemas/basket"
                       },
@@ -2877,6 +2881,7 @@
                       "timeToLivePayment": 0,
                       "timeToLiveQR": 0,
                       "specificWalletId": "string",
+                      "idempotencyKey": "string",
                       "basket": {
                         "items": [
                           {
@@ -2943,6 +2948,71 @@
                         "schemaId": "string",
                         "payload": {
                           "additionalProp1": {}
+                        }
+                      },
+                      "merchantPayload": {
+                        "schemaId": "string",
+                        "payload": {
+                          "rpvs": {
+                            "basket": [
+                              {
+                                "itemId": 1234
+                              },
+                              {
+                                "category": "alcohol"
+                              },
+                              {
+                                "category": "baby",
+                                "subcategory": "formula"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "additionalProp1": {}
+                    }
+                  }
+                },
+                "POS Payload And Merchant Payload Sample": {
+                  "value": {
+                    "data": {
+                      "merchantReferenceId": "string",
+                      "grossAmount": 1,
+                      "generateQR": false,
+                      "maxUses": 1,
+                      "timeToLivePayment": 0,
+                      "timeToLiveQR": 0,
+                      "specificWalletId": "string",
+                      "idempotencyKey": "string",
+                      "basket": {
+                        "items": [
+                          {
+                            "label": "string",
+                            "description": "string",
+                            "quantity": 0,
+                            "unitPrice": 0,
+                            "unitMeasure": "string",
+                            "totalPrice": 0,
+                            "tags": {
+                              "additionalProp1": "string",
+                              "additionalProp2": "string",
+                              "additionalProp3": "string"
+                            }
+                          }
+                        ]
+                      },
+                      "posPayload": {
+                        "schemaId": "string",
+                        "payload": {
+                          "storeId": "4952110",
+                          "laneId": "Test Lane",
+                          "rrn": "000000006567",
+                          "transactionTimestamp": 1598310169964,
+                          "terminalId": "W2774001",
+                          "stan": "600567",
+                          "groupId": "TestGroupId"
                         }
                       },
                       "merchantPayload": {
@@ -11259,6 +11329,9 @@
           },
           "challengeResponses": {
             "$ref": "#/components/schemas/metaChallenge"
+          },
+          "callbacks": {
+            "$ref": "#/components/schemas/metaCallbacks"
           }
         }
       },
@@ -11353,6 +11426,28 @@
             },
             "reference":{
               "description":"An optional reference that could be used for audit tracing",
+              "type":"string"
+            }
+          }
+        }
+      },
+      "metaCallbacks":{
+        "description":"Meta Object containing callback urls to be passed to payment sessions",
+        "type":"array",
+        "items":{
+          "description":"The object containing callback url data",
+          "type":"object",
+          "required":[
+            "id",
+            "url"
+          ],
+          "properties":{
+            "id":{
+              "description":"Unique id related to callback url",
+              "type":"string"
+            },
+            "url":{
+              "description":"Callback URL value",
               "type":"string"
             }
           }
