@@ -3,16 +3,24 @@
     "info": {
         "title": "Wpay Payments",
         "description": "Wpay APIs for payments",
-        "version": "0.0.3"
+        "version": "0.0.4"
     },
-    "servers": [
+    "servers":[
         {
-            "url": "https://dev.wpay.com.au",
-            "description": "Development API"
+            "url":"https://dev.mobile-api.woolworths.com.au/wow/v1/pay",
+            "description":"Development Environment"
         },
         {
-            "url": "https://api.wpay.com.au",
-            "description": "Production API"
+            "url":"https://test.mobile-api.woolworths.com.au/wow/v1/pay",
+            "description":"Integration Test Environment"
+        },
+        {
+            "url":"https://uat.mobile-api.woolworths.com.au/wow/v1/pay",
+            "description":"User Acceptance Environment"
+        },
+        {
+            "url":"https://capi.woolworths.com.au/wow/v1/pay",
+            "description":"Critical Production Environment"
         }
     ],
     "components": {

@@ -3,28 +3,28 @@
     "info":{
         "title":"Wpay APIs",
         "description":"Wpay APIs for payments and gifting",
-        "version":"2.0.3"
+        "version":"2.0.4"
     },
     "servers":[
         {
-            "url":"https://dev.wpay.com.au/v2",
-            "description":"Development environment"
+            "url":"https://dev-api.wpay.com.au/v2",
+            "description":"Development Environment"
         },
         {
-            "url":"https://test.wpay.com.au/v2",
-            "description":"System test environment"
+            "url":"https://uat-api.wpay.com.au/v2",
+            "description":"User Acceptance Environment"
         },
         {
-            "url":"https://uat.wpay.com.au/v2",
-            "description":"User acceptance environment"
+            "url":"https://pt-api.wpay.com.au/v2",
+            "description":"Performance Testing Environment"
         },
         {
             "url":"https://api.wpay.com.au/v2",
-            "description":"Production environment"
+            "description":"Production Environment"
         },
         {
             "url":"https://capi.wpay.com.au/v2",
-            "description":"Critical production environment"
+            "description":"Critical Production Environment"
         }
     ],
     "security":[
