@@ -10450,6 +10450,763 @@
         },
         "x-codegen-request-body-name":"body"
       }
+  },
+    "/gifting/products":{
+      "get":{
+        "tags":[
+          "Gifting"
+        ],
+        "summary":"Retrieve Gift Card Products",
+        "description":"Obtains a list of available gift card products that can be purchased.",
+        "parameters":[
+          {
+            "name":"X-Api-Key",
+            "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+          },
+          {
+            "name":"X-Auth-Key",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name":"X-Auth-Digest",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name":"X-Message-Id",
+            "in":"header",
+            "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name":"X-JWS-Signature",
+            "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+          },
+          {
+            "in":"query",
+            "name":"last-update-date-time",
+            "description":"If present, the date/time to limit products returned.  Only products changed since this time will be returned",
+            "required":false,
+            "schema":{
+              "type":"string",
+              "format":"date-time",
+              "example":"2017-11-06T19:38:09.890+11:00"
+            }
+          },
+          {
+            "in":"query",
+            "name":"page-size",
+            "description":"The number of records to return for this page.  Defaults to 25 if absent",
+            "required":false,
+            "schema":{
+              "type":"integer",
+              "default":25,
+              "minimum":1,
+              "maximum":500
+            }
+          },
+          {
+            "in":"query",
+            "name":"page",
+            "description":"The page of results to return with 1 indicating the first page.  Defaults to 1 if absent",
+            "required":false,
+            "schema":{
+              "type":"integer",
+              "default":1,
+              "minimum":1
+            }
+          }
+        ],
+        "responses":{
+          "200":{
+            "$ref":"#/components/responses/giftingProductsSuccessResponse"
+          },
+          "400":{
+            "description":"Missing or invalid request payload or value.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "401":{
+            "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "404":{
+            "description":"Invalid API Route.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "500":{
+            "description":"An unknown error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "501":{
+            "description":"A Business Validation error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/OpenpayRefundsErrorResponse"
+                }
+              }
+            }
+          },
+          "502":{
+            "description":"An Internal System error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "503":{
+            "description":"The Service is currently unavailable.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "504":{
+            "description":"The request timed out.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name":"body"
+      }
+    },
+    "/gifting/products/{productId}":{
+      "get":{
+        "tags":[
+          "Gifting"
+        ],
+        "summary":"Retrieve Gift Card Product Detail",
+        "description":"Obtains a list of available gift card products that can be purchased.",
+        "parameters":[
+          {
+            "name":"X-Api-Key",
+            "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+          },
+          {
+            "name":"X-Auth-Key",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name":"X-Auth-Digest",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name":"X-Message-Id",
+            "in":"header",
+            "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name":"X-JWS-Signature",
+            "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+          },
+          {
+            "in":"path",
+            "name":"productId",
+            "description":"The ID of the specific gift card product",
+            "required":true,
+            "schema":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses":{
+          "200":{
+            "$ref":"#/components/responses/giftingProductDetailSuccessResponse"
+          },
+          "400":{
+            "description":"Missing or invalid request payload or value.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "401":{
+            "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "404":{
+            "description":"Invalid API Route.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "500":{
+            "description":"An unknown error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "501":{
+            "description":"A Business Validation error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/OpenpayRefundsErrorResponse"
+                }
+              }
+            }
+          },
+          "502":{
+            "description":"An Internal System error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "503":{
+            "description":"The Service is currently unavailable.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "504":{
+            "description":"The request timed out.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name":"body"
+      }
+    },
+    "/gifting/products/quote":{
+      "post":{
+        "tags":[
+          "Gifting"
+        ],
+        "summary":"Obtain Gift Card Quote",
+        "description":"Validates a gift card order and verifies discount prior to an order being placed.",
+        "parameters":[
+          {
+            "name":"X-Api-Key",
+            "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+          },
+          {
+            "name":"X-Auth-Key",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name":"X-Auth-Digest",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name":"X-Message-Id",
+            "in":"header",
+            "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name":"X-JWS-Signature",
+            "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+          }
+        ],
+        "requestBody": {
+          "description":"Request payload containing details of the order to quote on",
+          "required":true,
+          "content":{
+            "application/json":{
+              "schema":{
+                "required":[
+                  "orderItems"
+                ],
+                "type":"object",
+                "properties":{
+                  "orderItems": {
+                    "description": "Gift cards to be included in the order.  Currently only supports a single entry.  Array is for future roadmap",
+                    "type":"array",
+                    "items": {
+                      "$ref":"#/components/schemas/giftingProductOrderItem"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "200":{
+            "$ref":"#/components/responses/giftingProductQuoteSuccessResponse"
+          },
+          "400":{
+            "description":"Missing or invalid request payload or value.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "401":{
+            "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "404":{
+            "description":"Invalid API Route.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "500":{
+            "description":"An unknown error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "501":{
+            "description":"A Business Validation error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "502":{
+            "description":"An Internal System error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "503":{
+            "description":"The Service is currently unavailable.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "504":{
+            "description":"The request timed out.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gifting/products/order":{
+      "post":{
+        "tags":[
+          "Gifting"
+        ],
+        "summary":"Order Gift Card",
+        "description":"Order a gift card product.",
+        "parameters":[
+          {
+            "name":"X-Api-Key",
+            "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+          },
+          {
+            "name":"X-Auth-Key",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name":"X-Auth-Digest",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name":"X-Message-Id",
+            "in":"header",
+            "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name":"X-JWS-Signature",
+            "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+          }
+        ],
+        "requestBody": {
+          "description":"Request payload containing details of the order",
+          "required":true,
+          "content":{
+            "application/json":{
+              "schema":{
+                "required":[
+                  "instrumentId",
+                  "deliveryEmail",
+                  "referenceId",
+                  "subTotalAmount",
+                  "discountAmount",
+                  "totalOrderAmount",
+                  "billingContact",
+                  "orderItems"
+                ],
+                "type":"object",
+                "properties": {
+                  "instrumentId": {
+                    "description": "The instrumentId to be used for the order.  Must not be a stored gift card",
+                    "type": "string"
+                  },
+                  "referenceId": {
+                    "description": "Unique reference for the order supplied by the client",
+                    "type": "string"
+                  },
+                  "subTotalAmount": {
+                    "description":"Face value of the gift card",
+                    "type":"number"
+                  },
+                  "discountAmount": {
+                    "description":"Eligible discount amount. In case of no discounts, value will be 0",
+                    "type":"number"
+                  },
+                  "totalOrderAmount": {
+                    "description":"Net amount payable",
+                    "type":"number"
+                  },
+                  "billingContact": {
+                    "description": "Billing address for the order",
+                    "required":[
+                      "firstName",
+                      "lastName",
+                      "email",
+                      "mobileNumber",
+                      "streetAddress",
+                      "suburb",
+                      "stateOrTerritory",
+                      "postalCode",
+                      "countryCode"
+                    ],
+                    "type":"object",
+                    "properties":{
+                      "firstName": {
+                        "type": "string",
+                        "description": "The customer's first name.",
+                        "example": "Francois"
+                      },
+                      "lastName": {
+                        "type": "string",
+                        "description": "The customer's last name.",
+                        "example": "van der Merwe"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "The email of the ordering customer",
+                        "example": "sample@gmail.com"
+                      },
+                      "mobileNumber": {
+                        "type": "string",
+                        "description": "The mobile number of the ordering customer",
+                        "example": "+61444555666"
+                      },
+                      "streetAddress": {
+                        "type": "string",
+                        "description": "The customer's street address line.",
+                        "example": "22 River Oak Circuit"
+                      },
+                      "extendedAddress": {
+                        "type": "string",
+                        "description": "The customer's extended address line.",
+                        "example": "Level 1"
+                      },
+                      "suburb": {
+                        "type": "string",
+                        "description": "The customer's suburb.",
+                        "example": "Kellyville"
+                      },
+                      "stateOrTerritory": {
+                        "type": "string",
+                        "description": "The customer's abbreviated state or territory.",
+                        "example": "NSW"
+                      },
+                      "postalCode": {
+                        "type": "string",
+                        "description": "The customer's postal code.",
+                        "example": "2155"
+                      },
+                      "countryCode": {
+                        "type": "string",
+                        "description": "The customer's Alpha-2 (2-character) ISO-3166-1 country code.",
+                        "example": "AU"
+                      }
+                    }
+                  },
+                  "orderItems": {
+                    "description": "Gift cards to be included in the order.  Currently only supports a single entry.  Array is for future roadmap",
+                    "type":"array",
+                    "items": {
+                      "$ref":"#/components/schemas/giftingProductOrderItem"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "200":{
+            "$ref":"#/components/responses/giftingProductOrderSuccessResponse"
+          },
+          "400":{
+            "description":"Missing or invalid request payload or value.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "401":{
+            "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "404":{
+            "description":"Invalid API Route.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "500":{
+            "description":"An unknown error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "501":{
+            "description":"A Business Validation error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "502":{
+            "description":"An Internal System error occurred.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "503":{
+            "description":"The Service is currently unavailable.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "504":{
+            "description":"The request timed out.",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components":{
@@ -11543,6 +12300,265 @@
           }
         },
         "description": "The customer's billing address."
+      },
+      "giftingProductList": {
+        "description": "List of gifting products.",
+        "required": [
+          "products"
+        ],
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "description": "Array of products",
+            "items":{
+              "$ref": "#/components/schemas/giftingProduct"
+            }
+          }
+        }
+      },
+      "giftingProduct": {
+        "description": "Gift card product summary data",
+        "required":[
+          "productId",
+          "name",
+          "barCodeType",
+          "lastUpdateDateTime",
+          "defaultDesign"
+        ],
+        "type":"object",
+        "properties":{
+          "productId": {
+            "description":"Unique identifier assigned to gift card program",
+            "type":"string"
+          },
+          "name": {
+            "description":"Display name of the gift card program",
+            "type":"string"
+          },
+          "barCodeType": {
+            "description":"The manner in which the barcode is displayed for optical recognition (can be used to drive CX experience flows)",
+            "type":"string",
+            "enum": [
+              "PAN",
+              "GTIN"
+            ]
+          },
+          "lastUpdateDateTime": {
+            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+            "type":"string",
+            "description":"The timestamp the gift card program was last updated. The timestamp format is ISO8601.",
+            "example":"2017-10-26T04:56:25.046Z"
+          },
+          "defaultDesign": {
+            "$ref": "#/components/schemas/giftingProductDesign"
+          },
+          "discountOffered": {
+            "$ref": "#/components/schemas/giftingProductDiscount"
+          }
+        }
+      },
+      "giftingProductDetail": {
+        "description": "Gift card product detailed data",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/giftingProduct"
+          },
+          {
+            "required":[
+              "redemptionType",
+              "minValue",
+              "maxValue",
+              "isActive",
+              "availability",
+              "designs"
+            ],
+            "type":"object",
+            "properties":{
+              "redemptionInstructions": {
+                "description":"Display instruction on where and how to redeem the product",
+                "type":"string"
+              },
+              "redemptionType": {
+                "description":"The enabled redemption channels",
+                "type":"string",
+                "enum": [
+                  "INSTORE",
+                  "ONLINE",
+                  "BOTH"
+                ]
+              },
+              "termsAndConditions": {
+                "description":"Terms and conditions text for the gift card product",
+                "type":"string"
+              },
+              "minValue": {
+                "description":"Minimum AUD value gift card able to be purchased for this product",
+                "type":"integer"
+              },
+              "maxValue": {
+                "description":"Maximum AUD value gift card able to be purchased for this product",
+                "type":"integer"
+              },
+              "expiryPeriodInDays": {
+                "description":"Expiry period for the gift card product once purchased",
+                "type":"integer"
+              },
+              "expiryPeriodText": {
+                "description":"Display text for the expiry period",
+                "type":"string"
+              },
+              "isActive": {
+                "description":"Returns true if the gift card product is active, else false. Only active programs are orderable",
+                "type":"boolean"
+              },
+              "redemptionStores": {
+                "description":"The stores in which the gift card product is able to be redeemed",
+                "type":"array",
+                "items": {
+                  "type":"string"
+                }
+              },
+              "availability": {
+                "description":"Digital or phyiscal availability of the gift card",
+                "type":"string",
+                "enum": [
+                  "DIGITAL",
+                  "PHYSICAL",
+                  "BOTH"
+                ]
+              },
+              "designs": {
+                "description":"Array of all alternative designs for the gift card product",
+                "type":"array",
+                "items": {
+                  "$ref": "#/components/schemas/giftingProductDesign"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "giftingProductDesign": {
+        "description": "The aesthectic design of a gift card product",
+        "required":[
+          "designId",
+          "imageUrl",
+          "designType"
+        ],
+        "type":"object",
+        "properties":{
+          "designId": {
+            "description":"Unique (within the scope of designType) identifier of the aesthectic design of the gift card",
+            "type":"string"
+          },
+          "designType": {
+            "description":"Format of the design (note that different design types have different unique IDs)",
+            "type":"string",
+            "enum": [
+              "DIGITAL",
+              "PHYSICAL"
+            ]
+          },
+          "imageUrl": {
+            "description":"URL to the image for the gift card design",
+            "type":"string"
+          }
+        }
+      },
+      "giftingProductDiscount": {
+        "description": "A discount offered for a gift card product",
+        "required":[
+          "discountId",
+          "description",
+          "percentageDiscount"
+        ],
+        "type":"object",
+        "properties":{
+          "discountId": {
+            "description":"Unique identifier of the discount",
+            "type":"string"
+          },
+          "description": {
+            "description":"Display description of the discount",
+            "type":"string"
+          },
+          "percentageDiscount": {
+            "description":"Percentage discount offered on the gift card",
+            "type":"integer",
+            "minimum":0
+          },
+          "startDate": {
+            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+            "type":"string",
+            "description":"The start date of the offered discount. The timestamp format is ISO8601.",
+            "example":"2017-10-26T00:00:00.000Z"
+          },
+          "endDate": {
+            "pattern":"YYYY-MM-DDTHH:mm:ss.SSSZ",
+            "type":"string",
+            "description":"The end date of the offered discount. The timestamp format is ISO8601.",
+            "example":"2017-10-26T00:00:00.000Z"
+          }
+        }
+      },
+      "giftingProductOrderItem": {
+        "required":[
+          "designId",
+          "amount",
+          "quantity",
+          "isGifting"
+        ],
+        "type":"object",
+        "properties":{
+          "designId": {
+            "description":"Unique identifier of the design selected (assumed to be DIGITAL only currently)",
+            "type":"string"
+          },
+          "amount": {
+            "description":"Face value of the gift card",
+            "type":"number"
+          },
+          "quantity": {
+            "description":"For self use card, this can be any value between 1 and 10. For a gifting card, it must be 1",
+            "type":"integer"
+          },
+          "isGifting": {
+            "description":"If true its a gifting card, if false it is a self use card",
+            "type":"boolean"
+          },
+          "recipientDetails": {
+            "description":"For a gifting card, contains the recipient details",
+            "required":[
+              "toName",
+              "fromName",
+              "mobileNumber"
+            ],
+            "type":"object",
+            "properties":{
+              "toName": {
+                "description":"Name of sender",
+                "type":"string"
+              },
+              "fromName": {
+                "description":"Name of recipient",
+                "type":"string"
+              },
+              "message": {
+                "description":"Optional message to be sent as part of gift card delivery",
+                "type":"string"
+              },
+              "imageUrl": {
+                "description":"Optional image URL for personalisation purposes",
+                "type":"string"
+              },
+              "mobileNumber": {
+                "description":"Australian mobile number of recipient. Only SMS delivery method is supported for gifting card",
+                "type":"string"
+              }
+            }
+          }
+        }
       },
       "transactionType": {
         "type": "string",
@@ -22149,6 +23165,182 @@
                 },
                 "meta": {
                   "$ref": "#/components/schemas/meta"
+                }
+              }
+            }
+          }
+        }
+      },
+      "giftingProductsSuccessResponse": {
+        "description":"Successful response",
+        "content":{
+          "application/json":{
+            "schema":{
+              "type":"object",
+              "required":[
+                "data",
+                "meta"
+              ],
+              "properties":{
+                "data":{
+                  "$ref":"#/components/schemas/giftingProductList"
+                },
+                "meta":{
+                  "$ref":"#/components/schemas/metaPaginated"
+                }
+              }
+            }
+          }
+        }
+      },
+      "giftingProductDetailSuccessResponse": {
+        "description":"Successful response",
+        "content":{
+          "application/json":{
+            "schema":{
+              "type":"object",
+              "required":[
+                "data",
+                "meta"
+              ],
+              "properties":{
+                "data":{
+                  "$ref":"#/components/schemas/giftingProductDetail"
+                },
+                "meta":{
+                  "$ref":"#/components/schemas/meta"
+                }
+              }
+            }
+          }
+        }
+      },
+      "giftingProductQuoteSuccessResponse": {
+        "description":"Successful response",
+        "content":{
+          "application/json":{
+            "schema":{
+              "type":"object",
+              "required":[
+                "data",
+                "meta"
+              ],
+              "properties":{
+                "data":{
+                  "description":"Results of the gifting quote",
+                  "required":[
+                    "quoteId",
+                    "subTotalAmount",
+                    "discountAmount",
+                    "totalOrderAmount",
+                    "orderItems"
+                  ],
+                  "type":"object",
+                  "properties":{
+                    "quoteId": {
+                      "description":"Quote reference. Can be used as a reference when placing the actual order",
+                      "type":"string"
+                    },
+                    "subTotalAmount": {
+                      "description":"Face value of the gift card",
+                      "type":"number"
+                    },
+                    "discountAmount": {
+                      "description":"Eligible discount amount. In case of no discounts, value will be 0",
+                      "type":"number"
+                    },
+                    "totalOrderAmount": {
+                      "description":"Net amount payable",
+                      "type":"number"
+                    },
+                    "orderItems": {
+                      "description":"Results of the gifting quote",
+                      "required":[
+                        "designId",
+                        "amount",
+                        "unitPrice",
+                        "totalPrice",
+                        "quantity",
+                        "isGifting"
+                      ],
+                      "type":"object",
+                      "properties":{
+                        "designId": {
+                          "description":"Unique identifier of the design selected (assumed to be DIGITAL only currently)",
+                          "type":"string"
+                        },
+                        "amount": {
+                          "description":"Face value of the gift card",
+                          "type":"number"
+                        },
+                        "unitPrice": {
+                          "description":"Sale price of the gift card",
+                          "type":"number"
+                        },
+                        "totalPrice": {
+                          "description":"Total order price",
+                          "type":"number"
+                        },
+                        "quantity": {
+                          "description":"For self use card, this can be any value between 1 and 10. For a gifting card, it must be 1",
+                          "type":"integer"
+                        },
+                        "isGifting": {
+                          "description":"If true its a gifting card, if false it is a self use card",
+                          "type":"boolean"
+                        },
+                        "mobileNumber": {
+                          "description":"Australian mobile number of recipient. Only SMS delivery method is supported for gifting card",
+                          "type":"string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "meta":{
+                  "$ref":"#/components/schemas/meta"
+                }
+              }
+            }
+          }
+        }
+      },
+      "giftingProductOrderSuccessResponse": {
+        "description":"Successful response",
+        "content":{
+          "application/json":{
+            "schema":{
+              "type":"object",
+              "required":[
+                "data",
+                "meta"
+              ],
+              "properties":{
+                "data":{
+                  "description":"Results of the gifting order",
+                  "required":[
+                    "status",
+                    "orderId",
+                    "quoteNo"
+                  ],
+                  "type":"object",
+                  "properties":{
+                    "status": {
+                      "description":"Current order status",
+                      "type":"string"
+                    },
+                    "orderId": {
+                      "description":"Order reference",
+                      "type":"string"
+                    },
+                    "quoteNo": {
+                      "description":"Quote reference",
+                      "type":"string"
+                    }
+                  }
+                },
+                "meta":{
+                  "$ref":"#/components/schemas/meta"
                 }
               }
             }
