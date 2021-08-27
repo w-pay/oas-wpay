@@ -4049,7 +4049,7 @@
           }
       }
     },
-    "/merchant/transactions/{transactionId}/void":{
+    "/instore/merchant/transactions/{transactionId}/void":{
         "post":{
             "tags":[
                 "Merchant"
