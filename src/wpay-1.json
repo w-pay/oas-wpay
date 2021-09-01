@@ -3,7 +3,7 @@
   "info":{
     "title":"Wpay APIs",
     "description":"Wpay APIs for payments and gifting",
-    "version":"1.0.6"
+    "version":"1.0.7"
   },
   "servers":[
     {
@@ -15880,6 +15880,107 @@
                   "type":"string",
                   "description":"The passcode is used to send additional information (eg. gift card PIN) for the payment instrument. This property is currently only required for gift card instruments and only if the gift card PIN is required during payment. This property should NOT be used with credit card instruments (see stepUpToken).",
                   "example":"1425"
+                },
+                "controlData":{
+                  "type":"object",
+                  "description":"This object is used to pass additonal control data to Digital Pay",
+                  "properties":{
+                    "tokenType":{
+                      "type":"string",
+                      "description":"The Digital Pay token type to use for a scheme card instrument during 3DS processing for merchants that have 3DS enabled. Defaults to 'PAN' if absent.",
+                      "enum":[
+                        "SCHEME_TOKEN",
+                        "SCDR",
+                        "PAN"
+                      ],
+                      "default":"PAN"
+                    }
+                  }
+                },
+                "threeDS":{
+                  "required":[
+                    "messageVersion",
+                    "xid",
+                    "authenticationValue",
+                    "dsTransID",
+                    "eci",
+                    "aresStatus",
+                    "veresEnrolled",
+                    "transStatus"
+                  ],
+                  "type":"object",
+                  "description":"This object is only required if the payments request requires 3DS challenge response data to be sent to Digital Pay.",
+                  "properties":{
+                    "messageVersion":{
+                      "type":"string",
+                      "description":"The Protocol Version Number of the specification utilised by the system creating this message.",
+                      "example":"2.2.0"
+                    },
+                    "xid":{
+                      "type":"string",
+                      "description":"The transaction identifier. Required for Mastercard and Amex. Not applicable for Visa.",
+                      "example":"313233343536373839303132333435363738"
+                    },
+                    "authenticationValue":{
+                      "type":"string",
+                      "description":"The payment system-specific value provided by the ACS or the Directory Server (DS) using an algorithm defined by Payment System.",
+                      "example":"RGlkWW91UmVhbGx5Q2hlY2tJdCE="
+                    },
+                    "dsTransID":{
+                      "type":"string",
+                      "description":"The Directory Server (DS) authentication identification code. A universally unique transaction identifier assigned by the DS to identify a single transaction. The format of the value is defined in IETF RFC 4122. It may utilise any of the specified versions if the output meets specific requirements.",
+                      "example":"f25084f0-5b16-4c0a-ae5d-b24808a95e4b"
+                    },
+                    "eci":{
+                      "type":"string",
+                      "description":"The electronic commerce indicator. Required for calculating the SLI. A Payment System-specific value provided by the ACS or DS to indicate the results of the attempt to authenticate the Cardholder.",
+                      "example":"For Mastercard: ('00','01','02') and for Visa: ('05','06','07')"
+                    },
+                    "aresStatus":{
+                      "type":"string",
+                      "description":"The payer authentication response status. Required for Visa.",
+                      "enum":[
+                        "Y: Customer was successfully authenticated",
+                        "N: Customer failed or canceled authentication",
+                        "C: Card challenged",
+                        "R: Authentication rejected",
+                        "A: Proof of authentication attempt was generated",
+                        "U: Authentication not completed regardless of the reason"
+                      ],
+                      "example":"Y"
+                    },
+                    "veresEnrolled":{
+                      "type":"string",
+                      "description":"The verification response enrollment status. Required for Visa.",
+                      "enum":[
+                        "Y: Card enrolled, must authenticate",
+                        "N: Card not enrolled, proceed with authorization",
+                        "U: Unable to authenticate regardless of the reason",
+                        "B: Indicates that authentication was bypassed"
+                      ],
+                      "example":"Y"
+                    },
+                    "transStatus":{
+                      "type":"string",
+                      "description": "Indicates whether a transaction qualifies as an authenticated transaction or account verification.",
+                      "enum":[
+                        "Y: Authentication Successful",
+                        "N: Not Authenticated",
+                        "U: Authentication could not be performed",
+                        "A: Attempts Processing Performed; Not authenticated",
+                        "C: Challenge Required. Additional authentication is required",
+                        "D: Challenge Required; Decoupled Authentication performed",
+                        "R: Authentication Rejected. Issuer is rejecting",
+                        "I: Informational Only"
+                      ],
+                      "example":"Y"
+                    },
+                    "sli":{
+                      "type":"string",
+                      "description":"The SLI from the merchant.",
+                      "example":"07"
+                    }
+                  }
                 }
               }
             }
@@ -15911,16 +16012,42 @@
           },
           "storeData":{
             "required":[
-              "rrn",
+              "terminalId",
               "storeId",
+              "stan",
+              "rrn",
               "transactionTimestamp"
             ],
             "type":"object",
             "properties":{
+              "groupId":{
+                "type":"string",
+                "description":"The payment transaction merchant group id. The group id is defined as a logical grouping of merchants or stores. A default configured group id is set in Apigee if absent in the payload.",
+                "example":"7915d9d7-368e-4af9-a3d4-d09927b8603a"
+              },
+              "terminalId":{
+                "maxLength":8,
+                "minLength":8,
+                "type":"string",
+                "description":"The in-store payment transaction terminal id. This is a 8 character alphanumeric string. If present in the payload the 'storeId' has to be omitted.",
+                "example":"W4952110"
+              },
               "storeId":{
                 "type":"string",
-                "description":"The in-store payment transaction store id.",
+                "description":"The in-store payment transaction store id. If present in the payload the 'terminalId' and 'stan' can be omitted.",
                 "example":"4952110"
+              },
+              "laneId":{
+                "type":"string",
+                "description":"The in-store payment transaction lane id.",
+                "example":"110"
+              },
+              "stan":{
+                "maxLength":6,
+                "minLength":6,
+                "type":"string",
+                "description":"The System Trace Audit Number (STAN) used to identify the transaction. This is a 6 digit numeric string.",
+                "example":"555001"
               },
               "rrn":{
                 "maxLength":12,
@@ -15932,10 +16059,10 @@
               "transactionTimestamp":{
                 "type":"number",
                 "description":"The in-store payment transaction timestamp. The timestamp format is milliseconds since epoch.",
-                "example":1528264660639
+                "example":1607915015449
               }
             },
-            "description":"This object is only required if the payments request is for an in-store (R10) payment transaction."
+            "description":"This object is only required if the payments request is for an in-store payment transaction."
           },
           "basketData":{
             "type":"array",
@@ -16067,12 +16194,40 @@
             {
               "paymentInstrumentId":"90731",
               "amount":20.5,
-              "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+              "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8",
+              "controlData":{
+                "tokenType":"PAN"
+              },
+              "threeDS":{
+                "messageVersion":"2.2.0",
+                "xid":"313233343536373839303132333435363738",
+                "authenticationValue":"RGlkWW91UmVhbGx5Q2hlY2tJdCE=",
+                "dsTransID":"f25084f0-5b16-4c0a-ae5d-b24808a95e4b",
+                "eci":"05",
+                "aresStatus":"Y",
+                "veresEnrolled":"Y",
+                "transStatus":"Y",
+                "sli":"07"
+              }
             },
             {
               "paymentToken":"712029a1-c0aa-41bc-a810-3d42424c5834",
               "amount":20.5,
-              "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+              "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8",
+              "controlData":{
+                "tokenType":"PAN"
+              },
+              "threeDS":{
+                "messageVersion":"2.2.0",
+                "xid":"313233343536373839303132333435363738",
+                "authenticationValue":"RGlkWW91UmVhbGx5Q2hlY2tJdCE=",
+                "dsTransID":"f25084f0-5b16-4c0a-ae5d-b24808a95e4b",
+                "eci":"05",
+                "aresStatus":"Y",
+                "veresEnrolled":"Y",
+                "transStatus":"Y",
+                "sli":"07"
+              }
             },
             {
               "paymentInstrumentId":"81054",
@@ -16090,10 +16245,14 @@
               "value":"23f585945be2f"
             }
           ],
-          "storeData":{
-            "storeId":"4952110",
-            "rrn":"000000006564",
-            "transactionTimestamp":1528264660639
+          "storeData": {
+            "groupId": "7915d9d7-368e-4af9-a3d4-d09927b8603a",
+            "terminalId": "W4952110",
+            "storeId": "4952110",
+            "laneId": "110",
+            "stan": "555001",
+            "rrn": "000000006564",
+            "transactionTimestamp": 1607915015449
           },
           "basketData":[
             {
@@ -16351,6 +16510,32 @@
                     }
                   },
                   "description":"Special handling instructions that have to be executed after a payment. Only present if no error occurred during payment."
+                },
+                "threeDS":{
+                  "required":[
+                    "car",
+                    "dsTransID",
+                    "sli"
+                  ],
+                  "type":"object",
+                  "description":"This object is only present if the payments response contains 3DS data from Digital Pay.",
+                  "properties":{
+                    "car":{
+                      "type":"string",
+                      "description":"Received in response to a Visa authenticated Purchase and PreAuth. Only present for Visa.",
+                      "example":"frva_need_a_sample"
+                    },
+                    "dsTransID":{
+                      "type":"string",
+                      "description":"The Directory Server (DS) authentication identification code. A universally unique transaction identifier assigned by the DS to identify a single transaction. The format of the value is defined in IETF RFC 4122. It may utilise any of the specified versions if the output meets specific requirements.",
+                      "example":"f25084f0-5b16-4c0a-ae5d-b24808a95e4b"
+                    },
+                    "sli":{
+                      "type":"string",
+                      "description":"The SLI from the the schemes.",
+                      "example":"07"
+                    }
+                  }
                 }
               }
             }
