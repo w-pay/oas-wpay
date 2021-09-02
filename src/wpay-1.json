@@ -16951,7 +16951,259 @@
           }
         },
         "description":"The JSON success response structure of the Payments endpoint.",
-        "example":"Complete Success:{    \"transactionReceipt\": \"1000000000670621\",    \"partialSuccess\": false,    \"fraudResponse\": {        \"clientId\": \"5017321752216948403009\",        \"reasonCode\": \"480\",        \"decision\": \"REVIEW\"    },    \"creditCards\": [        {            \"paymentInstrumentId\": \"90731\",            \"paymentToken\": \"712029a1-c0aa-41bc-a810-3d42424c5834\",            \"paymentTransactionRef\": \"1000000000670622\",            \"receiptData\": {                \"cardSuffix\": \"6106\",                \"scheme\": \"MASTERCARD\",                \"expiryMonth\": \"05\",                \"expiryYear\": \"21\"            },            \"extendedTransactionData\": [                {                    \"field\": \"bin\",                    \"value\": \"401200\"                },                {                    \"field\": \"stan\",                    \"value\": \"001675\"                },                {                    \"field\": \"rrn\",                    \"value\": \"000000000076\"                },                {                    \"field\": \"token\",                    \"value\": \"40120080000200000928\"                },                {                    \"field\": \"mid\",                    \"value\": \"611000602006135\"                },                {                    \"field\": \"terminalId\",                    \"value\": \"W6135100\"                }            ],            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\",            \"handlingInstructions\": {                \"instructionCode\": \"110\",                \"instructionMessage\": \"Immediate Completion\"            }        }    ],    \"giftCards\": [        {            \"paymentInstrumentId\": \"81054\",            \"paymentToken\": \"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c\",            \"paymentTransactionRef\": \"1000000000670623\",            \"receiptData\": {                \"cardSuffix\": \"2517\"            },            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ],    \"payPal\": [        {            \"paymentInstrumentId\": \"90271\",            \"paymentToken\": \"15f774d0-e42e-11e9-a359-2a2ae2dbcce4\",            \"paymentTransactionRef\": \"1000000000670624\",            \"receiptData\": {                \"payPalId\": \"jane.doe@paypal.com\",                \"customerId\": \"690238314\"            },            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ],    \"androidPay\": [],    \"googlePay\": [        {            \"paymentInstrumentId\": \"90953\",            \"paymentToken\": \"76a4c2f1-7620-4bc4-8f4f-01c1467ea318\",            \"paymentTransactionRef\": \"1000000000670625\",            \"extendedTransactionData\": [                {                    \"field\": \"bin\",                    \"value\": \"376445\"                }            ],            \"externalServiceCode\": \"100\",            \"externalServiceMessage\": \"ACCEPT\"        }    ],    \"applePay\": [        {            \"paymentInstrumentId\": \"90375\",            \"paymentToken\": \"64dee650-e42e-11e9-81b4-2a2ae2dbcce4\",            \"paymentTransactionRef\": \"1000000000670626\",            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ],    \"unknown\": []}Partial Success:{    \"transactionReceipt\": \"1000000000670621\",    \"partialSuccess\": true,    \"fraudResponse\": {        \"clientId\": \"5017321752216948403009\",        \"reasonCode\": \"480\",        \"decision\": \"REVIEW\"    },    \"creditCards\": [        {            \"paymentInstrumentId\": \"90731\",            \"paymentToken\": \"712029a1-c0aa-41bc-a810-3d42424c5834\",            \"paymentTransactionRef\": \"1000000000670622\",            \"receiptData\": {                \"cardSuffix\": \"6106\",                \"scheme\": \"MASTERCARD\",                \"expiryMonth\": \"05\",                \"expiryYear\": \"21\"            },            \"extendedTransactionData\": [                {                    \"field\": \"bin\",                    \"value\": \"401200\"                },                {                    \"field\": \"stan\",                    \"value\": \"001675\"                },                {                    \"field\": \"rrn\",                    \"value\": \"000000000076\"                },                {                    \"field\": \"token\",                    \"value\": \"40120080000200000928\"                },                {                    \"field\": \"mid\",                    \"value\": \"611000602006135\"                },                {                    \"field\": \"terminalId\",                    \"value\": \"W6135100\"                }            ],            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\",            \"handlingInstructions\": {                \"instructionCode\": \"110\",                \"instructionMessage\": \"Immediate Completion\"            }        }    ],    \"giftCards\": [        {            \"paymentInstrumentId\": \"81054\",            \"paymentToken\": \"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c\",            \"errorCode\": \"UN99\",            \"errorMessage\": \"UNEXPECTED SYSTEM FAILURE\",            \"errorDetail\": \"We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)\",            \"stepUp\": {                \"type\": \"REQUIRE_PASSCODE\",                \"mandatory\": true,                \"url\": \"https://uat.woolworthspay.com.au/container-ws/tbd\"            },                      \"receiptData\": {                \"cardSuffix\": \"2517\"            },            \"externalServiceCode\": \"02\",            \"externalServiceMessage\": \"FAILURE\"        }    ],    \"payPal\": [        {            \"paymentInstrumentId\": \"90271\",            \"paymentToken\": \"15f774d0-e42e-11e9-a359-2a2ae2dbcce4\",            \"errorCode\": \"UN99\",            \"errorMessage\": \"UNEXPECTED SYSTEM FAILURE\",            \"errorDetail\": \"We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)\",            \"receiptData\": {                \"payPalId\": \"jane.doe@paypal.com\",                \"customerId\": \"690238314\"            },            \"externalServiceCode\": \"02\",            \"externalServiceMessage\": \"FAILURE\"        }    ],    \"androidPay\": [],    \"googlePay\": [        {            \"paymentInstrumentId\": \"90953\",            \"paymentToken\": \"76a4c2f1-7620-4bc4-8f4f-01c1467ea318\",            \"errorCode\": \"UN99\",            \"errorMessage\": \"UNEXPECTED SYSTEM FAILURE\",            \"errorDetail\": \"We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)\",            \"stepUp\": {                \"type\": \"REFRESH_TOKEN\",                \"mandatory\": true,                \"url\": \"https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/googlepay/tokenize/90953\"            },            \"extendedTransactionData\": [                {                    \"field\": \"bin\",                    \"value\": \"376445\"                }            ],            \"externalServiceCode\": \"02\",            \"externalServiceMessage\": \"FAILURE\"        }    ],    \"applePay\": [        {            \"paymentInstrumentId\": \"90375\",            \"paymentToken\": \"64dee650-e42e-11e9-81b4-2a2ae2dbcce4\",            \"errorCode\": \"UN99\",            \"errorMessage\": \"UNEXPECTED SYSTEM FAILURE\",            \"errorDetail\": \"We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)\",            \"stepUp\": {                \"type\": \"REFRESH_TOKEN\",                \"mandatory\": true,                \"url\": \"https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/applepay/tokenize/90375\"            },            \"externalServiceCode\": \"02\",            \"externalServiceMessage\": \"FAILURE\"        }    ],    \"unknown\": [        {            \"paymentInstrumentId\": \"90945\",            \"paymentToken\": null,            \"errorCode\": \"UN99\",            \"errorMessage\": \"UNEXPECTED SYSTEM FAILURE\",            \"errorDetail\": \"We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)\"        }    ]}"
+        "example":{
+          "Complete Success Example:": {
+            "transactionReceipt": "1000000000670621",
+            "partialSuccess": false,
+            "fraudResponse": {
+              "clientId": "5017321752216948403009",
+              "reasonCode": "480",
+              "decision": "REVIEW"
+            },
+            "creditCards": [
+              {
+                "paymentInstrumentId": "90731",
+                "paymentToken": "712029a1-c0aa-41bc-a810-3d42424c5834",
+                "paymentTransactionRef": "1000000000670622",
+                "receiptData": {
+                  "cardSuffix": "6106",
+                  "scheme": "MASTERCARD",
+                  "expiryMonth": "05",
+                  "expiryYear": "21"
+                },
+                "extendedTransactionData": [
+                  {
+                    "field": "bin",
+                    "value": "401200"
+                  },
+                  {
+                    "field": "stan",
+                    "value": "001675"
+                  },
+                  {
+                    "field": "rrn",
+                    "value": "000000000076"
+                  },
+                  {
+                    "field": "token",
+                    "value": "40120080000200000928"
+                  },
+                  {
+                    "field": "mid",
+                    "value": "611000602006135"
+                  },
+                  {
+                    "field": "terminalId",
+                    "value": "W6135100"
+                  }
+                ],
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED",
+                "handlingInstructions": {
+                  "instructionCode": "110",
+                  "instructionMessage": "Immediate Completion"
+                },
+                "threeDS": {
+                  "car": "frva_need_a_sample",
+                  "dsTransID": "f25084f0-5b16-4c0a-ae5d-b24808a95e4b",
+                  "sli": "07"
+                }
+              }
+            ],
+            "giftCards": [
+              {
+                "paymentInstrumentId": "81054",
+                "paymentToken": "ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
+                "paymentTransactionRef": "1000000000670623",
+                "receiptData": {
+                  "cardSuffix": "2517"
+                },
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ],
+            "payPal": [
+              {
+                "paymentInstrumentId": "90271",
+                "paymentToken": "15f774d0-e42e-11e9-a359-2a2ae2dbcce4",
+                "paymentTransactionRef": "1000000000670624",
+                "receiptData": {
+                  "payPalId": "jane.doe@paypal.com",
+                  "customerId": "690238314"
+                },
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ],
+            "androidPay": [],
+            "googlePay": [
+              {
+                "paymentInstrumentId": "90953",
+                "paymentToken": "76a4c2f1-7620-4bc4-8f4f-01c1467ea318",
+                "paymentTransactionRef": "1000000000670625",
+                "extendedTransactionData": [
+                  {
+                    "field": "bin",
+                    "value": "376445"
+                  }
+                ],
+                "externalServiceCode": "100",
+                "externalServiceMessage": "ACCEPT"
+              }
+            ],
+            "applePay": [
+              {
+                "paymentInstrumentId": "90375",
+                "paymentToken": "64dee650-e42e-11e9-81b4-2a2ae2dbcce4",
+                "paymentTransactionRef": "1000000000670626",
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ],
+            "unknown": []
+          },
+          "Partial Success Example:": {
+            "transactionReceipt": "1000000000670621",
+            "partialSuccess": true,
+            "fraudResponse": {
+              "clientId": "5017321752216948403009",
+              "reasonCode": "480",
+              "decision": "REVIEW"
+            },
+            "creditCards": [
+              {
+                "paymentInstrumentId": "90731",
+                "paymentToken": "712029a1-c0aa-41bc-a810-3d42424c5834",
+                "paymentTransactionRef": "1000000000670622",
+                "receiptData": {
+                  "cardSuffix": "6106",
+                  "scheme": "MASTERCARD",
+                  "expiryMonth": "05",
+                  "expiryYear": "21"
+                },
+                "extendedTransactionData": [
+                  {
+                    "field": "bin",
+                    "value": "401200"
+                  },
+                  {
+                    "field": "stan",
+                    "value": "001675"
+                  },
+                  {
+                    "field": "rrn",
+                    "value": "000000000076"
+                  },
+                  {
+                    "field": "token",
+                    "value": "40120080000200000928"
+                  },
+                  {
+                    "field": "mid",
+                    "value": "611000602006135"
+                  },
+                  {
+                    "field": "terminalId",
+                    "value": "W6135100"
+                  }
+                ],
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED",
+                "handlingInstructions": {
+                  "instructionCode": "110",
+                  "instructionMessage": "Immediate Completion"
+                },
+                "threeDS": {
+                  "car": "frva_need_a_sample",
+                  "dsTransID": "f25084f0-5b16-4c0a-ae5d-b24808a95e4b",
+                  "sli": "07"
+                }
+              }
+            ],
+            "giftCards": [
+              {
+                "paymentInstrumentId": "81054",
+                "paymentToken": "ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
+                "errorCode": "UN99",
+                "errorMessage": "UNEXPECTED SYSTEM FAILURE",
+                "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                "stepUp": {
+                  "type": "REQUIRE_PASSCODE",
+                  "mandatory": true,
+                  "url": "https://uat.woolworthspay.com.au/container-ws/tbd"
+                },
+                "receiptData": {
+                  "cardSuffix": "2517"
+                },
+                "externalServiceCode": "02",
+                "externalServiceMessage": "FAILURE"
+              }
+            ],
+            "payPal": [
+              {
+                "paymentInstrumentId": "90271",
+                "paymentToken": "15f774d0-e42e-11e9-a359-2a2ae2dbcce4",
+                "errorCode": "UN99",
+                "errorMessage": "UNEXPECTED SYSTEM FAILURE",
+                "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                "receiptData": {
+                  "payPalId": "jane.doe@paypal.com",
+                  "customerId": "690238314"
+                },
+                "externalServiceCode": "02",
+                "externalServiceMessage": "FAILURE"
+              }
+            ],
+            "androidPay": [],
+            "googlePay": [
+              {
+                "paymentInstrumentId": "90953",
+                "paymentToken": "76a4c2f1-7620-4bc4-8f4f-01c1467ea318",
+                "errorCode": "UN99",
+                "errorMessage": "UNEXPECTED SYSTEM FAILURE",
+                "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                "stepUp": {
+                  "type": "REFRESH_TOKEN",
+                  "mandatory": true,
+                  "url": "https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/googlepay/tokenize/90953"
+                },
+                "extendedTransactionData": [
+                  {
+                    "field": "bin",
+                    "value": "376445"
+                  }
+                ],
+                "externalServiceCode": "02",
+                "externalServiceMessage": "FAILURE"
+              }
+            ],
+            "applePay": [
+              {
+                "paymentInstrumentId": "90375",
+                "paymentToken": "64dee650-e42e-11e9-81b4-2a2ae2dbcce4",
+                "errorCode": "UN99",
+                "errorMessage": "UNEXPECTED SYSTEM FAILURE",
+                "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                "stepUp": {
+                  "type": "REFRESH_TOKEN",
+                  "mandatory": true,
+                  "url": "https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/applepay/tokenize/90375"
+                },
+                "externalServiceCode": "02",
+                "externalServiceMessage": "FAILURE"
+              }
+            ],
+            "unknown": [
+              {
+                "paymentInstrumentId": "90945",
+                "paymentToken": null,
+                "errorCode": "UN99",
+                "errorMessage": "UNEXPECTED SYSTEM FAILURE",
+                "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)"
+              }
+            ]
+          }
+        }
       },
       "PaymentsErrorResponse":{
         "required":[
@@ -17116,6 +17368,32 @@
                   "type":"string",
                   "description":"The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
                   "example":"DO NOT HONOUR"
+                },
+                "threeDS":{
+                  "required":[
+                    "car",
+                    "dsTransID",
+                    "sli"
+                  ],
+                  "type":"object",
+                  "description":"This object is only present if the payments response contains 3DS data from Digital Pay.",
+                  "properties":{
+                    "car":{
+                      "type":"string",
+                      "description":"Received in response to a Visa authenticated Purchase and PreAuth. Only present for Visa.",
+                      "example":"frva_need_a_sample"
+                    },
+                    "dsTransID":{
+                      "type":"string",
+                      "description":"The Directory Server (DS) authentication identification code. A universally unique transaction identifier assigned by the DS to identify a single transaction. The format of the value is defined in IETF RFC 4122. It may utilise any of the specified versions if the output meets specific requirements.",
+                      "example":"f25084f0-5b16-4c0a-ae5d-b24808a95e4b"
+                    },
+                    "sli":{
+                      "type":"string",
+                      "description":"The SLI from the the schemes.",
+                      "example":"07"
+                    }
+                  }
                 }
               }
             }
@@ -17557,7 +17835,12 @@
                 }
               ],
               "externalServiceCode":"05",
-              "externalServiceMessage":"DO NOT HONOUR"
+              "externalServiceMessage":"DO NOT HONOUR",
+              "threeDS": {
+                "car": "frva_need_a_sample",
+                "dsTransID": "f25084f0-5b16-4c0a-ae5d-b24808a95e4b",
+                "sli": "07"
+              }
             }
           ],
           "giftCards":[
@@ -18401,7 +18684,49 @@
           }
         },
         "description":"The JSON response structure of the Completions endpoint.",
-        "example":"Complete Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": false,    \"completionResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"completionTransactionRef\": \"1000000000670875\",            \"amount\": 20.5,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"completionTransactionRef\": \"1000000000670876\",            \"amount\": 10,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ]}Partial Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": true,    \"completionResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"completionTransactionRef\": \"1000000000670875\",            \"amount\": 20.5,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"errorCode\": \"BI55\",            \"errorMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\",            \"errorDetail\": \"Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)\",            \"externalServiceCode\": \"55\",            \"externalServiceMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\"        }    ]}"
+        "example":{
+          "Complete Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": false,
+            "completionResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "completionTransactionRef": "1000000000670875",
+                "amount": 20.5,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "completionTransactionRef": "1000000000670876",
+                "amount": 10,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ]
+          },
+          "Partial Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": true,
+            "completionResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "completionTransactionRef": "1000000000670875",
+                "amount": 20.5,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "errorCode": "BI55",
+                "errorMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND",
+                "errorDetail": "Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)",
+                "externalServiceCode": "55",
+                "externalServiceMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND"
+              }
+            ]
+          }
+        }
       },
       "CompletionsErrorResponse":{
         "required":[
@@ -18626,7 +18951,46 @@
           }
         },
         "description":"The JSON response structure of the Voids endpoint.",
-        "example":"Complete Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": false,    \"voidResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"voidTransactionRef\": \"1000000000670875\",            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"voidTransactionRef\": \"1000000000670876\",            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ]}Partial Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": true,    \"voidResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"voidTransactionRef\": \"1000000000670875\",            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"errorCode\": \"BI55\",            \"errorMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\",            \"errorDetail\": \"Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)\",            \"externalServiceCode\": \"55\",            \"externalServiceMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\"        }    ]}"
+        "example":{
+          "Complete Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": false,
+            "voidResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "voidTransactionRef": "1000000000670875",
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "voidTransactionRef": "1000000000670876",
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ]
+          },
+          "Partial Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": true,
+            "voidResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "voidTransactionRef": "1000000000670875",
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "errorCode": "BI55",
+                "errorMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND",
+                "errorDetail": "Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)",
+                "externalServiceCode": "55",
+                "externalServiceMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND"
+              }
+            ]
+          }
+        }
       },
       "VoidsErrorResponse":{
         "required":[
@@ -18769,6 +19133,60 @@
                 }
               }
             }
+          },
+          "storeData":{
+            "required":[
+              "terminalId",
+              "storeId",
+              "stan",
+              "rrn",
+              "transactionTimestamp"
+            ],
+            "type":"object",
+            "properties":{
+              "groupId":{
+                "type":"string",
+                "description":"The refund transaction merchant group id. The group id is defined as a logical grouping of merchants or stores. A default configured group id is set in Apigee if absent in the payload.",
+                "example":"7915d9d7-368e-4af9-a3d4-d09927b8603a"
+              },
+              "terminalId":{
+                "maxLength":8,
+                "minLength":8,
+                "type":"string",
+                "description":"The in-store refund transaction terminal id. This is a 8 character alphanumeric string. If present in the payload the 'storeId' has to be omitted.",
+                "example":"W4952110"
+              },
+              "storeId":{
+                "type":"string",
+                "description":"The in-store refund transaction store id. If present in the payload the 'terminalId' and 'stan' can be omitted.",
+                "example":"4952110"
+              },
+              "laneId":{
+                "type":"string",
+                "description":"The in-store refund transaction lane id.",
+                "example":"110"
+              },
+              "stan":{
+                "maxLength":6,
+                "minLength":6,
+                "type":"string",
+                "description":"The System Trace Audit Number (STAN) used to identify the transaction. This is a 6 digit numeric string.",
+                "example":"555001"
+              },
+              "rrn":{
+                "maxLength":12,
+                "minLength":12,
+                "type":"string",
+                "description":"The in-store refund transaction store id. This is a 12 digit \"0\" [zero] padded numeric string.",
+                "example":"000000006564"
+              },
+              "transactionTimestamp":{
+                "type":"number",
+                "description":"The in-store refund transaction timestamp. The timestamp format is milliseconds since epoch.",
+                "example":1607915015449
+              }
+            },
+            "description":"This object is only required if the refunds request is for an in-store refund transaction."
           }
         },
         "description":"The JSON request structure of the Refunds endpoint.",
@@ -18784,7 +19202,16 @@
               "paymentTransactionRef":"1000000000670623",
               "amount":10
             }
-          ]
+          ],
+          "storeData": {
+            "groupId": "7915d9d7-368e-4af9-a3d4-d09927b8603a",
+            "terminalId": "W4952110",
+            "storeId": "4952110",
+            "laneId": "110",
+            "stan": "555002",
+            "rrn": "000000006565",
+            "transactionTimestamp": 1630592568014
+          }
         }
       },
       "RefundsSuccessResponse":{
@@ -18865,7 +19292,49 @@
           }
         },
         "description":"The JSON response structure of the Refunds endpoint.",
-        "example":"Complete Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": false,    \"refundResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"refundTransactionRef\": \"1000000000670875\",            \"amount\": 20.5,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"refundTransactionRef\": \"1000000000670876\",            \"amount\": 10,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ]}Partial Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": true,    \"refundResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"refundTransactionRef\": \"1000000000670875\",            \"amount\": 20.5,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"errorCode\": \"BI55\",            \"errorMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\",            \"errorDetail\": \"Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)\",            \"externalServiceCode\": \"55\",            \"externalServiceMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\"        }    ]}"
+        "example":{
+          "Complete Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": false,
+            "refundResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "refundTransactionRef": "1000000000670875",
+                "amount": 20.5,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "refundTransactionRef": "1000000000670876",
+                "amount": 10,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ]
+          },
+          "Partial Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": true,
+            "refundResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "refundTransactionRef": "1000000000670875",
+                "amount": 20.5,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "errorCode": "BI55",
+                "errorMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND",
+                "errorDetail": "Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)",
+                "externalServiceCode": "55",
+                "externalServiceMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND"
+              }
+            ]
+          }
+        }
       },
       "RefundsErrorResponse":{
         "required":[
