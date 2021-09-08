@@ -10529,7 +10529,7 @@
         },
         "x-codegen-request-body-name":"body"
       }
-  },
+    },
     "/gifting/products":{
       "get":{
         "tags":[
@@ -11368,42 +11368,42 @@
         "description":"Meta object containing fraud payload to be passed to Digital Pay",
         "type":"object",
         "required":[
-            "message",
-            "provider",
-            "format",
-            "responseFormat",
-            "version"
-          ],
-          "properties":{
-            "message": {
-                "description":"The fraud check message.",
-                "type":"string"
-            },
-            "provider": {
-                "description":"The fraud check provider.",
-                "type":"string"
-            },
-            "version": {
-                "description":"The fraud check version.",
-                "type":"string"
-            },
-            "format":{
-                "description":"The fraud check message format.",
-                "type":"string",
-                "enum":[
-                    "ZIP_BASE_64_ENCODED",
-                    "XML"
-                ]
-            },
-            "responseFormat":{
-                "description":"The fraud check response message format.",
-                "type":"string",
-                "enum":[
-                    "ZIP_BASE_64_ENCODED",
-                    "XML"
-                ]
-            }
+          "message",
+          "provider",
+          "format",
+          "responseFormat",
+          "version"
+        ],
+        "properties":{
+          "message": {
+            "description":"The fraud check message.",
+            "type":"string"
+          },
+          "provider": {
+            "description":"The fraud check provider.",
+            "type":"string"
+          },
+          "version": {
+            "description":"The fraud check version.",
+            "type":"string"
+          },
+          "format":{
+            "description":"The fraud check message format.",
+            "type":"string",
+            "enum":[
+              "ZIP_BASE_64_ENCODED",
+              "XML"
+            ]
+          },
+          "responseFormat":{
+            "description":"The fraud check response message format.",
+            "type":"string",
+            "enum":[
+              "ZIP_BASE_64_ENCODED",
+              "XML"
+            ]
           }
+        }
       },
       "metaChallenge":{
         "description":"Meta Object containing responses to a step up challenges",
