@@ -3929,7 +3929,7 @@
         },
         "responses":{
           "200":{
-            "$ref":"#/components/responses/refundMerchantTransactionResponse"
+            "$ref":"#/components/responses/merchantTransactionResponse"
           },
           "422":{
             "description":"The transaction specified doesn't exist or is a refund transaction already",
@@ -4082,7 +4082,7 @@
           "responses":{
               "200":{
                   "description":"Success",
-                  "$ref": "#/components/responses/completionMerchantTransactionResponse"
+                  "$ref": "#/components/responses/merchantTransactionResponse"
               },
               "400":{
                   "description":"Missing or invalid request payload or value.",
@@ -4263,7 +4263,7 @@
             "responses":{
                 "200":{
                     "description":"Success",
-                    "$ref": "#/components/responses/voidMerchantTransactionResponse"
+                    "$ref": "#/components/responses/merchantTransactionResponse"
                 },
                 "400":{
                     "description":"Missing or invalid request payload or value.",
@@ -12330,7 +12330,10 @@
                 "type":"string",
                 "enum":[
                   "PAYMENT",
-                  "REFUND"
+                  "PREAUTH",
+                  "REFUND",
+                  "COMPLETION",
+                  "VOID"
                 ]
               },
               "executionTime":{
@@ -24626,12 +24629,12 @@
           }
         }
       },
-      "refundMerchantTransactionResponse":{
+      "merchantTransactionResponse":{
         "description":"Successful response",
         "content":{
           "application/json":{
             "schema":{
-              "title":"refundMerchantTransactionResults",
+              "title":"merchantTransactionResults",
               "type":"object",
               "required":[
                 "data",
@@ -24647,215 +24650,46 @@
               }
             },
             "examples":{
-              "MerchantTransactionRefund":{
+              "MerchantTransactionResponse":{
                 "value":{
                   "data":{
+                    "transactionId":"7198fae2-951d-4951-b9c8-f3ef9d2ab716",
                     "merchantReferenceId":"123456",
                     "walletId":"80856249-6847-49f8-af02-9551a039b289",
+                    "merchantId": "10001",
                     "paymentRequestId":"d98b8c61-3731-477f-a380-d3ddc80bf718",
-                    "type":"REFUND",
-                    "grossAmount":12,
+                    "refundReason": "Refund requested by customer",
+                    "grossAmount": 12.99,
+                    "clientReference": "purchase-1234",
                     "executionTime":"2020-04-29T00:38:43.997Z",
-                    "payments":[
-
-                    ],
-                    "status":"REJECTED",
-                    "statusDetail":{
-
-                    },
-                    "transactionId":"7198fae2-951d-4951-b9c8-f3ef9d2ab716",
-                    "refunds":[
-                      {
+                    "type":"REFUND",
+                    "status": "APPROVED",
+                    "instruments": [{
+                      "paymentInstrumentId": "123456",
+                      "instrumentType": "MASTERCARD",
+                      "transactions": [{
+                        "type": "REFUND", 
+                        "executionTime": "2021-09-16T06:34:52.226Z", 
+                        "paymentTransactionRef": "1000000000670875",
+                        "amount": 12.99,
+                        "status": "APPROVED"
+                      }]
+                    }],
+                    "subTransactions": [{
+                      "transactionReceipt": "1000000000670875",
+                      "refunds": [{
                         "paymentTransactionRef":"1000000005202446",
-                        "amount":12
-                      }
-                    ]
+                        "refundTransactionRef": "1000000000670875",
+                        "amount": 12.99
+                      }],
+                      "partialSuccess": false
+                    }]
                   },
-                  "meta":{
-
-                  }
+                  "meta":{}
                 }
               }
             }
           }
-        }
-      },
-      "voidMerchantTransactionResponse": {
-        "description": "The JSON response structure of the Voids endpoint.",
-        "content": {
-            "application/json": {
-                "schema": {
-                    "required": [
-                        "data",
-                        "meta"
-                    ],
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "required": [
-                                "voidResponses",
-                                "partialSuccess",
-                                "transactionReceipt"
-                            ],
-                            "type": "object",
-                            "properties": {
-                                "transactionReceipt": {
-                                    "description": "Container reference in the transaction logs. This number uniquely identifies the whole/grouped transaction in the container.",
-                                    "type": "string",
-                                    "example": "1000000000670875"
-                                },
-                                "partialSuccess": {
-                                    "description": "A flag to indicate if a split void was only partially successful, ie. at least 1 of the voids had a successful result.",
-                                    "type": "boolean",
-                                    "example": true
-                                },
-                                "voidResponses": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "paymentTransactionRef",
-                                            "voidTransactionRef"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "paymentTransactionRef": {
-                                                "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
-                                                "type": "string",
-                                                "example": "1000000000670622"
-                                            },
-                                            "voidTransactionRef": {
-                                                "description": "Container reference in the transaction logs. This number uniquely identifies the void transaction in the container.",
-                                                "type": "string",
-                                                "example": "1000000000670875"
-                                            },
-                                            "errorCode": {
-                                                "description": "The error code. Only present if an error occurred during payment.",
-                                                "type": "string",
-                                                "example": "UN99"
-                                            },
-                                            "errorMessage": {
-                                                "description": "The error message. Only present if an error occurred during payment.",
-                                                "type": "string",
-                                                "example": "UNEXPECTED SYSTEM FAILURE"
-                                            },
-                                            "errorDetail": {
-                                                "description": "The error detail. Only present if an error occurred during payment.",
-                                                "type": "string",
-                                                "example": "We are currently experiencing technical issues with our service."
-                                            },
-                                            "externalServiceCode": {
-                                                "description": "The external service code (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
-                                                "type": "string",
-                                                "example": "00"
-                                            },
-                                            "externalServiceMessage": {
-                                                "description": "The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
-                                                "type": "string",
-                                                "example": "APPROVED"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "meta": {
-                            "$ref": "#/components/schemas/meta"
-                        }
-                    }
-                }
-            }
-        }
-      },
-      "completionMerchantTransactionResponse": {
-        "description": "The JSON response structure of the Completions endpoint.",
-        "content": {
-            "application/json": {
-                "schema": {
-                    "required": [
-                        "data",
-                        "meta"
-                    ],
-                    "type": "object",
-                    "properties": {
-                        "data": {
-                            "required": [
-                                "completionResponses",
-                                "partialSuccess",
-                                "transactionReceipt"
-                            ],
-                            "type": "object",
-                            "properties": {
-                                "transactionReceipt": {
-                                    "description": "Container reference in the transaction logs. This number uniquely identifies the whole/grouped transaction in the container.",
-                                    "type": "string",
-                                    "example": "1000000000670875"
-                                },
-                                "partialSuccess": {
-                                    "description": "A flag to indicate if a split completion was only partially successful, ie. at least 1 of the completions had a successful result.",
-                                    "type": "boolean",
-                                    "example": true
-                                },
-                                "completionResponses": {
-                                    "type": "array",
-                                    "items": {
-                                        "required": [
-                                            "paymentTransactionRef",
-                                            "completionTransactionRef",
-                                            "amount"
-                                        ],
-                                        "type": "object",
-                                        "properties": {
-                                            "paymentTransactionRef": {
-                                                "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
-                                                "type": "string",
-                                                "example": "1000000000670622"
-                                            },
-                                            "completionTransactionRef": {
-                                                "description": "Container reference in the transaction logs. This number uniquely identifies the completion transaction in the container.",
-                                                "type": "string",
-                                                "example": "1000000000670875"
-                                            },
-                                            "amount": {
-                                                "description": "The amount processed in the completion.",
-                                                "type": "number",
-                                                "example": 20.5
-                                            },
-                                            "errorCode": {
-                                                "description": "The error code. Only present if an error occurred during payment.",
-                                                "type": "string",
-                                                "example": "UN99"
-                                            },
-                                            "errorMessage": {
-                                                "description": "The error message. Only present if an error occurred during payment.",
-                                                "type": "string",
-                                                "example": "UNEXPECTED SYSTEM FAILURE"
-                                            },
-                                            "errorDetail": {
-                                                "description": "The error detail. Only present if an error occurred during payment.",
-                                                "type": "string",
-                                                "example": "We are currently experiencing technical issues with our service."
-                                            },
-                                            "externalServiceCode": {
-                                                "description": "The external service code (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
-                                                "type": "string",
-                                                "example": "00"
-                                            },
-                                            "externalServiceMessage": {
-                                                "description": "The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
-                                                "type": "string",
-                                                "example": "APPROVED"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "meta": {
-                            "$ref": "#/components/schemas/meta"
-                        }
-                    }
-                }
-            }
         }
       },
       "customerPaymentAgreementResponse": {
