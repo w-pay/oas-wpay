@@ -464,15 +464,6 @@
             "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
           },
           {
-            "in":"path",
-            "name":"paymentRequestId",
-            "description":"The ID of the specific payment request",
-            "required":true,
-            "schema":{
-              "type":"string"
-            }
-          },
-          {
             "in":"header",
             "name":"X-Everyday-Pay-Wallet",
             "description":"The makes instruments available in the everyday pay wallet available for payments",
