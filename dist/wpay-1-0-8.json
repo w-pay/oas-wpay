@@ -487,7 +487,7 @@
         },
         "responses":{
           "200":{
-              "$ref":"#/components/responses/makeCustomerPaymentResponse"
+            "$ref":"#/components/responses/makeCustomerPaymentResponse"
           },
           "422":{
             "description":"The specified Payment Request ID doesn't exist, has been used or is expired",
@@ -3946,359 +3946,359 @@
     },
     "/instore/merchant/transactions/{transactionId}/completion":{
       "post":{
-          "tags":[
-              "Merchant"
-          ],
-          "summary":"Completions",
-          "description":"Complete pre-authed payments. This API is IP restricted to allow unauthenticated server side calls.",
-          "parameters": [
-              {
-                "name":"X-Api-Key",
-                "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
-                "schema":{
-                  "type":"string"
-                },
-                "in":"header",
-                "required":true,
-                "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-              },
-              {
-                "name":"X-Auth-Key",
-                "in":"header",
-                "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-                "schema":{
-                  "type":"string"
-                },
-                "example":"OHR1Ull5TVk53NjI5Ng=="
-              },
-              {
-                "name":"X-Auth-Digest",
-                "in":"header",
-                "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-                "schema":{
-                  "type":"string"
-                },
-                "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-              },
-              {
-                "name":"X-Message-Id",
-                "in":"header",
-                "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
-                "schema":{
-                  "type":"string"
-                },
-                "example":"f23c096b2e816da158fdf1ad839298e2"
-              },
-              {
-                "name":"Authorization",
-                "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-                "schema":{
-                  "type":"string"
-                },
-                "in":"header",
-                "required":true,
-                "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
-              },
-              {
-                "name":"X-JWS-Signature",
-                "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible. The X-JWS-Signature header is only required if the Authorization header is not present.",
-                "schema":{
-                  "type":"string"
-                },
-                "in":"header",
-                "required":true,
-                "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
-              },
-              {
-                  "in": "path",
-                  "name": "transactionId",
-                  "description": "The ID of the transaction to operate on",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
-          "requestBody":{
-              "description": "The JSON request structure of the Completions endpoint.",
-              "content": {
-                  "application/json": {
-                    "schema": {
-                        "required": [
-                            "data",
-                            "meta"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "required":[
-                                    "clientReference",
-                                    "orderNumber"
-                                ],
-                                "type":"object",
-                                "properties":{
-                                    "clientReference":{
-                                        "type":"string",
-                                        "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
-                                        "example":"Z3XFS8507RDC71T"
-                                    },
-                                    "orderNumber":{
-                                        "type":"string",
-                                        "description":"The merchant order number of the transaction.",
-                                        "example":"20170505090"
-                                    },
-                                    "completions":{
-                                        "type":"array",
-                                        "items":{
-                                            "required":[
-                                                "amount",
-                                                "paymentTransactionRef"
-                                            ],
-                                            "type":"object",
-                                            "properties":{
-                                                "paymentTransactionRef":{
-                                                    "type":"string",
-                                                    "description":"Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
-                                                    "example":"1000000000670622"
-                                                },
-                                                "amount":{
-                                                    "type":"number",
-                                                    "description":"The amount you want to process in the completion.",
-                                                    "example":20.5
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "meta": {
-                                "$ref": "#/components/schemas/meta"
-                            }
-                        }
-                    }
-                  }
-              }
+        "tags":[
+          "Merchant"
+        ],
+        "summary":"Completions",
+        "description":"Complete pre-authed payments. This API is IP restricted to allow unauthenticated server side calls.",
+        "parameters": [
+          {
+            "name":"X-Api-Key",
+            "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
-          "responses":{
-              "200":{
-                  "description":"Success",
-                  "$ref": "#/components/responses/merchantTransactionResponse"
-              },
-              "400":{
-                  "description":"Missing or invalid request payload or value.",
-                  "$ref": "#/components/schemas/completionsErrorResponse"
-              },
-              "401":{
-                  "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                  "$ref": "#/components/schemas/error"
-              },
-              "404":{
-                  "description":"Invalid API Route.",
-                  "$ref": "#/components/schemas/error"
-              },
-              "500":{
-                  "description":"An unknown error occurred.",
-                  "$ref": "#/components/schemas/completionsErrorResponse"
-              },
-              "501":{
-                  "description":"A Business Validation error occurred.",
-                  "$ref": "#/components/schemas/completionsErrorResponse"
-              },
-              "502":{
-                  "description":"An Internal System error occurred.",
-                  "$ref": "#/components/schemas/completionsErrorResponse"
-              },
-              "503":{
-                  "description":"The Service is currently unavailable.",
-                  "$ref": "#/components/schemas/error"
-              },
-              "504":{
-                  "description":"The request timed out.",
-                  "$ref": "#/components/schemas/error"
-              }
+          {
+            "name":"X-Auth-Key",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name":"X-Auth-Digest",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name":"X-Message-Id",
+            "in":"header",
+            "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name":"Authorization",
+            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
+          },
+          {
+            "name":"X-JWS-Signature",
+            "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible. The X-JWS-Signature header is only required if the Authorization header is not present.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+          },
+          {
+            "in": "path",
+            "name": "transactionId",
+            "description": "The ID of the transaction to operate on",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
+        ],
+        "requestBody":{
+          "description": "The JSON request structure of the Completions endpoint.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "data",
+                  "meta"
+                ],
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "required":[
+                      "clientReference",
+                      "orderNumber"
+                    ],
+                    "type":"object",
+                    "properties":{
+                      "clientReference":{
+                        "type":"string",
+                        "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                        "example":"Z3XFS8507RDC71T"
+                      },
+                      "orderNumber":{
+                        "type":"string",
+                        "description":"The merchant order number of the transaction.",
+                        "example":"20170505090"
+                      },
+                      "completions":{
+                        "type":"array",
+                        "items":{
+                          "required":[
+                            "amount",
+                            "paymentTransactionRef"
+                          ],
+                          "type":"object",
+                          "properties":{
+                            "paymentTransactionRef":{
+                              "type":"string",
+                              "description":"Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                              "example":"1000000000670622"
+                            },
+                            "amount":{
+                              "type":"number",
+                              "description":"The amount you want to process in the completion.",
+                              "example":20.5
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "meta": {
+                    "$ref": "#/components/schemas/meta"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "200":{
+            "description":"Success",
+            "$ref": "#/components/responses/merchantTransactionResponse"
+          },
+          "400":{
+            "description":"Missing or invalid request payload or value.",
+            "$ref": "#/components/schemas/completionsErrorResponse"
+          },
+          "401":{
+            "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+            "$ref": "#/components/schemas/error"
+          },
+          "404":{
+            "description":"Invalid API Route.",
+            "$ref": "#/components/schemas/error"
+          },
+          "500":{
+            "description":"An unknown error occurred.",
+            "$ref": "#/components/schemas/completionsErrorResponse"
+          },
+          "501":{
+            "description":"A Business Validation error occurred.",
+            "$ref": "#/components/schemas/completionsErrorResponse"
+          },
+          "502":{
+            "description":"An Internal System error occurred.",
+            "$ref": "#/components/schemas/completionsErrorResponse"
+          },
+          "503":{
+            "description":"The Service is currently unavailable.",
+            "$ref": "#/components/schemas/error"
+          },
+          "504":{
+            "description":"The request timed out.",
+            "$ref": "#/components/schemas/error"
+          }
+        }
       }
     },
     "/instore/merchant/transactions/{transactionId}/void":{
-        "post":{
-            "tags":[
-                "Merchant"
-            ],
-            "summary":"Voids",
-            "description":"Void (cancel) pre-authed payments. This API is IP restricted to allow unauthenticated server side calls.",
-            "parameters": [
-                {
-                  "name":"X-Api-Key",
-                  "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
-                  "schema":{
-                    "type":"string"
-                  },
-                  "in":"header",
-                  "required":true,
-                  "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-                },
-                {
-                  "name":"X-Auth-Key",
-                  "in":"header",
-                  "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-                  "schema":{
-                    "type":"string"
-                  },
-                  "example":"OHR1Ull5TVk53NjI5Ng=="
-                },
-                {
-                  "name":"X-Auth-Digest",
-                  "in":"header",
-                  "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-                  "schema":{
-                    "type":"string"
-                  },
-                  "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-                },
-                {
-                  "name":"X-Message-Id",
-                  "in":"header",
-                  "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
-                  "schema":{
-                    "type":"string"
-                  },
-                  "example":"f23c096b2e816da158fdf1ad839298e2"
-                },
-                {
-                  "name":"Authorization",
-                  "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-                  "schema":{
-                    "type":"string"
-                  },
-                  "in":"header",
-                  "required":true,
-                  "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
-                },
-                {
-                  "name":"X-JWS-Signature",
-                  "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible. The X-JWS-Signature header is only required if the Authorization header is not present.",
-                  "schema":{
-                    "type":"string"
-                  },
-                  "in":"header",
-                  "required":true,
-                  "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
-                },
-                {
-                    "in": "path",
-                    "name": "transactionId",
-                    "description": "The ID of the transaction to operate on",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    }
-                }
-            ],
-            "requestBody":{
-                "description": "The JSON request structure of the Voids endpoint.",
-                "content": {
-                    "application/json": {
-                        "schema": {
-                            "required": [
-                                "data",
-                                "meta"
-                            ],
-                            "type": "object",
-                            "properties": {
-                                "data": {
-                                    "required":[
-                                        "clientReference",
-                                        "orderNumber"
-                                    ],
-                                    "type":"object",
-                                    "properties":{
-                                        "clientReference":{
-                                            "type":"string",
-                                            "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
-                                            "example":"T8VZS5KQH0N278D"
-                                        },
-                                        "orderNumber":{
-                                            "type":"string",
-                                            "description":"The merchant order number of the transaction.",
-                                            "example":"20170505090"
-                                        },
-                                        "voids":{
-                                            "type":"array",
-                                            "items":{
-                                                "required":[
-                                                    "paymentTransactionRef"
-                                                ],
-                                                "type":"object",
-                                                "properties":{
-                                                    "paymentTransactionRef":{
-                                                        "type":"string",
-                                                        "description":"Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
-                                                        "example":"1000000000670622"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                                "meta": {
-                                    "$ref": "#/components/schemas/meta"
-                                }
-                            }
-                        },
-                        "example": {
-                            "clientReference": "T8VZS5KQH0N278D",
-                            "orderNumber": "20170505090",
-                            "voids": [
-                                {
-                                    "paymentTransactionRef": "1000000000670622"
-                                },
-                                {
-                                    "paymentTransactionRef": "1000000000670623"
-                                }
-                            ]
-                        }
-                    }
-                }
+      "post":{
+        "tags":[
+          "Merchant"
+        ],
+        "summary":"Voids",
+        "description":"Void (cancel) pre-authed payments. This API is IP restricted to allow unauthenticated server side calls.",
+        "parameters": [
+          {
+            "name":"X-Api-Key",
+            "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+            "schema":{
+              "type":"string"
             },
-            "responses":{
-                "200":{
-                    "description":"Success",
-                    "$ref": "#/components/responses/merchantTransactionResponse"
-                },
-                "400":{
-                    "description":"Missing or invalid request payload or value.",
-                    "$ref": "#/components/schemas/voidsErrorResponse"
-                },
-                "401":{
-                    "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
-                    "$ref": "#/components/schemas/error"
-                },
-                "404":{
-                    "description":"Invalid API Route.",
-                    "$ref": "#/components/schemas/error"
-                },
-                "500":{
-                    "description":"An unknown error occurred.",
-                    "$ref": "#/components/schemas/voidsErrorResponse"
-                },
-                "501":{
-                    "description":"A Business Validation error occurred.",
-                    "$ref": "#/components/schemas/voidsErrorResponse"
-                },
-                "502":{
-                    "description":"An Internal System error occurred.",
-                    "$ref": "#/components/schemas/voidsErrorResponse"
-                },
-                "503":{
-                    "description":"The Service is currently unavailable.",
-                    "$ref": "#/components/schemas/error"
-                },
-                "504":{
-                    "description":"The request timed out.",
-                    "$ref": "#/components/schemas/error"
-                }
+            "in":"header",
+            "required":true,
+            "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+          },
+          {
+            "name":"X-Auth-Key",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name":"X-Auth-Digest",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name":"X-Message-Id",
+            "in":"header",
+            "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name":"Authorization",
+            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
+          },
+          {
+            "name":"X-JWS-Signature",
+            "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible. The X-JWS-Signature header is only required if the Authorization header is not present.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+          },
+          {
+            "in": "path",
+            "name": "transactionId",
+            "description": "The ID of the transaction to operate on",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
+          }
+        ],
+        "requestBody":{
+          "description": "The JSON request structure of the Voids endpoint.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "data",
+                  "meta"
+                ],
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "required":[
+                      "clientReference",
+                      "orderNumber"
+                    ],
+                    "type":"object",
+                    "properties":{
+                      "clientReference":{
+                        "type":"string",
+                        "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                        "example":"T8VZS5KQH0N278D"
+                      },
+                      "orderNumber":{
+                        "type":"string",
+                        "description":"The merchant order number of the transaction.",
+                        "example":"20170505090"
+                      },
+                      "voids":{
+                        "type":"array",
+                        "items":{
+                          "required":[
+                            "paymentTransactionRef"
+                          ],
+                          "type":"object",
+                          "properties":{
+                            "paymentTransactionRef":{
+                              "type":"string",
+                              "description":"Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                              "example":"1000000000670622"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "meta": {
+                    "$ref": "#/components/schemas/meta"
+                  }
+                }
+              },
+              "example": {
+                "clientReference": "T8VZS5KQH0N278D",
+                "orderNumber": "20170505090",
+                "voids": [
+                  {
+                    "paymentTransactionRef": "1000000000670622"
+                  },
+                  {
+                    "paymentTransactionRef": "1000000000670623"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses":{
+          "200":{
+            "description":"Success",
+            "$ref": "#/components/responses/merchantTransactionResponse"
+          },
+          "400":{
+            "description":"Missing or invalid request payload or value.",
+            "$ref": "#/components/schemas/voidsErrorResponse"
+          },
+          "401":{
+            "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+            "$ref": "#/components/schemas/error"
+          },
+          "404":{
+            "description":"Invalid API Route.",
+            "$ref": "#/components/schemas/error"
+          },
+          "500":{
+            "description":"An unknown error occurred.",
+            "$ref": "#/components/schemas/voidsErrorResponse"
+          },
+          "501":{
+            "description":"A Business Validation error occurred.",
+            "$ref": "#/components/schemas/voidsErrorResponse"
+          },
+          "502":{
+            "description":"An Internal System error occurred.",
+            "$ref": "#/components/schemas/voidsErrorResponse"
+          },
+          "503":{
+            "description":"The Service is currently unavailable.",
+            "$ref": "#/components/schemas/error"
+          },
+          "504":{
+            "description":"The request timed out.",
+            "$ref": "#/components/schemas/error"
+          }
         }
+      }
     },
     "/instore/merchant/preferences":{
       "get":{
@@ -10996,7 +10996,7 @@
         },
         "x-codegen-request-body-name":"body"
       }
-  },
+    },
     "/gifting/products":{
       "get":{
         "tags":[
@@ -11835,42 +11835,42 @@
         "description":"Meta object containing fraud payload to be passed to Digital Pay",
         "type":"object",
         "required":[
-            "message",
-            "provider",
-            "format",
-            "responseFormat",
-            "version"
-          ],
-          "properties":{
-            "message": {
-                "description":"The fraud check message.",
-                "type":"string"
-            },
-            "provider": {
-                "description":"The fraud check provider.",
-                "type":"string"
-            },
-            "version": {
-                "description":"The fraud check version.",
-                "type":"string"
-            },
-            "format":{
-                "description":"The fraud check message format.",
-                "type":"string",
-                "enum":[
-                    "ZIP_BASE_64_ENCODED",
-                    "XML"
-                ]
-            },
-            "responseFormat":{
-                "description":"The fraud check response message format.",
-                "type":"string",
-                "enum":[
-                    "ZIP_BASE_64_ENCODED",
-                    "XML"
-                ]
-            }
+          "message",
+          "provider",
+          "format",
+          "responseFormat",
+          "version"
+        ],
+        "properties":{
+          "message": {
+            "description":"The fraud check message.",
+            "type":"string"
+          },
+          "provider": {
+            "description":"The fraud check provider.",
+            "type":"string"
+          },
+          "version": {
+            "description":"The fraud check version.",
+            "type":"string"
+          },
+          "format":{
+            "description":"The fraud check message format.",
+            "type":"string",
+            "enum":[
+              "ZIP_BASE_64_ENCODED",
+              "XML"
+            ]
+          },
+          "responseFormat":{
+            "description":"The fraud check response message format.",
+            "type":"string",
+            "enum":[
+              "ZIP_BASE_64_ENCODED",
+              "XML"
+            ]
           }
+        }
       },
       "metaChallenge":{
         "description":"Meta Object containing responses to a step up challenges",
@@ -22484,136 +22484,136 @@
       "immediatePaymentRequest":{
         "type":"object",
         "required":[
-            "data",
-            "meta"
+          "data",
+          "meta"
         ],
         "properties":{
-            "data":{
-                "required":[
-                    "clientReference",
-                    "orderNumber",
-                    "payments"
-                ],
-                "type":"object",
-                "properties":{
-                    "clientReference":{
-                        "type":"string",
-                        "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
-                        "example":"T5ESYRPWJKPHF54"
+          "data":{
+            "required":[
+              "clientReference",
+              "orderNumber",
+              "payments"
+            ],
+            "type":"object",
+            "properties":{
+              "clientReference":{
+                "type":"string",
+                "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                "example":"T5ESYRPWJKPHF54"
+              },
+              "orderNumber":{
+                "type":"string",
+                "description":"The merchant order number of the transaction.",
+                "example":"20170505090"
+              },
+              "skipRollback": {
+                "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                "type": "boolean"
+              },
+              "allowPartialSuccess": {
+                "description": "An optional flag allowing the consumer to indicate that a partial success will not trigger a failure and rollback",
+                "type": "boolean"
+              },
+              "payments":{
+                "type":"array",
+                "items":{
+                  "required":[
+                    "paymentInstrumentId",
+                    "amount"
+                  ],
+                  "type":"object",
+                  "properties":{
+                    "paymentInstrumentId":{
+                      "type":"string",
+                      "description":"The payment instrument id from the card capture iframe response or the list payment instruments response. This property can be omitted if the payment token property is present.",
+                      "example":"90731"
                     },
-                    "orderNumber":{
-                        "type":"string",
-                        "description":"The merchant order number of the transaction.",
-                        "example":"20170505090"
-                    },
-                    "skipRollback": {
-                      "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
-                      "type": "boolean"
-                    },
-                    "allowPartialSuccess": {
-                      "description": "An optional flag allowing the consumer to indicate that a partial success will not trigger a failure and rollback",
-                      "type": "boolean"
-                    },
-                    "payments":{
-                        "type":"array",
-                        "items":{
-                            "required":[
-                                "paymentInstrumentId",
-                                "amount"
-                            ],
-                            "type":"object",
-                            "properties":{
-                                "paymentInstrumentId":{
-                                    "type":"string",
-                                    "description":"The payment instrument id from the card capture iframe response or the list payment instruments response. This property can be omitted if the payment token property is present.",
-                                    "example":"90731"
-                                },
-                                "amount":{
-                                    "type":"number",
-                                    "description":"The amount you want to pay with the payment instrument.",
-                                    "example":20.5
-                                }
-                            }
-                        }
-                    },
-                    "posPayload":{
-                      "$ref":"#/components/schemas/posPayload"
-                    },
-                    "merchantPayload":{
-                      "$ref":"#/components/schemas/merchantPayload"
-                    },
-                    "transactionType": {
-                      "$ref":"#/components/schemas/PaymentTransactionType"
+                    "amount":{
+                      "type":"number",
+                      "description":"The amount you want to pay with the payment instrument.",
+                      "example":20.5
                     }
-                }
-            },
-            "meta": {
-                "$ref":"#/components/schemas/meta"
-            }
-        },
-        "example":{
-            "data": {
-                "transactionType":{
-                    "creditCard":"PREAUTH",
-                    "giftCard":"PURCHASE",
-                    "payPal":"PURCHASE",
-                    "googlePay":{
-                        "creditCard":"PREAUTH",
-                        "debitCard":"PURCHASE"
-                    },
-                    "applePay":{
-                        "creditCard":"PREAUTH",
-                        "debitCard":"PURCHASE"
-                    }
-                },
-                "clientReference":"T5ESYRPWJKPHF54",
-                "orderNumber":"20170505090",
-                "payments":[
-                    {
-                        "paymentInstrumentId":"90731",
-                        "amount":20.5
-                    },
-                    {
-                        "paymentInstrumentId":"90731",
-                        "amount":20.5
-                    },
-                    {
-                        "paymentInstrumentId":"81054",
-                        "amount":1
-                    },
-                    {
-                        "paymentInstrumentId":"90271",
-                        "amount":15
-                    }
-                ],
-                "posPayload": {
-                  "schemaId": "0a221353-b26c-4848-9a77-4a8bcbacf229",
-                  "payload": {
-                      "storeId": "4952110",
-                      "laneId": "123",
-                      "rrn": "000000006564",
-                      "transactionTimestamp": 1528264660639
                   }
                 }
-            },
-            "meta": {
-                "fraud":{
-                    "provider":"cybersource",
-                    "version":"CyberSourceTransaction_1.101",
-                    "format":"ZIP_BASE_64_ENCODED",
-                    "responseFormat":"ZIP_BASE_64_ENCODED",
-                    "message":"GzbOxpLagX6iFEb7td61cZyA="
-                },
-                "challengeResponses": [{
-                    "instrumentId": "90731",
-                    "type": "STEP_UP",
-                    "token": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
-                }, {
-                    "instrumentId": "81054",
-                    "type": "PASSCODE",
-                    "token": "1425"
-                }]
+              },
+              "posPayload":{
+                "$ref":"#/components/schemas/posPayload"
+              },
+              "merchantPayload":{
+                "$ref":"#/components/schemas/merchantPayload"
+              },
+              "transactionType": {
+                "$ref":"#/components/schemas/PaymentTransactionType"
+              }
             }
+          },
+          "meta": {
+            "$ref":"#/components/schemas/meta"
+          }
+        },
+        "example":{
+          "data": {
+            "transactionType":{
+              "creditCard":"PREAUTH",
+              "giftCard":"PURCHASE",
+              "payPal":"PURCHASE",
+              "googlePay":{
+                "creditCard":"PREAUTH",
+                "debitCard":"PURCHASE"
+              },
+              "applePay":{
+                "creditCard":"PREAUTH",
+                "debitCard":"PURCHASE"
+              }
+            },
+            "clientReference":"T5ESYRPWJKPHF54",
+            "orderNumber":"20170505090",
+            "payments":[
+              {
+                "paymentInstrumentId":"90731",
+                "amount":20.5
+              },
+              {
+                "paymentInstrumentId":"90731",
+                "amount":20.5
+              },
+              {
+                "paymentInstrumentId":"81054",
+                "amount":1
+              },
+              {
+                "paymentInstrumentId":"90271",
+                "amount":15
+              }
+            ],
+            "posPayload": {
+              "schemaId": "0a221353-b26c-4848-9a77-4a8bcbacf229",
+              "payload": {
+                "storeId": "4952110",
+                "laneId": "123",
+                "rrn": "000000006564",
+                "transactionTimestamp": 1528264660639
+              }
+            }
+          },
+          "meta": {
+            "fraud":{
+              "provider":"cybersource",
+              "version":"CyberSourceTransaction_1.101",
+              "format":"ZIP_BASE_64_ENCODED",
+              "responseFormat":"ZIP_BASE_64_ENCODED",
+              "message":"GzbOxpLagX6iFEb7td61cZyA="
+            },
+            "challengeResponses": [{
+              "instrumentId": "90731",
+              "type": "STEP_UP",
+              "token": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+            }, {
+              "instrumentId": "81054",
+              "type": "PASSCODE",
+              "token": "1425"
+            }]
+          }
         }
       },
       "customerPaymentDetails": {
@@ -22684,194 +22684,194 @@
         "description": "The JSON response structure of the Completions endpoint.",
         "allOf": [
           {
-              "$ref": "#/components/schemas/error"
+            "$ref": "#/components/schemas/error"
           },
           {
-              "required": [
-                  "errorCode",
-                  "errorDetail",
-                  "errorMessage",
-                  "httpStatusCode"
-              ],
-              "type": "object",
-              "properties": {
-                  "httpStatusCode": {
-                      "description": "The http status code (4xx and 5xx HTTP status codes).",
-                      "type": "number",
-                      "example": 400
-                  },
-                  "errorCode": {
-                      "description": "The error code.",
+            "required": [
+              "errorCode",
+              "errorDetail",
+              "errorMessage",
+              "httpStatusCode"
+            ],
+            "type": "object",
+            "properties": {
+              "httpStatusCode": {
+                "description": "The http status code (4xx and 5xx HTTP status codes).",
+                "type": "number",
+                "example": 400
+              },
+              "errorCode": {
+                "description": "The error code.",
+                "type": "string",
+                "example": "BI52"
+              },
+              "errorMessage": {
+                "description": "The error message.",
+                "type": "string",
+                "example": "PAYMENT TRANSACTION FAILED"
+              },
+              "errorDetail": {
+                "description": "The error detail.",
+                "type": "string",
+                "example": "Oops! An unknown error has occurred"
+              },
+              "completionResponses": {
+                "type": "array",
+                "items": {
+                  "required": [
+                    "paymentTransactionRef",
+                    "errorCode",
+                    "errorDetail",
+                    "errorMessage",
+                    "externalServiceCode",
+                    "externalServiceMessage"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "paymentTransactionRef": {
+                      "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
                       "type": "string",
-                      "example": "BI52"
-                  },
-                  "errorMessage": {
-                      "description": "The error message.",
+                      "example": "1000000000670622"
+                    },
+                    "errorCode": {
+                      "description": "The error code. Only present if an error occurred during payment.",
                       "type": "string",
-                      "example": "PAYMENT TRANSACTION FAILED"
-                  },
-                  "errorDetail": {
-                      "description": "The error detail.",
+                      "example": "UN99"
+                    },
+                    "errorMessage": {
+                      "description": "The error message. Only present if an error occurred during payment.",
                       "type": "string",
-                      "example": "Oops! An unknown error has occurred"
-                  },
-                  "completionResponses": {
-                      "type": "array",
-                      "items": {
-                          "required": [
-                              "paymentTransactionRef",
-                              "errorCode",
-                              "errorDetail",
-                              "errorMessage",
-                              "externalServiceCode",
-                              "externalServiceMessage"
-                          ],
-                          "type": "object",
-                          "properties": {
-                              "paymentTransactionRef": {
-                                  "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
-                                  "type": "string",
-                                  "example": "1000000000670622"
-                              },
-                              "errorCode": {
-                                  "description": "The error code. Only present if an error occurred during payment.",
-                                  "type": "string",
-                                  "example": "UN99"
-                              },
-                              "errorMessage": {
-                                  "description": "The error message. Only present if an error occurred during payment.",
-                                  "type": "string",
-                                  "example": "UNEXPECTED SYSTEM FAILURE"
-                              },
-                              "errorDetail": {
-                                  "description": "The error detail. Only present if an error occurred during payment.",
-                                  "type": "string",
-                                  "example": "We are currently experiencing technical issues with our service."
-                              },
-                              "externalServiceCode": {
-                                  "description": "The external service code (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
-                                  "type": "string",
-                                  "example": "05"
-                              },
-                              "externalServiceMessage": {
-                                  "description": "The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
-                                  "type": "string",
-                                  "example": "DO NOT HONOUR"
-                              }
-                          }
-                      }
+                      "example": "UNEXPECTED SYSTEM FAILURE"
+                    },
+                    "errorDetail": {
+                      "description": "The error detail. Only present if an error occurred during payment.",
+                      "type": "string",
+                      "example": "We are currently experiencing technical issues with our service."
+                    },
+                    "externalServiceCode": {
+                      "description": "The external service code (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                      "type": "string",
+                      "example": "05"
+                    },
+                    "externalServiceMessage": {
+                      "description": "The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                      "type": "string",
+                      "example": "DO NOT HONOUR"
+                    }
                   }
+                }
               }
+            }
           }
         ],
         "example": {
-            "httpStatusCode": 400,
-            "errorCode": "BI52",
-            "errorMessage": "PAYMENT TRANSACTION FAILED",
-            "errorDetail": "Oops! An unknown error has occurred",
-            "completionResponses": [
-                {
-                    "paymentTransactionRef": "1000000000670622",
-                    "errorCode": "ES52",
-                    "errorMessage": "PAYMENT TRANSACTION FAILED",
-                    "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
-                    "externalServiceCode": "0T",
-                    "externalServiceMessage": "INVALID COMPLETION AUTH NOT FOUND"
-                },
-                {
-                    "paymentTransactionRef": "1000000000670623",
-                    "errorCode": "ES52",
-                    "errorMessage": "PAYMENT TRANSACTION FAILED",
-                    "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
-                    "externalServiceCode": "0T",
-                    "externalServiceMessage": "INVALID COMPLETION AUTH NOT FOUND"
-                }
-            ]
+          "httpStatusCode": 400,
+          "errorCode": "BI52",
+          "errorMessage": "PAYMENT TRANSACTION FAILED",
+          "errorDetail": "Oops! An unknown error has occurred",
+          "completionResponses": [
+            {
+              "paymentTransactionRef": "1000000000670622",
+              "errorCode": "ES52",
+              "errorMessage": "PAYMENT TRANSACTION FAILED",
+              "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
+              "externalServiceCode": "0T",
+              "externalServiceMessage": "INVALID COMPLETION AUTH NOT FOUND"
+            },
+            {
+              "paymentTransactionRef": "1000000000670623",
+              "errorCode": "ES52",
+              "errorMessage": "PAYMENT TRANSACTION FAILED",
+              "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
+              "externalServiceCode": "0T",
+              "externalServiceMessage": "INVALID COMPLETION AUTH NOT FOUND"
+            }
+          ]
         }
       },
       "voidsErrorResponse": {
         "description": "The JSON response structure of the Voids endpoint.",
         "allOf": [
-            {
-                "$ref": "#/components/schemas/error"
-            },
-            {
-                "required": [
+          {
+            "$ref": "#/components/schemas/error"
+          },
+          {
+            "required": [
+              "errorCode",
+              "errorDetail",
+              "errorMessage",
+              "httpStatusCode"
+            ],
+            "type": "object",
+            "properties": {
+              "httpStatusCode": {
+                "description": "The http status code (4xx and 5xx HTTP status codes).",
+                "type": "number",
+                "example": 400
+              },
+              "errorCode": {
+                "description": "The error code.",
+                "type": "string",
+                "example": "BI52"
+              },
+              "errorMessage": {
+                "description": "The error message.",
+                "type": "string",
+                "example": "PAYMENT TRANSACTION FAILED"
+              },
+              "errorDetail": {
+                "description": "The error detail.",
+                "type": "string",
+                "example": "Oops! An unknown error has occurred"
+              },
+              "voidResponses": {
+                "type": "array",
+                "items": {
+                  "required": [
+                    "paymentTransactionRef",
                     "errorCode",
                     "errorDetail",
                     "errorMessage",
-                    "httpStatusCode"
-                ],
-                "type": "object",
-                "properties": {
-                    "httpStatusCode": {
-                        "description": "The http status code (4xx and 5xx HTTP status codes).",
-                        "type": "number",
-                        "example": 400
+                    "externalServiceCode",
+                    "externalServiceMessage"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "paymentTransactionRef": {
+                      "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                      "type": "string",
+                      "example": "1000000000670622"
                     },
                     "errorCode": {
-                        "description": "The error code.",
-                        "type": "string",
-                        "example": "BI52"
+                      "description": "The error code. Only present if an error occurred during payment.",
+                      "type": "string",
+                      "example": "UN99"
                     },
                     "errorMessage": {
-                        "description": "The error message.",
-                        "type": "string",
-                        "example": "PAYMENT TRANSACTION FAILED"
+                      "description": "The error message. Only present if an error occurred during payment.",
+                      "type": "string",
+                      "example": "UNEXPECTED SYSTEM FAILURE"
                     },
                     "errorDetail": {
-                        "description": "The error detail.",
-                        "type": "string",
-                        "example": "Oops! An unknown error has occurred"
+                      "description": "The error detail. Only present if an error occurred during payment.",
+                      "type": "string",
+                      "example": "We are currently experiencing technical issues with our service."
                     },
-                    "voidResponses": {
-                        "type": "array",
-                        "items": {
-                            "required": [
-                                "paymentTransactionRef",
-                                "errorCode",
-                                "errorDetail",
-                                "errorMessage",
-                                "externalServiceCode",
-                                "externalServiceMessage"
-                            ],
-                            "type": "object",
-                            "properties": {
-                                "paymentTransactionRef": {
-                                    "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
-                                    "type": "string",
-                                    "example": "1000000000670622"
-                                },
-                                "errorCode": {
-                                    "description": "The error code. Only present if an error occurred during payment.",
-                                    "type": "string",
-                                    "example": "UN99"
-                                },
-                                "errorMessage": {
-                                    "description": "The error message. Only present if an error occurred during payment.",
-                                    "type": "string",
-                                    "example": "UNEXPECTED SYSTEM FAILURE"
-                                },
-                                "errorDetail": {
-                                    "description": "The error detail. Only present if an error occurred during payment.",
-                                    "type": "string",
-                                    "example": "We are currently experiencing technical issues with our service."
-                                },
-                                "externalServiceCode": {
-                                    "description": "The external service code (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
-                                    "type": "string",
-                                    "example": "05"
-                                },
-                                "externalServiceMessage": {
-                                    "description": "The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
-                                    "type": "string",
-                                    "example": "DO NOT HONOUR"
-                                }
-                            }
-                        }
+                    "externalServiceCode": {
+                      "description": "The external service code (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                      "type": "string",
+                      "example": "05"
+                    },
+                    "externalServiceMessage": {
+                      "description": "The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                      "type": "string",
+                      "example": "DO NOT HONOUR"
                     }
+                  }
                 }
+              }
             }
+          }
         ],
         "example": {
           "httpStatusCode": 400,
@@ -22879,22 +22879,22 @@
           "errorMessage": "PAYMENT TRANSACTION FAILED",
           "errorDetail": "Oops! An unknown error has occurred",
           "voidResponses": [
-              {
-                  "paymentTransactionRef": "1000000000670622",
-                  "errorCode": "ES52",
-                  "errorMessage": "PAYMENT TRANSACTION FAILED",
-                  "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
-                  "externalServiceCode": "0T",
-                  "externalServiceMessage": "INVALID VOID AUTH NOT FOUND"
-              },
-              {
-                  "paymentTransactionRef": "1000000000670623",
-                  "errorCode": "ES52",
-                  "errorMessage": "PAYMENT TRANSACTION FAILED",
-                  "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
-                  "externalServiceCode": "0T",
-                  "externalServiceMessage": "INVALID VOID AUTH NOT FOUND"
-              }
+            {
+              "paymentTransactionRef": "1000000000670622",
+              "errorCode": "ES52",
+              "errorMessage": "PAYMENT TRANSACTION FAILED",
+              "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
+              "externalServiceCode": "0T",
+              "externalServiceMessage": "INVALID VOID AUTH NOT FOUND"
+            },
+            {
+              "paymentTransactionRef": "1000000000670623",
+              "errorCode": "ES52",
+              "errorMessage": "PAYMENT TRANSACTION FAILED",
+              "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
+              "externalServiceCode": "0T",
+              "externalServiceMessage": "INVALID VOID AUTH NOT FOUND"
+            }
           ]
         }
       }
