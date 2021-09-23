@@ -391,6 +391,117 @@
         }
       }
     },
+    "/instore/customer/payments":{
+      "post":{
+        "summary":"Immediate Customer Payments",
+        "operationId": "makeImmediateCustomerPayments",
+        "security":[
+          {
+            "ApiKeyAuth":[],
+            "bearerAuth":[]
+          }
+        ],
+        "description":"Make payments to a merchant using payment intruments. This endpoint establishes a payment request and then makes a payment against it.",
+        "tags":[
+          "Customer"
+        ],
+        "parameters":[
+          {
+            "name":"X-Api-Key",
+            "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+          },
+          {
+            "name":"X-Auth-Key",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name":"X-Auth-Digest",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name":"X-Message-Id",
+            "in":"header",
+            "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name":"Authorization",
+            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
+          },
+          {
+            "name":"X-JWS-Signature",
+            "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible. The X-JWS-Signature header is only required if the Authorization header is not present.",
+            "schema":{
+              "type":"string"
+            },
+            "in":"header",
+            "required":true,
+            "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+          },
+          {
+            "in":"header",
+            "name":"X-Everyday-Pay-Wallet",
+            "description":"The makes instruments available in the everyday pay wallet available for payments",
+            "schema":{
+              "type":"boolean",
+              "default":false
+            },
+            "required":false
+          }
+        ],
+        "requestBody":{
+          "description":"Request payload containing instruments to use for the payment",
+          "required":true,
+          "content":{
+            "application/json":{
+              "schema":{
+                "$ref":"#/components/schemas/immediatePaymentRequest"
+              }
+            }
+          }
+        },
+        "responses":{
+          "200":{
+              "$ref":"#/components/responses/makeCustomerPaymentResponse"
+          },
+          "422":{
+            "description":"The specified Payment Request ID doesn't exist, has been used or is expired",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/instore/customer/payments/{paymentRequestId}":{
       "get":{
         "summary":"Get Payment Request details",
@@ -691,15 +802,6 @@
             "in":"header",
             "required":true,
             "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
-          },
-          {
-            "name":"paymentSessionId",
-            "description":"The optional paymentSessionId is relevant for QR payments instore. The paymentSessionId is used to retrieve the allowed GC programs for the merchant and update the allowed property for every GC in list of instruments",
-            "schema":{
-              "type":"string"
-            },
-            "in":"query",
-            "required":false
           }
         ],
         "responses":{
@@ -3818,7 +3920,7 @@
         },
         "responses":{
           "200":{
-            "$ref":"#/components/responses/refundMerchantTransactionResponse"
+            "$ref":"#/components/responses/merchantTransactionResponse"
           },
           "422":{
             "description":"The transaction specified doesn't exist or is a refund transaction already",
@@ -3832,6 +3934,362 @@
           }
         }
       }
+    },
+    "/instore/merchant/transactions/{transactionId}/completion":{
+      "post":{
+          "tags":[
+              "Merchant"
+          ],
+          "summary":"Completions",
+          "description":"Complete pre-authed payments. This API is IP restricted to allow unauthenticated server side calls.",
+          "parameters": [
+              {
+                "name":"X-Api-Key",
+                "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+                "schema":{
+                  "type":"string"
+                },
+                "in":"header",
+                "required":true,
+                "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+              },
+              {
+                "name":"X-Auth-Key",
+                "in":"header",
+                "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+                "schema":{
+                  "type":"string"
+                },
+                "example":"OHR1Ull5TVk53NjI5Ng=="
+              },
+              {
+                "name":"X-Auth-Digest",
+                "in":"header",
+                "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+                "schema":{
+                  "type":"string"
+                },
+                "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+              },
+              {
+                "name":"X-Message-Id",
+                "in":"header",
+                "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+                "schema":{
+                  "type":"string"
+                },
+                "example":"f23c096b2e816da158fdf1ad839298e2"
+              },
+              {
+                "name":"Authorization",
+                "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
+                "schema":{
+                  "type":"string"
+                },
+                "in":"header",
+                "required":true,
+                "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
+              },
+              {
+                "name":"X-JWS-Signature",
+                "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible. The X-JWS-Signature header is only required if the Authorization header is not present.",
+                "schema":{
+                  "type":"string"
+                },
+                "in":"header",
+                "required":true,
+                "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+              },
+              {
+                  "in": "path",
+                  "name": "transactionId",
+                  "description": "The ID of the transaction to operate on",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "requestBody":{
+              "description": "The JSON request structure of the Completions endpoint.",
+              "content": {
+                  "application/json": {
+                    "schema": {
+                        "required": [
+                            "data",
+                            "meta"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "required":[
+                                    "clientReference",
+                                    "orderNumber"
+                                ],
+                                "type":"object",
+                                "properties":{
+                                    "clientReference":{
+                                        "type":"string",
+                                        "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                                        "example":"Z3XFS8507RDC71T"
+                                    },
+                                    "orderNumber":{
+                                        "type":"string",
+                                        "description":"The merchant order number of the transaction.",
+                                        "example":"20170505090"
+                                    },
+                                    "completions":{
+                                        "type":"array",
+                                        "items":{
+                                            "required":[
+                                                "amount",
+                                                "paymentTransactionRef"
+                                            ],
+                                            "type":"object",
+                                            "properties":{
+                                                "paymentTransactionRef":{
+                                                    "type":"string",
+                                                    "description":"Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                                                    "example":"1000000000670622"
+                                                },
+                                                "amount":{
+                                                    "type":"number",
+                                                    "description":"The amount you want to process in the completion.",
+                                                    "example":20.5
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "meta": {
+                                "$ref": "#/components/schemas/meta"
+                            }
+                        }
+                    }
+                  }
+              }
+          },
+          "responses":{
+              "200":{
+                  "description":"Success",
+                  "$ref": "#/components/responses/merchantTransactionResponse"
+              },
+              "400":{
+                  "description":"Missing or invalid request payload or value.",
+                  "$ref": "#/components/schemas/completionsErrorResponse"
+              },
+              "401":{
+                  "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                  "$ref": "#/components/schemas/error"
+              },
+              "404":{
+                  "description":"Invalid API Route.",
+                  "$ref": "#/components/schemas/error"
+              },
+              "500":{
+                  "description":"An unknown error occurred.",
+                  "$ref": "#/components/schemas/completionsErrorResponse"
+              },
+              "501":{
+                  "description":"A Business Validation error occurred.",
+                  "$ref": "#/components/schemas/completionsErrorResponse"
+              },
+              "502":{
+                  "description":"An Internal System error occurred.",
+                  "$ref": "#/components/schemas/completionsErrorResponse"
+              },
+              "503":{
+                  "description":"The Service is currently unavailable.",
+                  "$ref": "#/components/schemas/error"
+              },
+              "504":{
+                  "description":"The request timed out.",
+                  "$ref": "#/components/schemas/error"
+              }
+          }
+      }
+    },
+    "/instore/merchant/transactions/{transactionId}/void":{
+        "post":{
+            "tags":[
+                "Merchant"
+            ],
+            "summary":"Voids",
+            "description":"Void (cancel) pre-authed payments. This API is IP restricted to allow unauthenticated server side calls.",
+            "parameters": [
+                {
+                  "name":"X-Api-Key",
+                  "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+                  "schema":{
+                    "type":"string"
+                  },
+                  "in":"header",
+                  "required":true,
+                  "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+                },
+                {
+                  "name":"X-Auth-Key",
+                  "in":"header",
+                  "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+                  "schema":{
+                    "type":"string"
+                  },
+                  "example":"OHR1Ull5TVk53NjI5Ng=="
+                },
+                {
+                  "name":"X-Auth-Digest",
+                  "in":"header",
+                  "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+                  "schema":{
+                    "type":"string"
+                  },
+                  "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+                },
+                {
+                  "name":"X-Message-Id",
+                  "in":"header",
+                  "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+                  "schema":{
+                    "type":"string"
+                  },
+                  "example":"f23c096b2e816da158fdf1ad839298e2"
+                },
+                {
+                  "name":"Authorization",
+                  "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
+                  "schema":{
+                    "type":"string"
+                  },
+                  "in":"header",
+                  "required":true,
+                  "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
+                },
+                {
+                  "name":"X-JWS-Signature",
+                  "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible. The X-JWS-Signature header is only required if the Authorization header is not present.",
+                  "schema":{
+                    "type":"string"
+                  },
+                  "in":"header",
+                  "required":true,
+                  "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+                },
+                {
+                    "in": "path",
+                    "name": "transactionId",
+                    "description": "The ID of the transaction to operate on",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "requestBody":{
+                "description": "The JSON request structure of the Voids endpoint.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "required": [
+                                "data",
+                                "meta"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "required":[
+                                        "clientReference",
+                                        "orderNumber"
+                                    ],
+                                    "type":"object",
+                                    "properties":{
+                                        "clientReference":{
+                                            "type":"string",
+                                            "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                                            "example":"T8VZS5KQH0N278D"
+                                        },
+                                        "orderNumber":{
+                                            "type":"string",
+                                            "description":"The merchant order number of the transaction.",
+                                            "example":"20170505090"
+                                        },
+                                        "voids":{
+                                            "type":"array",
+                                            "items":{
+                                                "required":[
+                                                    "paymentTransactionRef"
+                                                ],
+                                                "type":"object",
+                                                "properties":{
+                                                    "paymentTransactionRef":{
+                                                        "type":"string",
+                                                        "description":"Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                                                        "example":"1000000000670622"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/components/schemas/meta"
+                                }
+                            }
+                        },
+                        "example": {
+                            "clientReference": "T8VZS5KQH0N278D",
+                            "orderNumber": "20170505090",
+                            "voids": [
+                                {
+                                    "paymentTransactionRef": "1000000000670622"
+                                },
+                                {
+                                    "paymentTransactionRef": "1000000000670623"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "200":{
+                    "description":"Success",
+                    "$ref": "#/components/responses/merchantTransactionResponse"
+                },
+                "400":{
+                    "description":"Missing or invalid request payload or value.",
+                    "$ref": "#/components/schemas/voidsErrorResponse"
+                },
+                "401":{
+                    "description":"Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+                    "$ref": "#/components/schemas/error"
+                },
+                "404":{
+                    "description":"Invalid API Route.",
+                    "$ref": "#/components/schemas/error"
+                },
+                "500":{
+                    "description":"An unknown error occurred.",
+                    "$ref": "#/components/schemas/voidsErrorResponse"
+                },
+                "501":{
+                    "description":"A Business Validation error occurred.",
+                    "$ref": "#/components/schemas/voidsErrorResponse"
+                },
+                "502":{
+                    "description":"An Internal System error occurred.",
+                    "$ref": "#/components/schemas/voidsErrorResponse"
+                },
+                "503":{
+                    "description":"The Service is currently unavailable.",
+                    "$ref": "#/components/schemas/error"
+                },
+                "504":{
+                    "description":"The request timed out.",
+                    "$ref": "#/components/schemas/error"
+                }
+            }
+        }
     },
     "/instore/merchant/preferences":{
       "get":{
@@ -10529,7 +10987,7 @@
         },
         "x-codegen-request-body-name":"body"
       }
-    },
+  },
     "/gifting/products":{
       "get":{
         "tags":[
@@ -11368,42 +11826,42 @@
         "description":"Meta object containing fraud payload to be passed to Digital Pay",
         "type":"object",
         "required":[
-          "message",
-          "provider",
-          "format",
-          "responseFormat",
-          "version"
-        ],
-        "properties":{
-          "message": {
-            "description":"The fraud check message.",
-            "type":"string"
-          },
-          "provider": {
-            "description":"The fraud check provider.",
-            "type":"string"
-          },
-          "version": {
-            "description":"The fraud check version.",
-            "type":"string"
-          },
-          "format":{
-            "description":"The fraud check message format.",
-            "type":"string",
-            "enum":[
-              "ZIP_BASE_64_ENCODED",
-              "XML"
-            ]
-          },
-          "responseFormat":{
-            "description":"The fraud check response message format.",
-            "type":"string",
-            "enum":[
-              "ZIP_BASE_64_ENCODED",
-              "XML"
-            ]
+            "message",
+            "provider",
+            "format",
+            "responseFormat",
+            "version"
+          ],
+          "properties":{
+            "message": {
+                "description":"The fraud check message.",
+                "type":"string"
+            },
+            "provider": {
+                "description":"The fraud check provider.",
+                "type":"string"
+            },
+            "version": {
+                "description":"The fraud check version.",
+                "type":"string"
+            },
+            "format":{
+                "description":"The fraud check message format.",
+                "type":"string",
+                "enum":[
+                    "ZIP_BASE_64_ENCODED",
+                    "XML"
+                ]
+            },
+            "responseFormat":{
+                "description":"The fraud check response message format.",
+                "type":"string",
+                "enum":[
+                    "ZIP_BASE_64_ENCODED",
+                    "XML"
+                ]
+            }
           }
-        }
       },
       "metaChallenge":{
         "description":"Meta Object containing responses to a step up challenges",
@@ -11863,7 +12321,10 @@
                 "type":"string",
                 "enum":[
                   "PAYMENT",
-                  "REFUND"
+                  "PREAUTH",
+                  "REFUND",
+                  "COMPLETION",
+                  "VOID"
                 ]
               },
               "executionTime":{
@@ -11878,7 +12339,8 @@
                 "enum":[
                   "PROCESSING",
                   "APPROVED",
-                  "REJECTED"
+                  "REJECTED",
+                  "PARTIAL_SUCCESS"
                 ]
               },
               "rollback":{
@@ -15693,6 +16155,84 @@
           "applicationData":"666555ef411bf515621f"
         }
       },
+      "PaymentTransactionType":{
+        "type":"object",
+        "properties":{
+          "creditCard":{
+            "type":"string",
+            "description":"The container transaction type to use for credit card instruments. This property is only required if the payments request contains credit card instruments.",
+            "enum":[
+              "PREAUTH",
+              "PURCHASE"
+            ]
+          },
+          "giftCard":{
+            "type":"string",
+            "description":"The container transaction type to use for gift card instruments. This property is only required if the payments request contains gift card instruments.",
+            "enum":[
+              "PREAUTH",
+              "PURCHASE"
+            ]
+          },
+          "payPal":{
+            "type":"string",
+            "description":"The container transaction type to use for paypal instruments. This property is only required if the payments request contains paypal instruments. Only PURCHASE is currently supported for paypal instruments.",
+            "enum":[
+              "PURCHASE"
+            ]
+          },
+          "googlePay":{
+            "required":[
+              "creditCard",
+              "debitCard"
+            ],
+            "type":"object",
+            "properties":{
+              "creditCard":{
+                "type":"string",
+                "description":"The container transaction type to use for google pay credit card instruments.",
+                "enum":[
+                  "PREAUTH",
+                  "PURCHASE"
+                ]
+              },
+              "debitCard":{
+                "type":"string",
+                "description":"The container transaction type to use for google pay debit card instruments. Only PURCHASE is currently supported for google pay debit card instruments.",
+                "enum":[
+                  "PURCHASE"
+                ]
+              }
+            },
+            "description":"This object is only required if the payments request contains google pay instruments."
+          },
+          "applePay":{
+            "required":[
+              "creditCard",
+              "debitCard"
+            ],
+            "type":"object",
+            "properties":{
+              "creditCard":{
+                "type":"string",
+                "description":"The container transaction type to use for apple pay credit card instruments.",
+                "enum":[
+                  "PREAUTH",
+                  "PURCHASE"
+                ]
+              },
+              "debitCard":{
+                "type":"string",
+                "description":"The container transaction type to use for apple pay debit card instruments. Only PURCHASE is currently supported for apple pay debit card instruments.",
+                "enum":[
+                  "PURCHASE"
+                ]
+              }
+            },
+            "description":"This object is only required if the payments request contains apple pay instruments."
+          }
+        }
+      },
       "PaymentsRequest":{
         "required":[
           "clientReference",
@@ -15702,83 +16242,8 @@
         ],
         "type":"object",
         "properties":{
-          "transactionType":{
-            "type":"object",
-            "properties":{
-              "creditCard":{
-                "type":"string",
-                "description":"The container transaction type to use for credit card instruments. This property is only required if the payments request contains credit card instruments.",
-                "enum":[
-                  "PREAUTH",
-                  "PURCHASE"
-                ]
-              },
-              "giftCard":{
-                "type":"string",
-                "description":"The container transaction type to use for gift card instruments. This property is only required if the payments request contains gift card instruments.",
-                "enum":[
-                  "PREAUTH",
-                  "PURCHASE"
-                ]
-              },
-              "payPal":{
-                "type":"string",
-                "description":"The container transaction type to use for paypal instruments. This property is only required if the payments request contains paypal instruments. Only PURCHASE is currently supported for paypal instruments.",
-                "enum":[
-                  "PURCHASE"
-                ]
-              },
-              "googlePay":{
-                "required":[
-                  "creditCard",
-                  "debitCard"
-                ],
-                "type":"object",
-                "properties":{
-                  "creditCard":{
-                    "type":"string",
-                    "description":"The container transaction type to use for google pay credit card instruments.",
-                    "enum":[
-                      "PREAUTH",
-                      "PURCHASE"
-                    ]
-                  },
-                  "debitCard":{
-                    "type":"string",
-                    "description":"The container transaction type to use for google pay debit card instruments. Only PURCHASE is currently supported for google pay debit card instruments.",
-                    "enum":[
-                      "PURCHASE"
-                    ]
-                  }
-                },
-                "description":"This object is only required if the payments request contains google pay instruments."
-              },
-              "applePay":{
-                "required":[
-                  "creditCard",
-                  "debitCard"
-                ],
-                "type":"object",
-                "properties":{
-                  "creditCard":{
-                    "type":"string",
-                    "description":"The container transaction type to use for apple pay credit card instruments.",
-                    "enum":[
-                      "PREAUTH",
-                      "PURCHASE"
-                    ]
-                  },
-                  "debitCard":{
-                    "type":"string",
-                    "description":"The container transaction type to use for apple pay debit card instruments. Only PURCHASE is currently supported for apple pay debit card instruments.",
-                    "enum":[
-                      "PURCHASE"
-                    ]
-                  }
-                },
-                "description":"This object is only required if the payments request contains apple pay instruments."
-              }
-            }
+          "transactionType": {
+            "$ref":"#/components/schemas/PaymentTransactionType"
           },
           "clientReference":{
             "type":"string",
@@ -15889,6 +16354,107 @@
                   "type":"string",
                   "description":"The passcode is used to send additional information (eg. gift card PIN) for the payment instrument. This property is currently only required for gift card instruments and only if the gift card PIN is required during payment. This property should NOT be used with credit card instruments (see stepUpToken).",
                   "example":"1425"
+                },
+                "controlData":{
+                  "type":"object",
+                  "description":"This object is used to pass additonal control data to Digital Pay",
+                  "properties":{
+                    "tokenType":{
+                      "type":"string",
+                      "description":"The Digital Pay token type to use for a scheme card instrument during 3DS processing for merchants that have 3DS enabled. Defaults to 'PAN' if absent.",
+                      "enum":[
+                        "SCHEME_TOKEN",
+                        "SCDR",
+                        "PAN"
+                      ],
+                      "default":"PAN"
+                    }
+                  }
+                },
+                "threeDS":{
+                  "required":[
+                    "messageVersion",
+                    "xid",
+                    "authenticationValue",
+                    "dsTransID",
+                    "eci",
+                    "aresStatus",
+                    "veresEnrolled",
+                    "transStatus"
+                  ],
+                  "type":"object",
+                  "description":"This object is only required if the payments request requires 3DS challenge response data to be sent to Digital Pay.",
+                  "properties":{
+                    "messageVersion":{
+                      "type":"string",
+                      "description":"The Protocol Version Number of the specification utilised by the system creating this message.",
+                      "example":"2.2.0"
+                    },
+                    "xid":{
+                      "type":"string",
+                      "description":"The transaction identifier. Required for Mastercard and Amex. Not applicable for Visa.",
+                      "example":"313233343536373839303132333435363738"
+                    },
+                    "authenticationValue":{
+                      "type":"string",
+                      "description":"The payment system-specific value provided by the ACS or the Directory Server (DS) using an algorithm defined by Payment System.",
+                      "example":"RGlkWW91UmVhbGx5Q2hlY2tJdCE="
+                    },
+                    "dsTransID":{
+                      "type":"string",
+                      "description":"The Directory Server (DS) authentication identification code. A universally unique transaction identifier assigned by the DS to identify a single transaction. The format of the value is defined in IETF RFC 4122. It may utilise any of the specified versions if the output meets specific requirements.",
+                      "example":"f25084f0-5b16-4c0a-ae5d-b24808a95e4b"
+                    },
+                    "eci":{
+                      "type":"string",
+                      "description":"The electronic commerce indicator. Required for calculating the SLI. A Payment System-specific value provided by the ACS or DS to indicate the results of the attempt to authenticate the Cardholder.",
+                      "example":"For Mastercard: ('00','01','02') and for Visa: ('05','06','07')"
+                    },
+                    "aresStatus":{
+                      "type":"string",
+                      "description":"The payer authentication response status. Required for Visa.",
+                      "enum":[
+                        "Y: Customer was successfully authenticated",
+                        "N: Customer failed or canceled authentication",
+                        "C: Card challenged",
+                        "R: Authentication rejected",
+                        "A: Proof of authentication attempt was generated",
+                        "U: Authentication not completed regardless of the reason"
+                      ],
+                      "example":"Y"
+                    },
+                    "veresEnrolled":{
+                      "type":"string",
+                      "description":"The verification response enrollment status. Required for Visa.",
+                      "enum":[
+                        "Y: Card enrolled, must authenticate",
+                        "N: Card not enrolled, proceed with authorization",
+                        "U: Unable to authenticate regardless of the reason",
+                        "B: Indicates that authentication was bypassed"
+                      ],
+                      "example":"Y"
+                    },
+                    "transStatus":{
+                      "type":"string",
+                      "description": "Indicates whether a transaction qualifies as an authenticated transaction or account verification.",
+                      "enum":[
+                        "Y: Authentication Successful",
+                        "N: Not Authenticated",
+                        "U: Authentication could not be performed",
+                        "A: Attempts Processing Performed; Not authenticated",
+                        "C: Challenge Required. Additional authentication is required",
+                        "D: Challenge Required; Decoupled Authentication performed",
+                        "R: Authentication Rejected. Issuer is rejecting",
+                        "I: Informational Only"
+                      ],
+                      "example":"Y"
+                    },
+                    "sli":{
+                      "type":"string",
+                      "description":"The SLI from the merchant.",
+                      "example":"07"
+                    }
+                  }
                 }
               }
             }
@@ -15920,16 +16486,42 @@
           },
           "storeData":{
             "required":[
-              "rrn",
+              "terminalId",
               "storeId",
+              "stan",
+              "rrn",
               "transactionTimestamp"
             ],
             "type":"object",
             "properties":{
+              "groupId":{
+                "type":"string",
+                "description":"The payment transaction merchant group id. The group id is defined as a logical grouping of merchants or stores. A default configured group id is set in Apigee if absent in the payload.",
+                "example":"7915d9d7-368e-4af9-a3d4-d09927b8603a"
+              },
+              "terminalId":{
+                "maxLength":8,
+                "minLength":8,
+                "type":"string",
+                "description":"The in-store payment transaction terminal id. This is a 8 character alphanumeric string. If present in the payload the 'storeId' has to be omitted.",
+                "example":"W4952110"
+              },
               "storeId":{
                 "type":"string",
-                "description":"The in-store payment transaction store id.",
+                "description":"The in-store payment transaction store id. If present in the payload the 'terminalId' and 'stan' can be omitted.",
                 "example":"4952110"
+              },
+              "laneId":{
+                "type":"string",
+                "description":"The in-store payment transaction lane id.",
+                "example":"110"
+              },
+              "stan":{
+                "maxLength":6,
+                "minLength":6,
+                "type":"string",
+                "description":"The System Trace Audit Number (STAN) used to identify the transaction. This is a 6 digit numeric string.",
+                "example":"555001"
               },
               "rrn":{
                 "maxLength":12,
@@ -15941,10 +16533,10 @@
               "transactionTimestamp":{
                 "type":"number",
                 "description":"The in-store payment transaction timestamp. The timestamp format is milliseconds since epoch.",
-                "example":1528264660639
+                "example":1607915015449
               }
             },
-            "description":"This object is only required if the payments request is for an in-store (R10) payment transaction."
+            "description":"This object is only required if the payments request is for an in-store payment transaction."
           },
           "basketData":{
             "type":"array",
@@ -16076,12 +16668,40 @@
             {
               "paymentInstrumentId":"90731",
               "amount":20.5,
-              "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+              "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8",
+              "controlData":{
+                "tokenType":"PAN"
+              },
+              "threeDS":{
+                "messageVersion":"2.2.0",
+                "xid":"313233343536373839303132333435363738",
+                "authenticationValue":"RGlkWW91UmVhbGx5Q2hlY2tJdCE=",
+                "dsTransID":"f25084f0-5b16-4c0a-ae5d-b24808a95e4b",
+                "eci":"05",
+                "aresStatus":"Y",
+                "veresEnrolled":"Y",
+                "transStatus":"Y",
+                "sli":"07"
+              }
             },
             {
               "paymentToken":"712029a1-c0aa-41bc-a810-3d42424c5834",
               "amount":20.5,
-              "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+              "stepUpToken":"e86b3a32-96a5-4659-b6d8-5d685bfa78e8",
+              "controlData":{
+                "tokenType":"PAN"
+              },
+              "threeDS":{
+                "messageVersion":"2.2.0",
+                "xid":"313233343536373839303132333435363738",
+                "authenticationValue":"RGlkWW91UmVhbGx5Q2hlY2tJdCE=",
+                "dsTransID":"f25084f0-5b16-4c0a-ae5d-b24808a95e4b",
+                "eci":"05",
+                "aresStatus":"Y",
+                "veresEnrolled":"Y",
+                "transStatus":"Y",
+                "sli":"07"
+              }
             },
             {
               "paymentInstrumentId":"81054",
@@ -16099,10 +16719,14 @@
               "value":"23f585945be2f"
             }
           ],
-          "storeData":{
-            "storeId":"4952110",
-            "rrn":"000000006564",
-            "transactionTimestamp":1528264660639
+          "storeData": {
+            "groupId": "7915d9d7-368e-4af9-a3d4-d09927b8603a",
+            "terminalId": "W4952110",
+            "storeId": "4952110",
+            "laneId": "110",
+            "stan": "555001",
+            "rrn": "000000006564",
+            "transactionTimestamp": 1607915015449
           },
           "basketData":[
             {
@@ -16360,6 +16984,32 @@
                     }
                   },
                   "description":"Special handling instructions that have to be executed after a payment. Only present if no error occurred during payment."
+                },
+                "threeDS":{
+                  "required":[
+                    "car",
+                    "dsTransID",
+                    "sli"
+                  ],
+                  "type":"object",
+                  "description":"This object is only present if the payments response contains 3DS data from Digital Pay.",
+                  "properties":{
+                    "car":{
+                      "type":"string",
+                      "description":"Received in response to a Visa authenticated Purchase and PreAuth. Only present for Visa.",
+                      "example":"frva_need_a_sample"
+                    },
+                    "dsTransID":{
+                      "type":"string",
+                      "description":"The Directory Server (DS) authentication identification code. A universally unique transaction identifier assigned by the DS to identify a single transaction. The format of the value is defined in IETF RFC 4122. It may utilise any of the specified versions if the output meets specific requirements.",
+                      "example":"f25084f0-5b16-4c0a-ae5d-b24808a95e4b"
+                    },
+                    "sli":{
+                      "type":"string",
+                      "description":"The SLI from the the schemes.",
+                      "example":"07"
+                    }
+                  }
                 }
               }
             }
@@ -16775,7 +17425,259 @@
           }
         },
         "description":"The JSON success response structure of the Payments endpoint.",
-        "example":"Complete Success:{    \"transactionReceipt\": \"1000000000670621\",    \"partialSuccess\": false,    \"fraudResponse\": {        \"clientId\": \"5017321752216948403009\",        \"reasonCode\": \"480\",        \"decision\": \"REVIEW\"    },    \"creditCards\": [        {            \"paymentInstrumentId\": \"90731\",            \"paymentToken\": \"712029a1-c0aa-41bc-a810-3d42424c5834\",            \"paymentTransactionRef\": \"1000000000670622\",            \"receiptData\": {                \"cardSuffix\": \"6106\",                \"scheme\": \"MASTERCARD\",                \"expiryMonth\": \"05\",                \"expiryYear\": \"21\"            },            \"extendedTransactionData\": [                {                    \"field\": \"bin\",                    \"value\": \"401200\"                },                {                    \"field\": \"stan\",                    \"value\": \"001675\"                },                {                    \"field\": \"rrn\",                    \"value\": \"000000000076\"                },                {                    \"field\": \"token\",                    \"value\": \"40120080000200000928\"                },                {                    \"field\": \"mid\",                    \"value\": \"611000602006135\"                },                {                    \"field\": \"terminalId\",                    \"value\": \"W6135100\"                }            ],            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\",            \"handlingInstructions\": {                \"instructionCode\": \"110\",                \"instructionMessage\": \"Immediate Completion\"            }        }    ],    \"giftCards\": [        {            \"paymentInstrumentId\": \"81054\",            \"paymentToken\": \"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c\",            \"paymentTransactionRef\": \"1000000000670623\",            \"receiptData\": {                \"cardSuffix\": \"2517\"            },            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ],    \"payPal\": [        {            \"paymentInstrumentId\": \"90271\",            \"paymentToken\": \"15f774d0-e42e-11e9-a359-2a2ae2dbcce4\",            \"paymentTransactionRef\": \"1000000000670624\",            \"receiptData\": {                \"payPalId\": \"jane.doe@paypal.com\",                \"customerId\": \"690238314\"            },            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ],    \"androidPay\": [],    \"googlePay\": [        {            \"paymentInstrumentId\": \"90953\",            \"paymentToken\": \"76a4c2f1-7620-4bc4-8f4f-01c1467ea318\",            \"paymentTransactionRef\": \"1000000000670625\",            \"extendedTransactionData\": [                {                    \"field\": \"bin\",                    \"value\": \"376445\"                }            ],            \"externalServiceCode\": \"100\",            \"externalServiceMessage\": \"ACCEPT\"        }    ],    \"applePay\": [        {            \"paymentInstrumentId\": \"90375\",            \"paymentToken\": \"64dee650-e42e-11e9-81b4-2a2ae2dbcce4\",            \"paymentTransactionRef\": \"1000000000670626\",            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ],    \"unknown\": []}Partial Success:{    \"transactionReceipt\": \"1000000000670621\",    \"partialSuccess\": true,    \"fraudResponse\": {        \"clientId\": \"5017321752216948403009\",        \"reasonCode\": \"480\",        \"decision\": \"REVIEW\"    },    \"creditCards\": [        {            \"paymentInstrumentId\": \"90731\",            \"paymentToken\": \"712029a1-c0aa-41bc-a810-3d42424c5834\",            \"paymentTransactionRef\": \"1000000000670622\",            \"receiptData\": {                \"cardSuffix\": \"6106\",                \"scheme\": \"MASTERCARD\",                \"expiryMonth\": \"05\",                \"expiryYear\": \"21\"            },            \"extendedTransactionData\": [                {                    \"field\": \"bin\",                    \"value\": \"401200\"                },                {                    \"field\": \"stan\",                    \"value\": \"001675\"                },                {                    \"field\": \"rrn\",                    \"value\": \"000000000076\"                },                {                    \"field\": \"token\",                    \"value\": \"40120080000200000928\"                },                {                    \"field\": \"mid\",                    \"value\": \"611000602006135\"                },                {                    \"field\": \"terminalId\",                    \"value\": \"W6135100\"                }            ],            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\",            \"handlingInstructions\": {                \"instructionCode\": \"110\",                \"instructionMessage\": \"Immediate Completion\"            }        }    ],    \"giftCards\": [        {            \"paymentInstrumentId\": \"81054\",            \"paymentToken\": \"ec9b062a-220a-43b3-8185-a8ca4fc4dc0c\",            \"errorCode\": \"UN99\",            \"errorMessage\": \"UNEXPECTED SYSTEM FAILURE\",            \"errorDetail\": \"We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)\",            \"stepUp\": {                \"type\": \"REQUIRE_PASSCODE\",                \"mandatory\": true,                \"url\": \"https://uat.woolworthspay.com.au/container-ws/tbd\"            },                      \"receiptData\": {                \"cardSuffix\": \"2517\"            },            \"externalServiceCode\": \"02\",            \"externalServiceMessage\": \"FAILURE\"        }    ],    \"payPal\": [        {            \"paymentInstrumentId\": \"90271\",            \"paymentToken\": \"15f774d0-e42e-11e9-a359-2a2ae2dbcce4\",            \"errorCode\": \"UN99\",            \"errorMessage\": \"UNEXPECTED SYSTEM FAILURE\",            \"errorDetail\": \"We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)\",            \"receiptData\": {                \"payPalId\": \"jane.doe@paypal.com\",                \"customerId\": \"690238314\"            },            \"externalServiceCode\": \"02\",            \"externalServiceMessage\": \"FAILURE\"        }    ],    \"androidPay\": [],    \"googlePay\": [        {            \"paymentInstrumentId\": \"90953\",            \"paymentToken\": \"76a4c2f1-7620-4bc4-8f4f-01c1467ea318\",            \"errorCode\": \"UN99\",            \"errorMessage\": \"UNEXPECTED SYSTEM FAILURE\",            \"errorDetail\": \"We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)\",            \"stepUp\": {                \"type\": \"REFRESH_TOKEN\",                \"mandatory\": true,                \"url\": \"https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/googlepay/tokenize/90953\"            },            \"extendedTransactionData\": [                {                    \"field\": \"bin\",                    \"value\": \"376445\"                }            ],            \"externalServiceCode\": \"02\",            \"externalServiceMessage\": \"FAILURE\"        }    ],    \"applePay\": [        {            \"paymentInstrumentId\": \"90375\",            \"paymentToken\": \"64dee650-e42e-11e9-81b4-2a2ae2dbcce4\",            \"errorCode\": \"UN99\",            \"errorMessage\": \"UNEXPECTED SYSTEM FAILURE\",            \"errorDetail\": \"We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)\",            \"stepUp\": {                \"type\": \"REFRESH_TOKEN\",                \"mandatory\": true,                \"url\": \"https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/applepay/tokenize/90375\"            },            \"externalServiceCode\": \"02\",            \"externalServiceMessage\": \"FAILURE\"        }    ],    \"unknown\": [        {            \"paymentInstrumentId\": \"90945\",            \"paymentToken\": null,            \"errorCode\": \"UN99\",            \"errorMessage\": \"UNEXPECTED SYSTEM FAILURE\",            \"errorDetail\": \"We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)\"        }    ]}"
+        "example":{
+          "Complete Success Example:": {
+            "transactionReceipt": "1000000000670621",
+            "partialSuccess": false,
+            "fraudResponse": {
+              "clientId": "5017321752216948403009",
+              "reasonCode": "480",
+              "decision": "REVIEW"
+            },
+            "creditCards": [
+              {
+                "paymentInstrumentId": "90731",
+                "paymentToken": "712029a1-c0aa-41bc-a810-3d42424c5834",
+                "paymentTransactionRef": "1000000000670622",
+                "receiptData": {
+                  "cardSuffix": "6106",
+                  "scheme": "MASTERCARD",
+                  "expiryMonth": "05",
+                  "expiryYear": "21"
+                },
+                "extendedTransactionData": [
+                  {
+                    "field": "bin",
+                    "value": "401200"
+                  },
+                  {
+                    "field": "stan",
+                    "value": "001675"
+                  },
+                  {
+                    "field": "rrn",
+                    "value": "000000000076"
+                  },
+                  {
+                    "field": "token",
+                    "value": "40120080000200000928"
+                  },
+                  {
+                    "field": "mid",
+                    "value": "611000602006135"
+                  },
+                  {
+                    "field": "terminalId",
+                    "value": "W6135100"
+                  }
+                ],
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED",
+                "handlingInstructions": {
+                  "instructionCode": "110",
+                  "instructionMessage": "Immediate Completion"
+                },
+                "threeDS": {
+                  "car": "frva_need_a_sample",
+                  "dsTransID": "f25084f0-5b16-4c0a-ae5d-b24808a95e4b",
+                  "sli": "07"
+                }
+              }
+            ],
+            "giftCards": [
+              {
+                "paymentInstrumentId": "81054",
+                "paymentToken": "ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
+                "paymentTransactionRef": "1000000000670623",
+                "receiptData": {
+                  "cardSuffix": "2517"
+                },
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ],
+            "payPal": [
+              {
+                "paymentInstrumentId": "90271",
+                "paymentToken": "15f774d0-e42e-11e9-a359-2a2ae2dbcce4",
+                "paymentTransactionRef": "1000000000670624",
+                "receiptData": {
+                  "payPalId": "jane.doe@paypal.com",
+                  "customerId": "690238314"
+                },
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ],
+            "androidPay": [],
+            "googlePay": [
+              {
+                "paymentInstrumentId": "90953",
+                "paymentToken": "76a4c2f1-7620-4bc4-8f4f-01c1467ea318",
+                "paymentTransactionRef": "1000000000670625",
+                "extendedTransactionData": [
+                  {
+                    "field": "bin",
+                    "value": "376445"
+                  }
+                ],
+                "externalServiceCode": "100",
+                "externalServiceMessage": "ACCEPT"
+              }
+            ],
+            "applePay": [
+              {
+                "paymentInstrumentId": "90375",
+                "paymentToken": "64dee650-e42e-11e9-81b4-2a2ae2dbcce4",
+                "paymentTransactionRef": "1000000000670626",
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ],
+            "unknown": []
+          },
+          "Partial Success Example:": {
+            "transactionReceipt": "1000000000670621",
+            "partialSuccess": true,
+            "fraudResponse": {
+              "clientId": "5017321752216948403009",
+              "reasonCode": "480",
+              "decision": "REVIEW"
+            },
+            "creditCards": [
+              {
+                "paymentInstrumentId": "90731",
+                "paymentToken": "712029a1-c0aa-41bc-a810-3d42424c5834",
+                "paymentTransactionRef": "1000000000670622",
+                "receiptData": {
+                  "cardSuffix": "6106",
+                  "scheme": "MASTERCARD",
+                  "expiryMonth": "05",
+                  "expiryYear": "21"
+                },
+                "extendedTransactionData": [
+                  {
+                    "field": "bin",
+                    "value": "401200"
+                  },
+                  {
+                    "field": "stan",
+                    "value": "001675"
+                  },
+                  {
+                    "field": "rrn",
+                    "value": "000000000076"
+                  },
+                  {
+                    "field": "token",
+                    "value": "40120080000200000928"
+                  },
+                  {
+                    "field": "mid",
+                    "value": "611000602006135"
+                  },
+                  {
+                    "field": "terminalId",
+                    "value": "W6135100"
+                  }
+                ],
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED",
+                "handlingInstructions": {
+                  "instructionCode": "110",
+                  "instructionMessage": "Immediate Completion"
+                },
+                "threeDS": {
+                  "car": "frva_need_a_sample",
+                  "dsTransID": "f25084f0-5b16-4c0a-ae5d-b24808a95e4b",
+                  "sli": "07"
+                }
+              }
+            ],
+            "giftCards": [
+              {
+                "paymentInstrumentId": "81054",
+                "paymentToken": "ec9b062a-220a-43b3-8185-a8ca4fc4dc0c",
+                "errorCode": "UN99",
+                "errorMessage": "UNEXPECTED SYSTEM FAILURE",
+                "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                "stepUp": {
+                  "type": "REQUIRE_PASSCODE",
+                  "mandatory": true,
+                  "url": "https://uat.woolworthspay.com.au/container-ws/tbd"
+                },
+                "receiptData": {
+                  "cardSuffix": "2517"
+                },
+                "externalServiceCode": "02",
+                "externalServiceMessage": "FAILURE"
+              }
+            ],
+            "payPal": [
+              {
+                "paymentInstrumentId": "90271",
+                "paymentToken": "15f774d0-e42e-11e9-a359-2a2ae2dbcce4",
+                "errorCode": "UN99",
+                "errorMessage": "UNEXPECTED SYSTEM FAILURE",
+                "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                "receiptData": {
+                  "payPalId": "jane.doe@paypal.com",
+                  "customerId": "690238314"
+                },
+                "externalServiceCode": "02",
+                "externalServiceMessage": "FAILURE"
+              }
+            ],
+            "androidPay": [],
+            "googlePay": [
+              {
+                "paymentInstrumentId": "90953",
+                "paymentToken": "76a4c2f1-7620-4bc4-8f4f-01c1467ea318",
+                "errorCode": "UN99",
+                "errorMessage": "UNEXPECTED SYSTEM FAILURE",
+                "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                "stepUp": {
+                  "type": "REFRESH_TOKEN",
+                  "mandatory": true,
+                  "url": "https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/googlepay/tokenize/90953"
+                },
+                "extendedTransactionData": [
+                  {
+                    "field": "bin",
+                    "value": "376445"
+                  }
+                ],
+                "externalServiceCode": "02",
+                "externalServiceMessage": "FAILURE"
+              }
+            ],
+            "applePay": [
+              {
+                "paymentInstrumentId": "90375",
+                "paymentToken": "64dee650-e42e-11e9-81b4-2a2ae2dbcce4",
+                "errorCode": "UN99",
+                "errorMessage": "UNEXPECTED SYSTEM FAILURE",
+                "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)",
+                "stepUp": {
+                  "type": "REFRESH_TOKEN",
+                  "mandatory": true,
+                  "url": "https://{environment}.mobile-api.woolworths.com.au/wow/v1/pay/applepay/tokenize/90375"
+                },
+                "externalServiceCode": "02",
+                "externalServiceMessage": "FAILURE"
+              }
+            ],
+            "unknown": [
+              {
+                "paymentInstrumentId": "90945",
+                "paymentToken": null,
+                "errorCode": "UN99",
+                "errorMessage": "UNEXPECTED SYSTEM FAILURE",
+                "errorDetail": "We are currently experiencing technical issues with our service. Please try again later. We apologise for the inconvenience Please contact support for further investigation. (Payment)"
+              }
+            ]
+          }
+        }
       },
       "PaymentsErrorResponse":{
         "required":[
@@ -16940,6 +17842,32 @@
                   "type":"string",
                   "description":"The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
                   "example":"DO NOT HONOUR"
+                },
+                "threeDS":{
+                  "required":[
+                    "car",
+                    "dsTransID",
+                    "sli"
+                  ],
+                  "type":"object",
+                  "description":"This object is only present if the payments response contains 3DS data from Digital Pay.",
+                  "properties":{
+                    "car":{
+                      "type":"string",
+                      "description":"Received in response to a Visa authenticated Purchase and PreAuth. Only present for Visa.",
+                      "example":"frva_need_a_sample"
+                    },
+                    "dsTransID":{
+                      "type":"string",
+                      "description":"The Directory Server (DS) authentication identification code. A universally unique transaction identifier assigned by the DS to identify a single transaction. The format of the value is defined in IETF RFC 4122. It may utilise any of the specified versions if the output meets specific requirements.",
+                      "example":"f25084f0-5b16-4c0a-ae5d-b24808a95e4b"
+                    },
+                    "sli":{
+                      "type":"string",
+                      "description":"The SLI from the the schemes.",
+                      "example":"07"
+                    }
+                  }
                 }
               }
             }
@@ -17381,7 +18309,12 @@
                 }
               ],
               "externalServiceCode":"05",
-              "externalServiceMessage":"DO NOT HONOUR"
+              "externalServiceMessage":"DO NOT HONOUR",
+              "threeDS": {
+                "car": "frva_need_a_sample",
+                "dsTransID": "f25084f0-5b16-4c0a-ae5d-b24808a95e4b",
+                "sli": "07"
+              }
             }
           ],
           "giftCards":[
@@ -18225,7 +19158,49 @@
           }
         },
         "description":"The JSON response structure of the Completions endpoint.",
-        "example":"Complete Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": false,    \"completionResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"completionTransactionRef\": \"1000000000670875\",            \"amount\": 20.5,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"completionTransactionRef\": \"1000000000670876\",            \"amount\": 10,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ]}Partial Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": true,    \"completionResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"completionTransactionRef\": \"1000000000670875\",            \"amount\": 20.5,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"errorCode\": \"BI55\",            \"errorMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\",            \"errorDetail\": \"Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)\",            \"externalServiceCode\": \"55\",            \"externalServiceMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\"        }    ]}"
+        "example":{
+          "Complete Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": false,
+            "completionResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "completionTransactionRef": "1000000000670875",
+                "amount": 20.5,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "completionTransactionRef": "1000000000670876",
+                "amount": 10,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ]
+          },
+          "Partial Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": true,
+            "completionResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "completionTransactionRef": "1000000000670875",
+                "amount": 20.5,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "errorCode": "BI55",
+                "errorMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND",
+                "errorDetail": "Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)",
+                "externalServiceCode": "55",
+                "externalServiceMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND"
+              }
+            ]
+          }
+        }
       },
       "CompletionsErrorResponse":{
         "required":[
@@ -18450,7 +19425,46 @@
           }
         },
         "description":"The JSON response structure of the Voids endpoint.",
-        "example":"Complete Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": false,    \"voidResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"voidTransactionRef\": \"1000000000670875\",            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"voidTransactionRef\": \"1000000000670876\",            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ]}Partial Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": true,    \"voidResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"voidTransactionRef\": \"1000000000670875\",            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"errorCode\": \"BI55\",            \"errorMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\",            \"errorDetail\": \"Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)\",            \"externalServiceCode\": \"55\",            \"externalServiceMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\"        }    ]}"
+        "example":{
+          "Complete Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": false,
+            "voidResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "voidTransactionRef": "1000000000670875",
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "voidTransactionRef": "1000000000670876",
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ]
+          },
+          "Partial Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": true,
+            "voidResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "voidTransactionRef": "1000000000670875",
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "errorCode": "BI55",
+                "errorMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND",
+                "errorDetail": "Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)",
+                "externalServiceCode": "55",
+                "externalServiceMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND"
+              }
+            ]
+          }
+        }
       },
       "VoidsErrorResponse":{
         "required":[
@@ -18593,6 +19607,60 @@
                 }
               }
             }
+          },
+          "storeData":{
+            "required":[
+              "terminalId",
+              "storeId",
+              "stan",
+              "rrn",
+              "transactionTimestamp"
+            ],
+            "type":"object",
+            "properties":{
+              "groupId":{
+                "type":"string",
+                "description":"The refund transaction merchant group id. The group id is defined as a logical grouping of merchants or stores. A default configured group id is set in Apigee if absent in the payload.",
+                "example":"7915d9d7-368e-4af9-a3d4-d09927b8603a"
+              },
+              "terminalId":{
+                "maxLength":8,
+                "minLength":8,
+                "type":"string",
+                "description":"The in-store refund transaction terminal id. This is a 8 character alphanumeric string. If present in the payload the 'storeId' has to be omitted.",
+                "example":"W4952110"
+              },
+              "storeId":{
+                "type":"string",
+                "description":"The in-store refund transaction store id. If present in the payload the 'terminalId' and 'stan' can be omitted.",
+                "example":"4952110"
+              },
+              "laneId":{
+                "type":"string",
+                "description":"The in-store refund transaction lane id.",
+                "example":"110"
+              },
+              "stan":{
+                "maxLength":6,
+                "minLength":6,
+                "type":"string",
+                "description":"The System Trace Audit Number (STAN) used to identify the transaction. This is a 6 digit numeric string.",
+                "example":"555001"
+              },
+              "rrn":{
+                "maxLength":12,
+                "minLength":12,
+                "type":"string",
+                "description":"The in-store refund transaction store id. This is a 12 digit \"0\" [zero] padded numeric string.",
+                "example":"000000006564"
+              },
+              "transactionTimestamp":{
+                "type":"number",
+                "description":"The in-store refund transaction timestamp. The timestamp format is milliseconds since epoch.",
+                "example":1607915015449
+              }
+            },
+            "description":"This object is only required if the refunds request is for an in-store refund transaction."
           }
         },
         "description":"The JSON request structure of the Refunds endpoint.",
@@ -18608,7 +19676,16 @@
               "paymentTransactionRef":"1000000000670623",
               "amount":10
             }
-          ]
+          ],
+          "storeData": {
+            "groupId": "7915d9d7-368e-4af9-a3d4-d09927b8603a",
+            "terminalId": "W4952110",
+            "storeId": "4952110",
+            "laneId": "110",
+            "stan": "555002",
+            "rrn": "000000006565",
+            "transactionTimestamp": 1630592568014
+          }
         }
       },
       "RefundsSuccessResponse":{
@@ -18689,7 +19766,49 @@
           }
         },
         "description":"The JSON response structure of the Refunds endpoint.",
-        "example":"Complete Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": false,    \"refundResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"refundTransactionRef\": \"1000000000670875\",            \"amount\": 20.5,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"refundTransactionRef\": \"1000000000670876\",            \"amount\": 10,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        }    ]}Partial Success:{    \"transactionReceipt\": \"1000000000670875\",    \"partialSuccess\": true,    \"refundResponses\": [        {            \"paymentTransactionRef\": \"1000000000670622\",            \"refundTransactionRef\": \"1000000000670875\",            \"amount\": 20.5,            \"externalServiceCode\": \"00\",            \"externalServiceMessage\": \"APPROVED\"        },        {            \"paymentTransactionRef\": \"1000000000670623\",            \"errorCode\": \"BI55\",            \"errorMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\",            \"errorDetail\": \"Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)\",            \"externalServiceCode\": \"55\",            \"externalServiceMessage\": \"ORIGINAL PAYMENT TRANSACTION NOT FOUND\"        }    ]}"
+        "example":{
+          "Complete Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": false,
+            "refundResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "refundTransactionRef": "1000000000670875",
+                "amount": 20.5,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "refundTransactionRef": "1000000000670876",
+                "amount": 10,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              }
+            ]
+          },
+          "Partial Success Example:": {
+            "transactionReceipt": "1000000000670875",
+            "partialSuccess": true,
+            "refundResponses": [
+              {
+                "paymentTransactionRef": "1000000000670622",
+                "refundTransactionRef": "1000000000670875",
+                "amount": 20.5,
+                "externalServiceCode": "00",
+                "externalServiceMessage": "APPROVED"
+              },
+              {
+                "paymentTransactionRef": "1000000000670623",
+                "errorCode": "BI55",
+                "errorMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND",
+                "errorDetail": "Original payment transaction record cannot be found. Please provide a valid original transaction reference in the request. (processing payment)",
+                "externalServiceCode": "55",
+                "externalServiceMessage": "ORIGINAL PAYMENT TRANSACTION NOT FOUND"
+              }
+            ]
+          }
+        }
       },
       "RefundsErrorResponse":{
         "required":[
@@ -21353,6 +22472,141 @@
           }
         }
       },
+      "immediatePaymentRequest":{
+        "type":"object",
+        "required":[
+            "data",
+            "meta"
+        ],
+        "properties":{
+            "data":{
+                "required":[
+                    "clientReference",
+                    "orderNumber",
+                    "payments"
+                ],
+                "type":"object",
+                "properties":{
+                    "clientReference":{
+                        "type":"string",
+                        "description":"A merchant application specific reference number. This number should uniquely identify the transaction in the merchant’s system.",
+                        "example":"T5ESYRPWJKPHF54"
+                    },
+                    "orderNumber":{
+                        "type":"string",
+                        "description":"The merchant order number of the transaction.",
+                        "example":"20170505090"
+                    },
+                    "skipRollback": {
+                      "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
+                      "type": "boolean"
+                    },
+                    "allowPartialSuccess": {
+                      "description": "An optional flag allowing the consumer to indicate that a partial success will not trigger a failure and rollback",
+                      "type": "boolean"
+                    },
+                    "payments":{
+                        "type":"array",
+                        "items":{
+                            "required":[
+                                "paymentInstrumentId",
+                                "amount"
+                            ],
+                            "type":"object",
+                            "properties":{
+                                "paymentInstrumentId":{
+                                    "type":"string",
+                                    "description":"The payment instrument id from the card capture iframe response or the list payment instruments response. This property can be omitted if the payment token property is present.",
+                                    "example":"90731"
+                                },
+                                "amount":{
+                                    "type":"number",
+                                    "description":"The amount you want to pay with the payment instrument.",
+                                    "example":20.5
+                                }
+                            }
+                        }
+                    },
+                    "posPayload":{
+                      "$ref":"#/components/schemas/posPayload"
+                    },
+                    "merchantPayload":{
+                      "$ref":"#/components/schemas/merchantPayload"
+                    },
+                    "transactionType": {
+                      "$ref":"#/components/schemas/PaymentTransactionType"
+                    }
+                }
+            },
+            "meta": {
+                "$ref":"#/components/schemas/meta"
+            }
+        },
+        "example":{
+            "data": {
+                "transactionType":{
+                    "creditCard":"PREAUTH",
+                    "giftCard":"PURCHASE",
+                    "payPal":"PURCHASE",
+                    "googlePay":{
+                        "creditCard":"PREAUTH",
+                        "debitCard":"PURCHASE"
+                    },
+                    "applePay":{
+                        "creditCard":"PREAUTH",
+                        "debitCard":"PURCHASE"
+                    }
+                },
+                "clientReference":"T5ESYRPWJKPHF54",
+                "orderNumber":"20170505090",
+                "payments":[
+                    {
+                        "paymentInstrumentId":"90731",
+                        "amount":20.5
+                    },
+                    {
+                        "paymentInstrumentId":"90731",
+                        "amount":20.5
+                    },
+                    {
+                        "paymentInstrumentId":"81054",
+                        "amount":1
+                    },
+                    {
+                        "paymentInstrumentId":"90271",
+                        "amount":15
+                    }
+                ],
+                "posPayload": {
+                  "schemaId": "0a221353-b26c-4848-9a77-4a8bcbacf229",
+                  "payload": {
+                      "storeId": "4952110",
+                      "laneId": "123",
+                      "rrn": "000000006564",
+                      "transactionTimestamp": 1528264660639
+                  }
+                }
+            },
+            "meta": {
+                "fraud":{
+                    "provider":"cybersource",
+                    "version":"CyberSourceTransaction_1.101",
+                    "format":"ZIP_BASE_64_ENCODED",
+                    "responseFormat":"ZIP_BASE_64_ENCODED",
+                    "message":"GzbOxpLagX6iFEb7td61cZyA="
+                },
+                "challengeResponses": [{
+                    "instrumentId": "90731",
+                    "type": "STEP_UP",
+                    "token": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                }, {
+                    "instrumentId": "81054",
+                    "type": "PASSCODE",
+                    "token": "1425"
+                }]
+            }
+        }
+      },
       "customerPaymentDetails": {
         "type":"object",
         "required":[
@@ -21396,18 +22650,243 @@
                 "description": "An optional flag allowing the consumer to indicate that automatic rollback step should be skipped in the case of failure",
                 "type": "boolean"
               },
+              "allowPartialSuccess": {
+                "description": "An optional flag allowing the consumer to indicate that a partial success will not trigger a failure and rollback",
+                "type": "boolean"
+              },
               "clientReference":{
                 "description":"An optional client reference to be associated with the transaction.  If not suplied the transactionId will be used.",
                 "type":"string"
               },
               "preferences": {
                 "$ref": "#/components/schemas/preferencePayments"
+              },
+              "transactionType": {
+                "$ref":"#/components/schemas/PaymentTransactionType"
               }
             }
           },
           "meta":{
             "$ref": "#/components/schemas/meta"
           }
+        }
+      },
+      "completionsErrorResponse": {
+        "description": "The JSON response structure of the Completions endpoint.",
+        "allOf": [
+          {
+              "$ref": "#/components/schemas/error"
+          },
+          {
+              "required": [
+                  "errorCode",
+                  "errorDetail",
+                  "errorMessage",
+                  "httpStatusCode"
+              ],
+              "type": "object",
+              "properties": {
+                  "httpStatusCode": {
+                      "description": "The http status code (4xx and 5xx HTTP status codes).",
+                      "type": "number",
+                      "example": 400
+                  },
+                  "errorCode": {
+                      "description": "The error code.",
+                      "type": "string",
+                      "example": "BI52"
+                  },
+                  "errorMessage": {
+                      "description": "The error message.",
+                      "type": "string",
+                      "example": "PAYMENT TRANSACTION FAILED"
+                  },
+                  "errorDetail": {
+                      "description": "The error detail.",
+                      "type": "string",
+                      "example": "Oops! An unknown error has occurred"
+                  },
+                  "completionResponses": {
+                      "type": "array",
+                      "items": {
+                          "required": [
+                              "paymentTransactionRef",
+                              "errorCode",
+                              "errorDetail",
+                              "errorMessage",
+                              "externalServiceCode",
+                              "externalServiceMessage"
+                          ],
+                          "type": "object",
+                          "properties": {
+                              "paymentTransactionRef": {
+                                  "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                                  "type": "string",
+                                  "example": "1000000000670622"
+                              },
+                              "errorCode": {
+                                  "description": "The error code. Only present if an error occurred during payment.",
+                                  "type": "string",
+                                  "example": "UN99"
+                              },
+                              "errorMessage": {
+                                  "description": "The error message. Only present if an error occurred during payment.",
+                                  "type": "string",
+                                  "example": "UNEXPECTED SYSTEM FAILURE"
+                              },
+                              "errorDetail": {
+                                  "description": "The error detail. Only present if an error occurred during payment.",
+                                  "type": "string",
+                                  "example": "We are currently experiencing technical issues with our service."
+                              },
+                              "externalServiceCode": {
+                                  "description": "The external service code (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                  "type": "string",
+                                  "example": "05"
+                              },
+                              "externalServiceMessage": {
+                                  "description": "The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                  "type": "string",
+                                  "example": "DO NOT HONOUR"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+        ],
+        "example": {
+            "httpStatusCode": 400,
+            "errorCode": "BI52",
+            "errorMessage": "PAYMENT TRANSACTION FAILED",
+            "errorDetail": "Oops! An unknown error has occurred",
+            "completionResponses": [
+                {
+                    "paymentTransactionRef": "1000000000670622",
+                    "errorCode": "ES52",
+                    "errorMessage": "PAYMENT TRANSACTION FAILED",
+                    "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
+                    "externalServiceCode": "0T",
+                    "externalServiceMessage": "INVALID COMPLETION AUTH NOT FOUND"
+                },
+                {
+                    "paymentTransactionRef": "1000000000670623",
+                    "errorCode": "ES52",
+                    "errorMessage": "PAYMENT TRANSACTION FAILED",
+                    "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
+                    "externalServiceCode": "0T",
+                    "externalServiceMessage": "INVALID COMPLETION AUTH NOT FOUND"
+                }
+            ]
+        }
+      },
+      "voidsErrorResponse": {
+        "description": "The JSON response structure of the Voids endpoint.",
+        "allOf": [
+            {
+                "$ref": "#/components/schemas/error"
+            },
+            {
+                "required": [
+                    "errorCode",
+                    "errorDetail",
+                    "errorMessage",
+                    "httpStatusCode"
+                ],
+                "type": "object",
+                "properties": {
+                    "httpStatusCode": {
+                        "description": "The http status code (4xx and 5xx HTTP status codes).",
+                        "type": "number",
+                        "example": 400
+                    },
+                    "errorCode": {
+                        "description": "The error code.",
+                        "type": "string",
+                        "example": "BI52"
+                    },
+                    "errorMessage": {
+                        "description": "The error message.",
+                        "type": "string",
+                        "example": "PAYMENT TRANSACTION FAILED"
+                    },
+                    "errorDetail": {
+                        "description": "The error detail.",
+                        "type": "string",
+                        "example": "Oops! An unknown error has occurred"
+                    },
+                    "voidResponses": {
+                        "type": "array",
+                        "items": {
+                            "required": [
+                                "paymentTransactionRef",
+                                "errorCode",
+                                "errorDetail",
+                                "errorMessage",
+                                "externalServiceCode",
+                                "externalServiceMessage"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "paymentTransactionRef": {
+                                    "description": "Container reference in the transaction logs. This number uniquely identifies the credit card transaction in the container.",
+                                    "type": "string",
+                                    "example": "1000000000670622"
+                                },
+                                "errorCode": {
+                                    "description": "The error code. Only present if an error occurred during payment.",
+                                    "type": "string",
+                                    "example": "UN99"
+                                },
+                                "errorMessage": {
+                                    "description": "The error message. Only present if an error occurred during payment.",
+                                    "type": "string",
+                                    "example": "UNEXPECTED SYSTEM FAILURE"
+                                },
+                                "errorDetail": {
+                                    "description": "The error detail. Only present if an error occurred during payment.",
+                                    "type": "string",
+                                    "example": "We are currently experiencing technical issues with our service."
+                                },
+                                "externalServiceCode": {
+                                    "description": "The external service code (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                    "type": "string",
+                                    "example": "05"
+                                },
+                                "externalServiceMessage": {
+                                    "description": "The external service message (from eg. Webpay). This property is only included in the response if it is enabled in the consumers API configuration.",
+                                    "type": "string",
+                                    "example": "DO NOT HONOUR"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "example": {
+          "httpStatusCode": 400,
+          "errorCode": "BI52",
+          "errorMessage": "PAYMENT TRANSACTION FAILED",
+          "errorDetail": "Oops! An unknown error has occurred",
+          "voidResponses": [
+              {
+                  "paymentTransactionRef": "1000000000670622",
+                  "errorCode": "ES52",
+                  "errorMessage": "PAYMENT TRANSACTION FAILED",
+                  "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
+                  "externalServiceCode": "0T",
+                  "externalServiceMessage": "INVALID VOID AUTH NOT FOUND"
+              },
+              {
+                  "paymentTransactionRef": "1000000000670623",
+                  "errorCode": "ES52",
+                  "errorMessage": "PAYMENT TRANSACTION FAILED",
+                  "errorDetail": "PAYMENT TRANSACTION FAILED Please try later or contact support for further investigation. (processing payment)",
+                  "externalServiceCode": "0T",
+                  "externalServiceMessage": "INVALID VOID AUTH NOT FOUND"
+              }
+          ]
         }
       }
     },
@@ -23141,12 +24620,12 @@
           }
         }
       },
-      "refundMerchantTransactionResponse":{
+      "merchantTransactionResponse":{
         "description":"Successful response",
         "content":{
           "application/json":{
             "schema":{
-              "title":"refundMerchantTransactionResults",
+              "title":"merchantTransactionResults",
               "type":"object",
               "required":[
                 "data",
@@ -23162,33 +24641,42 @@
               }
             },
             "examples":{
-              "MerchantTransactionRefund":{
+              "MerchantTransactionResponse":{
                 "value":{
                   "data":{
+                    "transactionId":"7198fae2-951d-4951-b9c8-f3ef9d2ab716",
                     "merchantReferenceId":"123456",
                     "walletId":"80856249-6847-49f8-af02-9551a039b289",
+                    "merchantId": "10001",
                     "paymentRequestId":"d98b8c61-3731-477f-a380-d3ddc80bf718",
-                    "type":"REFUND",
-                    "grossAmount":12,
+                    "refundReason": "Refund requested by customer",
+                    "grossAmount": 12.99,
+                    "clientReference": "purchase-1234",
                     "executionTime":"2020-04-29T00:38:43.997Z",
-                    "payments":[
-
-                    ],
-                    "status":"REJECTED",
-                    "statusDetail":{
-
-                    },
-                    "transactionId":"7198fae2-951d-4951-b9c8-f3ef9d2ab716",
-                    "refunds":[
-                      {
+                    "type":"REFUND",
+                    "status": "APPROVED",
+                    "instruments": [{
+                      "paymentInstrumentId": "123456",
+                      "instrumentType": "MASTERCARD",
+                      "transactions": [{
+                        "type": "REFUND", 
+                        "executionTime": "2021-09-16T06:34:52.226Z", 
+                        "paymentTransactionRef": "1000000000670875",
+                        "amount": 12.99,
+                        "status": "APPROVED"
+                      }]
+                    }],
+                    "subTransactions": [{
+                      "transactionReceipt": "1000000000670875",
+                      "refunds": [{
                         "paymentTransactionRef":"1000000005202446",
-                        "amount":12
-                      }
-                    ]
+                        "refundTransactionRef": "1000000000670875",
+                        "amount": 12.99
+                      }],
+                      "partialSuccess": false
+                    }]
                   },
-                  "meta":{
-
-                  }
+                  "meta":{}
                 }
               }
             }
