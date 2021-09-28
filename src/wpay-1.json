@@ -11390,19 +11390,7 @@
           "content":{
             "application/json":{
               "schema":{
-                "required":[
-                  "orderItems"
-                ],
-                "type":"object",
-                "properties":{
-                  "orderItems": {
-                    "description": "Gift cards to be included in the order.  Currently only supports a single entry.  Array is for future roadmap",
-                    "type":"array",
-                    "items": {
-                      "$ref":"#/components/schemas/giftingProductOrderItem"
-                    }
-                  }
-                }
+                "$ref":"#/components/schemas/giftingProductQuoteRequest"
               }
             }
           }
@@ -11550,119 +11538,13 @@
             "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
           }
         ],
-        "requestBody": {
-          "description":"Request payload containing details of the order",
+        "requestBody":{
+          "description":"Request payload containing instruments to use for the payment",
           "required":true,
           "content":{
             "application/json":{
               "schema":{
-                "required":[
-                  "instrumentId",
-                  "deliveryEmail",
-                  "referenceId",
-                  "subTotalAmount",
-                  "discountAmount",
-                  "totalOrderAmount",
-                  "billingContact",
-                  "orderItems"
-                ],
-                "type":"object",
-                "properties": {
-                  "instrumentId": {
-                    "description": "The instrumentId to be used for the order.  Must not be a stored gift card",
-                    "type": "string"
-                  },
-                  "referenceId": {
-                    "description": "Unique reference for the order supplied by the client",
-                    "type": "string"
-                  },
-                  "subTotalAmount": {
-                    "description":"Face value of the gift card",
-                    "type":"number"
-                  },
-                  "discountAmount": {
-                    "description":"Eligible discount amount. In case of no discounts, value will be 0",
-                    "type":"number"
-                  },
-                  "totalOrderAmount": {
-                    "description":"Net amount payable",
-                    "type":"number"
-                  },
-                  "billingContact": {
-                    "description": "Billing address for the order",
-                    "required":[
-                      "firstName",
-                      "lastName",
-                      "email",
-                      "mobileNumber",
-                      "streetAddress",
-                      "suburb",
-                      "stateOrTerritory",
-                      "postalCode",
-                      "countryCode"
-                    ],
-                    "type":"object",
-                    "properties":{
-                      "firstName": {
-                        "type": "string",
-                        "description": "The customer's first name.",
-                        "example": "Francois"
-                      },
-                      "lastName": {
-                        "type": "string",
-                        "description": "The customer's last name.",
-                        "example": "van der Merwe"
-                      },
-                      "email": {
-                        "type": "string",
-                        "description": "The email of the ordering customer",
-                        "example": "sample@gmail.com"
-                      },
-                      "mobileNumber": {
-                        "type": "string",
-                        "description": "The mobile number of the ordering customer",
-                        "example": "+61444555666"
-                      },
-                      "streetAddress": {
-                        "type": "string",
-                        "description": "The customer's street address line.",
-                        "example": "22 River Oak Circuit"
-                      },
-                      "extendedAddress": {
-                        "type": "string",
-                        "description": "The customer's extended address line.",
-                        "example": "Level 1"
-                      },
-                      "suburb": {
-                        "type": "string",
-                        "description": "The customer's suburb.",
-                        "example": "Kellyville"
-                      },
-                      "stateOrTerritory": {
-                        "type": "string",
-                        "description": "The customer's abbreviated state or territory.",
-                        "example": "NSW"
-                      },
-                      "postalCode": {
-                        "type": "string",
-                        "description": "The customer's postal code.",
-                        "example": "2155"
-                      },
-                      "countryCode": {
-                        "type": "string",
-                        "description": "The customer's Alpha-2 (2-character) ISO-3166-1 country code.",
-                        "example": "AU"
-                      }
-                    }
-                  },
-                  "orderItems": {
-                    "description": "Gift cards to be included in the order.  Currently only supports a single entry.  Array is for future roadmap",
-                    "type":"array",
-                    "items": {
-                      "$ref":"#/components/schemas/giftingProductOrderItem"
-                    }
-                  }
-                }
+                "$ref":"#/components/schemas/giftingProductOrderRequest"
               }
             }
           }
@@ -22678,6 +22560,206 @@
           "meta":{
             "$ref": "#/components/schemas/meta"
           }
+        }
+      },
+      "giftingProductQuoteRequest":{
+        "required":[
+          "orderItems"
+        ],
+        "type":"object",
+        "properties":{
+          "orderItems": {
+            "description": "Gift cards to be included in the order.  Currently only supports a single entry.  Array is for future roadmap",
+            "type":"array",
+            "items": {
+              "$ref":"#/components/schemas/giftingProductOrderItem"
+            }
+          }
+        }
+      },
+      "giftingProductOrderRequest":{
+        "type":"object",
+        "required":[
+            "data",
+            "meta"
+        ],
+        "properties":{
+            "data":{
+              "required":[
+                "instrumentId",
+                "deliveryEmail",
+                "referenceId",
+                "subTotalAmount",
+                "discountAmount",
+                "totalOrderAmount",
+                "billingContact",
+                "orderItems"
+              ],
+              "type":"object",
+              "properties": {
+                "instrumentId": {
+                  "description": "The instrumentId to be used for the order.  Must not be a stored gift card",
+                  "type": "string"
+                },
+                "referenceId": {
+                  "description": "Unique reference for the order supplied by the client",
+                  "type": "string"
+                },
+                "subTotalAmount": {
+                  "description":"Face value of the gift card",
+                  "type":"number"
+                },
+                "discountAmount": {
+                  "description":"Eligible discount amount. In case of no discounts, value will be 0",
+                  "type":"number"
+                },
+                "totalOrderAmount": {
+                  "description":"Net amount payable",
+                  "type":"number"
+                },
+                "billingContact": {
+                  "description": "Billing address for the order",
+                  "required":[
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "mobileNumber",
+                    "streetAddress",
+                    "suburb",
+                    "stateOrTerritory",
+                    "postalCode",
+                    "countryCode"
+                  ],
+                  "type":"object",
+                  "properties":{
+                    "firstName": {
+                      "type": "string",
+                      "description": "The customer's first name.",
+                      "example": "Francois"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "The customer's last name.",
+                      "example": "van der Merwe"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "The email of the ordering customer",
+                      "example": "sample@gmail.com"
+                    },
+                    "mobileNumber": {
+                      "type": "string",
+                      "description": "The mobile number of the ordering customer",
+                      "example": "+61444555666"
+                    },
+                    "streetAddress": {
+                      "type": "string",
+                      "description": "The customer's street address line.",
+                      "example": "22 River Oak Circuit"
+                    },
+                    "extendedAddress": {
+                      "type": "string",
+                      "description": "The customer's extended address line.",
+                      "example": "Level 1"
+                    },
+                    "suburb": {
+                      "type": "string",
+                      "description": "The customer's suburb.",
+                      "example": "Kellyville"
+                    },
+                    "stateOrTerritory": {
+                      "type": "string",
+                      "description": "The customer's abbreviated state or territory.",
+                      "example": "NSW"
+                    },
+                    "postalCode": {
+                      "type": "string",
+                      "description": "The customer's postal code.",
+                      "example": "2155"
+                    },
+                    "countryCode": {
+                      "type": "string",
+                      "description": "The customer's Alpha-2 (2-character) ISO-3166-1 country code.",
+                      "example": "AU"
+                    }
+                  }
+                },
+                "orderItems": {
+                  "description": "Gift cards to be included in the order.  Currently only supports a single entry.  Array is for future roadmap",
+                  "type":"array",
+                  "items": {
+                    "$ref":"#/components/schemas/giftingProductOrderItem"
+                  }
+                }
+              }
+            },
+            "meta": {
+                "$ref":"#/components/schemas/meta"
+            }
+        },
+        "example":{
+            "data": {
+                "transactionType":{
+                    "creditCard":"PREAUTH",
+                    "giftCard":"PURCHASE",
+                    "payPal":"PURCHASE",
+                    "googlePay":{
+                        "creditCard":"PREAUTH",
+                        "debitCard":"PURCHASE"
+                    },
+                    "applePay":{
+                        "creditCard":"PREAUTH",
+                        "debitCard":"PURCHASE"
+                    }
+                },
+                "clientReference":"T5ESYRPWJKPHF54",
+                "orderNumber":"20170505090",
+                "payments":[
+                    {
+                        "paymentInstrumentId":"90731",
+                        "amount":20.5
+                    },
+                    {
+                        "paymentInstrumentId":"90731",
+                        "amount":20.5
+                    },
+                    {
+                        "paymentInstrumentId":"81054",
+                        "amount":1
+                    },
+                    {
+                        "paymentInstrumentId":"90271",
+                        "amount":15
+                    }
+                ],
+                "posPayload": {
+                  "schemaId": "0a221353-b26c-4848-9a77-4a8bcbacf229",
+                  "payload": {
+                      "storeId": "4952110",
+                      "laneId": "123",
+                      "rrn": "000000006564",
+                      "transactionTimestamp": 1528264660639
+                  }
+                }
+            },
+            "meta": {
+                "fraud":{
+                    "provider":"cybersource",
+                    "version":"CyberSourceTransaction_1.101",
+                    "format":"ZIP_BASE_64_ENCODED",
+                    "responseFormat":"ZIP_BASE_64_ENCODED",
+                    "message":"GzbOxpLagX6iFEb7td61cZyA="
+                },
+                "challengeResponses": [{
+                    "instrumentId": "90731",
+                    "type": "STEP_UP",
+                    "token": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+                }, {
+                    "instrumentId": "81054",
+                    "type": "PASSCODE",
+                    "token": "1425"
+                }]
+            }
         }
       },
       "completionsErrorResponse": {
