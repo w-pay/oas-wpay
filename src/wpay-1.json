@@ -11767,8 +11767,8 @@
               "enum":[
                 "STEP_UP",
                 "PASSCODE",
-                "3ds",
-                "3ds-frictionless"
+                "3DS",
+                "3DS-frictionless"
               ]
             },
             "token":{
