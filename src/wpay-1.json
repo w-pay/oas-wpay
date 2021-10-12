@@ -24990,7 +24990,14 @@
                     "quoteNo": {
                       "description":"Quote reference",
                       "type":"string"
-                    }
+                    },
+                    "subTransactions":{
+                      "description":"Array of transaction responses returned by downstream processes",
+                      "type":"array",
+                      "items": {
+                        "type": "object"
+                      }
+                  }
                   }
                 },
                 "meta":{
