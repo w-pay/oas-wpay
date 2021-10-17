@@ -24960,7 +24960,7 @@
         }
       },
       "giftingProductOrderSuccessResponse": {
-        "description":"Successful response",
+        "description":"Successful response. A 200 successful response can also be in status REJECTED due to the missing 3DS challenge information",
         "content":{
           "application/json":{
             "schema":{
@@ -24974,14 +24974,14 @@
                   "description":"Results of the gifting order",
                   "required":[
                     "status",
-                    "orderId",
                     "quoteNo"
                   ],
                   "type":"object",
                   "properties":{
                     "status": {
                       "description":"Current order status",
-                      "type":"string"
+                      "type":"string",
+                      "enum":["REJECTED", "APPROVED", "PROCESSING"]
                     },
                     "orderId": {
                       "description":"Order reference",
@@ -24995,9 +24995,37 @@
                       "description":"Array of transaction responses returned by downstream processes",
                       "type":"array",
                       "items": {
-                        "type": "object"
+                        "type": "object",
+                        "properties":{
+                          "errorCode": {
+                            "description":"Error code (in case of error)",
+                            "type":"string",
+                            "example":"3DS_001"
+                          },
+                          "errorMessage": {
+                            "description":"Error message (in case of error)",
+                            "type":"string",
+                            "example":"3DS TOKEN REQUIRED"
+                          },
+                          "threeDS": {
+                            "description":"3DS elements. So far we assume these elements are going to be used by the requestor to fire the 3DS challenge",
+                            "type":"object",
+                            "properties":{
+                              "paymentInstrumentId": {
+                                "description":"Instrument ID",
+                                "type":"string",
+                                "example":"215450"
+                              },
+                              "sessionId": {
+                                "description":"Order reference",
+                                "type":"string",
+                                "example":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiNjZjNTBlYy0wYjI5LTRiMGQtYmUyMi0wMjkzYmVmMTU4MTAiLCJpYXQiOjE2MzQ1MDUwNTUuODk0LCJpc3MiOiJwZXRjdWx0dXJlIiwiT3JnVW5pdElkIjoiNjBhZjhhMWUwYmFjNWQ1MGNjMjZmMzNjIiwiUGF5bG9hZCI6eyJwYXltZW50SW5zdHJ1bWVudElkIjoiMjE1NDUwIiwidG9rZW5UeXBlIjoiUEFOIiwib3JkZXJJbmZvcm1hdGlvbiI6eyJhbW91bnREZXRhaWxzIjp7ImN1cnJlbmN5IjoiQVVEIiwiYW1vdW50IjoxNDd9fX0sIk9iamVjdGlmeVBheWxvYWQiOnRydWUsIlJlZmVyZW5jZUlkIjoiYjc4OGJlMjMtYWRiZC00NTg1LWE4YWQtMjg4ZDlhYWI2NWFhIn0.H1bLRAI5ptFPGyCtN6EUTr4WR3D0vZRMVgzu1iPxttY"
+                              }
+                            }
+                           }
+                          }
+                        }
                       }
-                  }
                   }
                 },
                 "meta":{
