@@ -11492,7 +11492,7 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },{
             "name":"X-Everyday-Pay-Wallet",
-            "description":"Indicates that the order comes from EDWallet so Hybris can call payment accordingly.",
+            "description":"Indicates that the order comes from EDWallet.",
             "schema":{
               "type":"boolean"
             },
@@ -22551,8 +22551,8 @@
         "properties":{
             "data":{
               "required":[
-                "walletInstrumentId",
-                "userGroupId",
+                "paymentInstrumentId",
+                "clientId",
                 "deliveryEmail",
                 "firstName",
                 "lastName",
@@ -22563,11 +22563,11 @@
               ],
               "type":"object",
               "properties": {
-                "walletInstrumentId": {
+                "paymentInstrumentId": {
                   "description": "The instrumentId to be used for the order.  Must not be a stored gift card",
                   "type": "string"
                 },
-                "userGroupId": {
+                "clientId": {
                   "description": "Unique clientId",
                   "type": "string"
                 },
@@ -22587,7 +22587,7 @@
                   "description":"Net amount payable",
                   "type":"number"
                 },
-                "billingAddress": {
+                "billingContact": {
                   "description": "Billing address for the order",
                   "required":[
                     "firstName",
@@ -22669,8 +22669,8 @@
         },
         "example":{
           "data":{
-             "instrumentId":"",
-           "userGroupId":"wallet",
+             "paymentInstrumentId":"",
+             "clientId":"wallet",
              "firstName":"Sample",
              "lastName":"Name",
              "deliveryEmail":"sample@gmail.com",
@@ -22703,7 +22703,7 @@
                    }
                 }
              ],
-             "billingAddress":{
+             "billingContact":{
                 "firstName":"Sample",
                 "lastName":"Name",
                 "email":"sample@gmail.com",
