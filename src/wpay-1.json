@@ -11482,23 +11482,51 @@
         "description":"Order gift card products.",
         "parameters":[
           {
-            "name":"X-Hashed-Crn",
-            "description":"Hashed CRN of the customer making the transaction in the wallet",
+            "name":"X-Api-Key",
+            "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
             "schema":{
               "type":"string"
             },
             "in":"header",
             "required":true,
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-          },{
-            "name":"X-Everyday-Pay-Wallet",
-            "description":"Indicates that the order comes from EDWallet.",
+          },
+          {
+            "name":"X-Auth-Key",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
             "schema":{
-              "type":"boolean"
+              "type":"string"
+            },
+            "example":"OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name":"X-Auth-Digest",
+            "in":"header",
+            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name":"X-Message-Id",
+            "in":"header",
+            "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema":{
+              "type":"string"
+            },
+            "example":"f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name":"X-JWS-Signature",
+            "description":"The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible.",
+            "schema":{
+              "type":"string"
             },
             "in":"header",
             "required":true,
-            "example":"true"
+            "example":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
           }
         ],
         "requestBody":{
@@ -22594,10 +22622,10 @@
                     "lastName",
                     "email",
                     "mobileNumber",
-                    "line1",
+                    "streetAddress",
                     "suburb",
-                    "state",
-                    "postcode",
+                    "stateOrTerritory",
+                    "postalCode",
                     "countryCode"
                   ],
                   "type":"object",
@@ -22622,25 +22650,25 @@
                       "description": "The mobile number of the ordering customer",
                       "example": "+61444555666"
                     },
-                    "line1": {
+                    "streetAddress": {
                       "type": "string",
-                      "description": "The customer's street address line 1.",
+                      "description": "The customer's street address line.",
                       "example": "22 River Oak Circuit"
                     },
-                    "line2": {
+                    "extendedAddress": {
                       "type": "string",
-                      "description": "The customer's street address line 2.",
-                      "example": "22 River Oak Circuit"
+                      "description": "The customer's extended address line.",
+                      "example": "Level 1"
                     },
-                    "suburb": {
-                      "type": "string",
-                      "description": "The customer's suburb.",
-                      "example": "Kellyville"
-                    },
-                    "state": {
+                    "stateOrTerritory": {
                       "type": "string",
                       "description": "The customer's abbreviated state or territory.",
                       "example": "NSW"
+                    },
+                    "postalCode": {
+                      "type": "string",
+                      "description": "The customer's postal code.",
+                      "example": "2155"
                     },
                     "postcode": {
                       "type": "string",
