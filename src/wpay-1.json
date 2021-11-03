@@ -11479,7 +11479,7 @@
           "Gifting"
         ],
         "summary":"Order Gift Card",
-        "description":"Order a gift card product.",
+        "description":"Order gift card products.",
         "parameters":[
           {
             "name":"X-Api-Key",
@@ -22579,23 +22579,28 @@
         "properties":{
             "data":{
               "required":[
-                "instrumentId",
+                "paymentInstrumentId",
+                "clientId",
                 "deliveryEmail",
+                "firstName",
+                "lastName",
                 "referenceId",
                 "subTotalAmount",
                 "discountAmount",
-                "totalOrderAmount",
-                "billingContact",
-                "orderItems"
+                "totalOrderAmount"
               ],
               "type":"object",
               "properties": {
-                "instrumentId": {
+                "paymentInstrumentId": {
                   "description": "The instrumentId to be used for the order.  Must not be a stored gift card",
                   "type": "string"
                 },
+                "clientId": {
+                  "description": "Unique clientId",
+                  "type": "string"
+                },
                 "referenceId": {
-                  "description": "Unique reference for the order supplied by the client",
+                  "description": "Unique reference for the order supplied by the client. Cart number supplied by the Review Order API response",
                   "type": "string"
                 },
                 "subTotalAmount": {
@@ -22655,17 +22660,17 @@
                       "description": "The customer's extended address line.",
                       "example": "Level 1"
                     },
-                    "suburb": {
-                      "type": "string",
-                      "description": "The customer's suburb.",
-                      "example": "Kellyville"
-                    },
                     "stateOrTerritory": {
                       "type": "string",
                       "description": "The customer's abbreviated state or territory.",
                       "example": "NSW"
                     },
                     "postalCode": {
+                      "type": "string",
+                      "description": "The customer's postal code.",
+                      "example": "2155"
+                    },
+                    "postcode": {
                       "type": "string",
                       "description": "The customer's postal code.",
                       "example": "2155"
@@ -22691,70 +22696,71 @@
             }
         },
         "example":{
-            "data": {
-                "transactionType":{
-                    "creditCard":"PREAUTH",
-                    "giftCard":"PURCHASE",
-                    "payPal":"PURCHASE",
-                    "googlePay":{
-                        "creditCard":"PREAUTH",
-                        "debitCard":"PURCHASE"
-                    },
-                    "applePay":{
-                        "creditCard":"PREAUTH",
-                        "debitCard":"PURCHASE"
-                    }
+          "data":{
+             "paymentInstrumentId":"",
+             "clientId":"wallet",
+             "firstName":"Sample",
+             "lastName":"Name",
+             "deliveryEmail":"sample@gmail.com",
+             "referenceId":"012344567",
+             "subTotalAmount":200,
+             "totalOrderAmount":195,
+             "discountAmount":5,
+             "items":[
+                {
+                   "designId":"WOW555PRM001",
+                   "amount":50,
+                   "salePrice":47.5,
+                   "totalSalePrice":95,
+                   "quantity":2,
+                   "isGifting":false
                 },
-                "clientReference":"T5ESYRPWJKPHF54",
-                "orderNumber":"20170505090",
-                "payments":[
-                    {
-                        "paymentInstrumentId":"90731",
-                        "amount":20.5
-                    },
-                    {
-                        "paymentInstrumentId":"90731",
-                        "amount":20.5
-                    },
-                    {
-                        "paymentInstrumentId":"81054",
-                        "amount":1
-                    },
-                    {
-                        "paymentInstrumentId":"90271",
-                        "amount":15
-                    }
-                ],
-                "posPayload": {
-                  "schemaId": "0a221353-b26c-4848-9a77-4a8bcbacf229",
-                  "payload": {
-                      "storeId": "4952110",
-                      "laneId": "123",
-                      "rrn": "000000006564",
-                      "transactionTimestamp": 1528264660639
-                  }
+                {
+                   "designId":"WOW712EBW001",
+                   "amount":100,
+                   "salePrice":100,
+                   "totalSalePrice":100,
+                   "quantity":1,
+                   "isGifting":true,
+                   "recipientDetails":{
+                      "toName":"Jennifer",
+                      "fromName":"Jessica",
+                      "message":"Wishing you a very Happy Anniversary Dear :) ",
+                      "imageUrl":"",
+                      "mobileNumber":"+61444555666"
+                   }
                 }
-            },
-            "meta": {
-                "fraud":{
-                    "provider":"cybersource",
-                    "version":"CyberSourceTransaction_1.101",
-                    "format":"ZIP_BASE_64_ENCODED",
-                    "responseFormat":"ZIP_BASE_64_ENCODED",
-                    "message":"GzbOxpLagX6iFEb7td61cZyA="
-                },
-                "challengeResponses": [{
-                    "instrumentId": "90731",
-                    "type": "STEP_UP",
-                    "token": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
-                }, {
-                    "instrumentId": "81054",
-                    "type": "PASSCODE",
-                    "token": "1425"
-                }]
-            }
-        }
-      },
+             ],
+             "billingContact":{
+                "firstName":"Sample",
+                "lastName":"Name",
+                "email":"sample@gmail.com",
+                "mobileNumber":"+61444555666",
+                "line1":"1 Woolworths Way",
+                "line2":"",
+                "suburb":"Bellavista",
+                "state":"NSW",
+                "countryCode":"AU",
+                "postcode":"2152"
+             }
+          },
+          "meta":{
+             "challengeResponses":
+             [
+             {
+               "instrumentId": "90731",
+               "type": "STEP_UP",
+               "token": "e86b3a32-96a5-4659-b6d8-5d685bfa78e8"
+             },
+             {
+               "instrumentId": "81054",
+               "type": "PASSCODE",
+               "token": "1425"
+             }
+           ]
+          }
+         }
+       },
       "completionsErrorResponse": {
         "description": "The JSON response structure of the Completions endpoint.",
         "allOf": [
@@ -24743,8 +24749,8 @@
                       "paymentInstrumentId": "123456",
                       "instrumentType": "MASTERCARD",
                       "transactions": [{
-                        "type": "REFUND", 
-                        "executionTime": "2021-09-16T06:34:52.226Z", 
+                        "type": "REFUND",
+                        "executionTime": "2021-09-16T06:34:52.226Z",
                         "paymentTransactionRef": "1000000000670875",
                         "amount": 12.99,
                         "status": "APPROVED"
@@ -24982,7 +24988,7 @@
         }
       },
       "giftingProductOrderSuccessResponse": {
-        "description":"Successful response",
+        "description":"Successful response. A 200 successful response can also be in status REJECTED due to the missing 3DS challenge information",
         "content":{
           "application/json":{
             "schema":{
@@ -24996,14 +25002,14 @@
                   "description":"Results of the gifting order",
                   "required":[
                     "status",
-                    "orderId",
                     "quoteNo"
                   ],
                   "type":"object",
                   "properties":{
                     "status": {
                       "description":"Current order status",
-                      "type":"string"
+                      "type":"string",
+                      "enum":["REJECTED", "APPROVED", "PROCESSING"]
                     },
                     "orderId": {
                       "description":"Order reference",
@@ -25012,7 +25018,42 @@
                     "quoteNo": {
                       "description":"Quote reference",
                       "type":"string"
-                    }
+                    },
+                    "subTransactions":{
+                      "description":"Array of transaction responses returned by downstream processes",
+                      "type":"array",
+                      "items": {
+                        "type": "object",
+                        "properties":{
+                          "errorCode": {
+                            "description":"Error code (in case of error)",
+                            "type":"string",
+                            "example":"3DS_001"
+                          },
+                          "errorMessage": {
+                            "description":"Error message (in case of error)",
+                            "type":"string",
+                            "example":"3DS TOKEN REQUIRED"
+                          },
+                          "threeDS": {
+                            "description":"3DS elements. So far we assume these elements are going to be used by the requestor to fire the 3DS challenge",
+                            "type":"object",
+                            "properties":{
+                              "paymentInstrumentId": {
+                                "description":"Instrument ID",
+                                "type":"string",
+                                "example":"215450"
+                              },
+                              "sessionId": {
+                                "description":"Order reference",
+                                "type":"string",
+                                "example":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiNjZjNTBlYy0wYjI5LTRiMGQtYmUyMi0wMjkzYmVmMTU4MTAiLCJpYXQiOjE2MzQ1MDUwNTUuODk0LCJpc3MiOiJwZXRjdWx0dXJlIiwiT3JnVW5pdElkIjoiNjBhZjhhMWUwYmFjNWQ1MGNjMjZmMzNjIiwiUGF5bG9hZCI6eyJwYXltZW50SW5zdHJ1bWVudElkIjoiMjE1NDUwIiwidG9rZW5UeXBlIjoiUEFOIiwib3JkZXJJbmZvcm1hdGlvbiI6eyJhbW91bnREZXRhaWxzIjp7ImN1cnJlbmN5IjoiQVVEIiwiYW1vdW50IjoxNDd9fX0sIk9iamVjdGlmeVBheWxvYWQiOnRydWUsIlJlZmVyZW5jZUlkIjoiYjc4OGJlMjMtYWRiZC00NTg1LWE4YWQtMjg4ZDlhYWI2NWFhIn0.H1bLRAI5ptFPGyCtN6EUTr4WR3D0vZRMVgzu1iPxttY"
+                              }
+                            }
+                           }
+                          }
+                        }
+                      }
                   }
                 },
                 "meta":{
