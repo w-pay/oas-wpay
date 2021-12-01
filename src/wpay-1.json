@@ -189,7 +189,7 @@
           {
             "in":"query",
             "name":"paymentSessionId",
-            "description":"f present, limits the list of transactions to those that relate to the payment session",
+            "description":"If present, limits the list of transactions to those that relate to the payment session",
             "required":false,
             "schema":{
               "type":"string",
@@ -2337,7 +2337,7 @@
           {
             "in":"query",
             "name":"paymentSessionId",
-            "description":"f present, limits the list of transactions to those that relate to the payment session",
+            "description":"If present, limits the list of transactions to those that relate to the payment session",
             "required":false,
             "schema":{
               "type":"string",
