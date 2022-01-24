@@ -22396,6 +22396,9 @@
           "description": {
             "type": "string",
             "description": "A description of the payment agreement"
+          },
+          "transaction":{
+            "$ref":"#/components/schemas/customerTransactionSummary"
           }
         }
       },
