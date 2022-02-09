@@ -85,24 +85,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -234,24 +216,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -328,24 +292,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -417,6 +363,16 @@
         ],
         "parameters":[
           {
+            "in":"header",
+            "name":"X-Guest",
+            "description":"X-Guest indicates if the request comes from guest or not",
+            "schema":{
+              "type":"boolean",
+              "default":false
+            },
+            "required":false
+          },
+          {
             "name":"X-Api-Key",
             "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
             "schema":{
@@ -425,24 +381,6 @@
             "in":"header",
             "required":true,
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-          },
-          {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
           },
           {
             "name":"X-Message-Id",
@@ -542,24 +480,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -633,6 +553,16 @@
         ],
         "parameters":[
           {
+            "in":"header",
+            "name":"X-Guest",
+            "description":"X-Guest indicates if the request comes from guest or not",
+            "schema":{
+              "type":"boolean",
+              "default":false
+            },
+            "required":false
+          },
+          {
             "name":"X-Api-Key",
             "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
             "schema":{
@@ -641,24 +571,6 @@
             "in":"header",
             "required":true,
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-          },
-          {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
           },
           {
             "name":"X-Message-Id",
@@ -767,24 +679,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -856,24 +750,6 @@
             "in":"header",
             "required":true,
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-          },
-          {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
           },
           {
             "name":"X-Message-Id",
@@ -986,24 +862,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -1087,24 +945,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -1180,24 +1020,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -1260,24 +1082,6 @@
             "in":"header",
             "required":true,
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-          },
-          {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
           },
           {
             "name":"X-Message-Id",
@@ -1370,24 +1174,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -1463,6 +1249,16 @@
         ],
         "parameters":[
           {
+            "in":"header",
+            "name":"X-Guest",
+            "description":"X-Guest indicates if the request comes from guest or not",
+            "schema":{
+              "type":"boolean",
+              "default":false
+            },
+            "required":false
+          },
+          {
             "name":"X-Api-Key",
             "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
             "schema":{
@@ -1471,24 +1267,6 @@
             "in":"header",
             "required":true,
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-          },
-          {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
           },
           {
             "name":"X-Message-Id",
@@ -1565,24 +1343,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -1654,24 +1414,6 @@
             "in":"header",
             "required":true,
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-          },
-          {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
           },
           {
             "name":"X-Message-Id",
@@ -1755,24 +1497,6 @@
             "in":"header",
             "required":true,
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
-          },
-          {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
           },
           {
             "name":"X-Message-Id",
@@ -1880,15 +1604,6 @@
         ],
         "parameters": [
           {
-            "in": "header",
-            "name": "X-Wallet-ID",
-            "schema": {
-              "type": "string",
-              "example": "bb8f86af-9e7b-4659-85d5-346b5e99d500"
-            },
-            "required": true
-          },
-          {
             "in": "query",
             "name": "type",
             "description": "The type of Ts and Cs that the shopper/customer has agreed to.  Defaults to all if absent",
@@ -1927,15 +1642,6 @@
           "Customer"
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "X-Wallet-ID",
-            "schema": {
-              "type": "string",
-              "example": "bb8f86af-9e7b-4659-85d5-346b5e99d500"
-            },
-            "required": true
-          }
         ],
         "requestBody": {
           "description": "Request payload containing the acceptance of T&Cs.",
@@ -1996,15 +1702,6 @@
           "Customer"
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "X-Wallet-ID",
-            "schema": {
-              "type": "string",
-              "example": "bb8f86af-9e7b-4659-85d5-346b5e99d500"
-            },
-            "required": true
-          }
         ],
         "responses": {
           "200": {
@@ -2026,15 +1723,6 @@
           "Customer"
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "X-Wallet-ID",
-            "schema": {
-              "type": "string",
-              "example": "bb8f86af-9e7b-4659-85d5-346b5e99d500"
-            },
-            "required": true
-          }
         ],
         "requestBody": {
           "description": "Request payload containing the details of the payment agreement to be created",
@@ -2110,15 +1798,6 @@
         ],
         "parameters": [
           {
-            "in": "header",
-            "name": "X-Wallet-ID",
-            "schema": {
-              "type": "string",
-              "example": "bb8f86af-9e7b-4659-85d5-346b5e99d500"
-            },
-            "required": true
-          },
-          {
             "in": "path",
             "name": "paymentToken",
             "description": "The ID of the specific payment agreement",
@@ -2145,15 +1824,6 @@
           "Customer"
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "X-Wallet-ID",
-            "schema": {
-              "type": "string",
-              "example": "bb8f86af-9e7b-4659-85d5-346b5e99d500"
-            },
-            "required": true
-          },
           {
             "in": "path",
             "name": "paymentToken",
@@ -2243,24 +1913,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -2268,16 +1920,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -2372,24 +2014,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -2397,16 +2021,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -2455,24 +2069,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -2480,16 +2076,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -2589,24 +2175,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -2614,16 +2182,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -2680,24 +2238,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -2705,16 +2245,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -2774,24 +2304,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -2799,16 +2311,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -2875,6 +2377,16 @@
         ],
         "parameters":[
           {
+            "in":"header",
+            "name":"X-Guest",
+            "description":"X-Guest indicates if the request comes from guest or not",
+            "schema":{
+              "type":"boolean",
+              "default":false
+            },
+            "required":false
+          },
+          {
             "name":"X-Api-Key",
             "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
             "schema":{
@@ -2885,24 +2397,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -2910,16 +2404,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -3211,24 +2695,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -3236,16 +2702,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -3302,24 +2758,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -3327,16 +2765,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -3385,6 +2813,16 @@
         ],
         "parameters":[
           {
+            "in":"header",
+            "name":"X-Guest",
+            "description":"X-Guest indicates if the request comes from guest or not",
+            "schema":{
+              "type":"boolean",
+              "default":false
+            },
+            "required":false
+          },
+          {
             "name":"X-Api-Key",
             "description":"The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
             "schema":{
@@ -3395,24 +2833,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -3420,16 +2840,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -3539,24 +2949,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -3564,16 +2956,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -3630,24 +3012,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -3655,16 +3019,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -3749,24 +3103,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -3774,16 +3110,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -3842,24 +3168,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -3867,16 +3175,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -3993,24 +3291,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -4018,16 +3298,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -4168,24 +3438,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -4193,16 +3445,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -4350,24 +3592,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -4375,16 +3599,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -4422,24 +3636,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -4447,16 +3643,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -4520,24 +3706,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -4545,16 +3713,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -4592,24 +3750,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -4617,16 +3757,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -4710,24 +3840,6 @@
             "example":"haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
           },
           {
-            "name":"X-Auth-Key",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"OHR1Ull5TVk53NjI5Ng=="
-          },
-          {
-            "name":"X-Auth-Digest",
-            "in":"header",
-            "description":"(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
-            "schema":{
-              "type":"string"
-            },
-            "example":"c51e0ee540cd3893982d3539d81fddec0bcd832d"
-          },
-          {
             "name":"X-Message-Id",
             "in":"header",
             "description":"This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
@@ -4735,16 +3847,6 @@
               "type":"string"
             },
             "example":"f23c096b2e816da158fdf1ad839298e2"
-          },
-          {
-            "name":"Authorization",
-            "description":"The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
-            "schema":{
-              "type":"string"
-            },
-            "in":"header",
-            "required":true,
-            "example":"Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
           },
           {
             "name":"X-JWS-Signature",
@@ -4782,15 +3884,6 @@
           "Merchant"
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "X-Merchant-ID",
-            "schema": {
-              "type": "string",
-              "example": "10001"
-            },
-            "required": true
-          },
           {
             "in": "path",
             "name": "paymentToken",
@@ -4872,15 +3965,6 @@
           "Merchant"
         ],
         "parameters": [
-          {
-            "in": "header",
-            "name": "X-Merchant-ID",
-            "schema": {
-              "type": "string",
-              "example": "10001"
-            },
-            "required": true
-          },
           {
             "in": "path",
             "name": "paymentToken",
