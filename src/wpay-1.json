@@ -2082,7 +2082,7 @@
                       },            
                       "immediateCharge":{
                         "type":"boolean",
-                        "description":"A flag to indicate if a charge transaction must be performed at the time of payment agreement creation. This in convenient in the cases where a customer wants to process a first charge transaction immediately at payment agreement creation.",
+                        "description":"A flag to indicate if a charge transaction must be performed at the time of payment agreement creation. This in convenient in the cases where a customer wants to process a first charge transaction immediately at payment agreement creation."
                       }
                     }
                   },
