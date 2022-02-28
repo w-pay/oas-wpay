@@ -3,7 +3,7 @@
   "info":{
     "title":"Wpay APIs",
     "description":"Wpay APIs for payments and gifting",
-    "version":"1.0.11"
+    "version":"1.0.12"
   },
   "servers":[
     {
@@ -21813,6 +21813,21 @@
                 "description": "Unique clientId",
                 "type": "string"
               },
+              "deliveryEmail": {
+                "type": "string",
+                "description": "The email of the ordering customer",
+                "example": "sample@gmail.com"
+              },
+              "firstName": {
+                "type": "string",
+                "description": "The customer's first name.",
+                "example": "Francois"
+              },
+              "lastName": {
+                "type": "string",
+                "description": "The customer's last name.",
+                "example": "van der Merwe"
+              },
               "referenceId": {
                 "description": "Unique reference for the order supplied by the client. Cart number supplied by the Review Order API response",
                 "type": "string"
@@ -21879,7 +21894,7 @@
                     "description": "The customer's abbreviated state or territory.",
                     "example": "NSW"
                   },
-                  "postalCode": {
+                  "postcode": {
                     "type": "string",
                     "description": "The customer's postal code.",
                     "example": "2155"
