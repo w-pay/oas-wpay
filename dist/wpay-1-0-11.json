@@ -21813,21 +21813,6 @@
                 "description": "Unique clientId",
                 "type": "string"
               },
-              "deliveryEmail": {
-                "type": "string",
-                "description": "The email of the ordering customer",
-                "example": "sample@gmail.com"
-              },
-              "firstName": {
-                "type": "string",
-                "description": "The customer's first name.",
-                "example": "Francois"
-              },
-              "lastName": {
-                "type": "string",
-                "description": "The customer's last name.",
-                "example": "van der Merwe"
-              },
               "referenceId": {
                 "description": "Unique reference for the order supplied by the client. Cart number supplied by the Review Order API response",
                 "type": "string"
@@ -21894,7 +21879,7 @@
                     "description": "The customer's abbreviated state or territory.",
                     "example": "NSW"
                   },
-                  "postcode": {
+                  "postalCode": {
                     "type": "string",
                     "description": "The customer's postal code.",
                     "example": "2155"
@@ -23346,12 +23331,17 @@
                   "description":"Mandatory data object containing response",
                   "type":"object",
                   "required":[
-                    "paymentSessionId"
+                    "paymentSessionId",
+                    "paymentSession"
                   ],
                   "properties":{
                     "paymentSessionId":{
                       "description":"The ID of the new payment session",
-                      "type":"string"
+                      "type":"string",
+                      "deprecated": true
+                    },
+                    "paymentSession": {
+                      "$ref": "#/components/schemas/paymentSession"
                     },
                     "qr":{
                       "$ref":"#/components/schemas/qr"
@@ -23368,6 +23358,21 @@
                 "value":{
                   "data":{
                     "paymentSessionId":"06e46368-ffda-43d8-b772-d93087c9ba09",
+                    "paymentSession": {
+                      "location": "Carrum Downs",
+                      "expiryTime": "2020-07-01T01:31:45.438Z",
+                      "merchantId": "10001",
+                      "merchantInfo": {
+                        "payload": {
+                          "storeId": "4952110",
+                          "laneId": "123",
+                          "rrn": "000000006564",
+                          "transactionTimestamp": 1528264660639
+                        },
+                        "schemaId": "d2eb0361-7892-4e19-bbbc-409e58826e60"
+                      },
+                      "paymentSessionId": "06e46368-ffda-43d8-b772-d93087c9ba09"
+                    },
                     "qr":{
                       "qrId":"b1f6454c-81e5-4892-8e27-230f24847b3f",
                       "referenceId":"06e46368-ffda-43d8-b772-d93087c9ba09",
