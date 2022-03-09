@@ -3,7 +3,7 @@
   "info":{
     "title":"Wpay APIs",
     "description":"Wpay APIs for payments and gifting",
-    "version":"1.0.11"
+    "version":"1.0.12"
   },
   "servers":[
     {
@@ -5588,7 +5588,21 @@
               "application/json":{
                 "schema":{
                   "$ref":"#/components/schemas/BaseErrorResponse"
-                }
+                },
+                "examples": [
+                  {
+                    "httpStatusCode": 400,
+                    "errorCode": "AP99",
+                    "errorMessage": "Bad Request",
+                    "errorDetail": "Request is missing mandatory header(s): Origin"
+                  },
+                  {
+                    "httpStatusCode": 400,
+                    "errorCode": "AP99",
+                    "errorMessage": "Bad Request",
+                    "errorDetail": "The validation url field is invalid: https://apple.com/paymentservices/startSession"
+                  }
+                ]
               }
             }
           },
@@ -5598,6 +5612,12 @@
               "application/json":{
                 "schema":{
                   "$ref":"#/components/schemas/BaseErrorResponse"
+                },
+                "example":{
+                  "httpStatusCode": 401,
+                  "errorCode": "AP02",
+                  "errorMessage": "Unauthorized",
+                  "errorDetail": "Invalid or Expired Token"
                 }
               }
             }
@@ -5618,6 +5638,12 @@
               "application/json":{
                 "schema":{
                   "$ref":"#/components/schemas/BaseErrorResponse"
+                },
+                "example":{
+                  "httpStatusCode": 500,
+                  "errorCode": "UN68",
+                  "errorMessage": "UNSUPPORTED OPERATION",
+                  "errorDetail": "The operation [Merchant Item Type] is not supported by this service. Please try with valid operation or contact support. (Merchant User Profile Retrieval)"
                 }
               }
             }
