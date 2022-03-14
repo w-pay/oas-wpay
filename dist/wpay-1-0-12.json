@@ -5589,7 +5589,7 @@
                 "schema":{
                   "$ref":"#/components/schemas/BaseErrorResponse"
                 },
-                "example": {
+                "examples": {
                   "MandatoryHeadersMissing": {
                     "value": {
                       "httpStatusCode": 400,
