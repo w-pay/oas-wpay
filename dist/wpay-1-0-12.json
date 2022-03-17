@@ -12996,6 +12996,7 @@
         "properties":{
           "validationUrl":{
             "type":"string",
+            "pattern": "(https?:\/\/(.+?\\.)?apple\\.com(\/[A-Za-z0-9\\-\\._~:\/\\?#\\[\\]@!$&'\\(\\)\\*\\+,;\\=]*)?)",
             "description":"The URL to validate and obtain a merchant session object. Access this attribute using the event parameter, for example, var validationUrl = event.validationURL. For more information visit https://developer.apple.com/documentation/apple_pay_on_the_web/applepayvalidatemerchantevent",
             "example":"https://apple-pay-gateway.apple.com/paymentservices/paymentSession"
           },
