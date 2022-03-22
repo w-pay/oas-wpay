@@ -5592,18 +5592,18 @@
                 "examples": {
                   "MandatoryHeadersMissing": {
                     "value": {
-                    "httpStatusCode": 400,
-                    "errorCode": "AP99",
-                    "errorMessage": "Bad Request",
-                    "errorDetail": "Request is missing mandatory header(s): Origin"
+                      "httpStatusCode": 400,
+                      "errorCode": "AP99",
+                      "errorMessage": "Bad Request",
+                      "errorDetail": "Request is missing mandatory header(s): Origin"
                     }
                   },
                   "InvalidValidationUrl": {
                     "value": {
-                    "httpStatusCode": 400,
-                    "errorCode": "AP99",
-                    "errorMessage": "Bad Request",
-                    "errorDetail": "The validation url field is invalid: https://apple.com/paymentservices/startSession"
+                      "httpStatusCode": 400,
+                      "errorCode": "AP99",
+                      "errorMessage": "Bad Request",
+                      "errorDetail": "The validation url field is invalid: https://apple.com/paymentservices/startSession"
                     }
                   }
                 }
