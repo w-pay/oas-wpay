@@ -3,7 +3,7 @@
   "info":{
     "title":"Wpay APIs",
     "description":"Wpay APIs for payments and gifting",
-    "version":"1.0.13"
+    "version":"1.0.14"
   },
   "servers":[
     {
@@ -1767,10 +1767,6 @@
                       },
                       "paymentAgreement": {
                         "$ref": "#/components/schemas/paymentAgreement"
-                      },            
-                      "immediateCharge":{
-                        "type":"boolean",
-                        "description":"A flag to indicate if a charge transaction must be performed at the time of payment agreement creation. This in convenient in the cases where a customer wants to process a first charge transaction immediately at payment agreement creation."
                       }
                     }
                   },
@@ -21802,6 +21798,10 @@
           },
           "transaction":{
             "$ref":"#/components/schemas/customerTransactionSummary"
+          },            
+          "immediateCharge":{
+            "type":"boolean",
+            "description":"A flag to indicate if a charge transaction must be performed at the time of payment agreement creation. This in convenient in the cases where a customer wants to process a first charge transaction immediately at payment agreement creation."
           }
         }
       },
