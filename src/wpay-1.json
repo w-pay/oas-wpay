@@ -3,7 +3,7 @@
   "info":{
     "title":"Wpay APIs",
     "description":"Wpay APIs for payments and gifting",
-    "version":"1.0.14"
+    "version":"1.0.15"
   },
   "servers":[
     {
@@ -12212,7 +12212,7 @@
             ]
           },
           "lastUpdateDateTime": {
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"The timestamp the gift card program was last updated. The timestamp format is ISO8601.",
             "example":"2017-10-26T04:56:25.046Z"
@@ -12356,13 +12356,13 @@
             "minimum":0
           },
           "startDate": {
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"The start date of the offered discount. The timestamp format is ISO8601.",
             "example":"2017-10-26T00:00:00.000Z"
           },
           "endDate": {
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"The end date of the offered discount. The timestamp format is ISO8601.",
             "example":"2017-10-26T00:00:00.000Z"
@@ -12535,13 +12535,13 @@
                 ]
               },
               "lastUpdated":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
                 "example":"2017-10-26T04:56:25.046Z"
               },
               "lastUsed":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                 "example":"2017-10-26T04:56:25.046Z"
@@ -12658,13 +12658,13 @@
                 ]
               },
               "lastUpdated":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
                 "example":"2017-10-26T06:35:09.083Z"
               },
               "lastUsed":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                 "example":"2017-10-12T02:25:49.770Z"
@@ -13148,7 +13148,7 @@
                   "example":"2000000009719570"
                 },
                 "transactionTimestamp":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The WebPay transaction timestamp. The timestamp format is ISO8601.",
                   "example":"2017-09-26T23:11:27.000Z"
@@ -13266,7 +13266,7 @@
                   "example":"2000000009719570"
                 },
                 "transactionTimestamp":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The WebPay transaction timestamp. The timestamp format is ISO8601.",
                   "example":"2017-09-26T23:11:27.000Z"
@@ -13806,13 +13806,13 @@
                   ]
                 },
                 "lastUpdated":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
                   "example":"2017-11-06T08:38:09.890Z"
                 },
                 "lastUsed":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                   "example":"2017-11-06T08:38:09.890Z"
@@ -13942,13 +13942,13 @@
                   ]
                 },
                 "lastUpdated":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
                   "example":"2017-11-06T08:38:09.860Z"
                 },
                 "lastUsed":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                   "example":"2017-10-12T02:25:49.770Z"
@@ -14043,13 +14043,13 @@
                   ]
                 },
                 "lastUpdated":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
                   "example":"2017-11-06T08:38:09.860Z"
                 },
                 "lastUsed":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                   "example":"2017-11-06T08:38:09.860Z"
@@ -14120,13 +14120,13 @@
                   ]
                 },
                 "lastUpdated":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The timestamp the payment agreement was last updated in the container. The timestamp format is ISO8601.",
                   "example":"2018-09-01T00:00:00.000+1100"
                 },
                 "lastUsed":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The timestamp the payment agreement was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                   "example":"2018-09-14T12:00:00.000+1100"
@@ -14182,13 +14182,13 @@
                   "example":"22"
                 },
                 "startDate":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The payment agreement start date and time. The timestamp format is ISO8601.",
                   "example":"2018-09-01T00:00:00.000+1100"
                 },
                 "endDate":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The payment agreement end date and time. The timestamp format is ISO8601.",
                   "example":"2018-12-31T23:59:59.999+1100"
@@ -14291,13 +14291,13 @@
                 ]
               },
               "lastUpdated":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
                 "example":"2017-09-20T06:20:18.173Z"
               },
               "lastUsed":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                 "example":"2017-07-28T02:58:56.187Z"
@@ -14384,13 +14384,13 @@
                 ]
               },
               "lastUpdated":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The timestamp the payment instrument was last updated in the container. The timestamp format is ISO8601.",
                 "example":"2017-07-28T02:58:56.187Z"
               },
               "lastUsed":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The timestamp the payment instrument was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
                 "example":"2017-09-20T06:20:18.173Z"
@@ -14613,13 +14613,13 @@
             "example":"20170505090"
           },
           "startDate":{
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"Limit transactions included in the results FROM this timestamp. The timestamp format is ISO8601.",
             "example":"2017-01-01T00:00:00.000+1100"
           },
           "endDate":{
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"Limit transactions included in the results TO this timestamp . The timestamp format is ISO8601.",
             "example":"2017-12-31T23:59:59.999+1100"
@@ -14704,7 +14704,7 @@
                   "example":"1000000000671560"
                 },
                 "transactionTimestamp":{
-                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                  "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                   "type":"string",
                   "description":"The container transaction timestamp. The timestamp format is ISO8601.",
                   "example":"2017-11-08T05:06:57.513Z"
@@ -19415,13 +19415,13 @@
                 "example":"90731"
               },
               "startDate":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The payment agreement start date and time. The timestamp format is ISO8601.",
                 "example":"2018-09-01T00:00:00.000+1100"
               },
               "endDate":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The payment agreement end date and time. The timestamp format is ISO8601.",
                 "example":"2018-12-31T23:59:59.999+1100"
@@ -19701,13 +19701,13 @@
                 "example":"90731"
               },
               "startDate":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The payment agreement start date and time. The timestamp format is ISO8601.",
                 "example":"2018-09-01T00:00:00.000+1100"
               },
               "endDate":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The payment agreement end date and time. The timestamp format is ISO8601.",
                 "example":"2018-12-31T23:59:59.999+1100"
@@ -20089,13 +20089,13 @@
                 "example":"22"
               },
               "startDate":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The payment agreement start date and time. The timestamp format is ISO8601.",
                 "example":"2018-09-01T00:00:00.000+1100"
               },
               "endDate":{
-                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+                "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
                 "type":"string",
                 "description":"The payment agreement end date and time. The timestamp format is ISO8601.",
                 "example":"2018-12-31T23:59:59.999+1100"
@@ -20433,7 +20433,7 @@
             "example":"Jt4jeXZ1CcmZCTKkHAuN"
           },
           "merchantTransactedAt":{
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"The merchants transaction date and time. The timestamp format is ISO8601.",
             "example":"2020-06-19T14:30:00.000+1100"
@@ -20527,7 +20527,7 @@
             "example":"20170505090"
           },
           "merchantTransactedAt":{
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"The merchants transaction date and time. The timestamp format is ISO8601.",
             "example":"2020-06-19T18:00:00.000+1100"
@@ -20614,7 +20614,7 @@
             "example":"20170505090"
           },
           "merchantTransactedAt":{
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"The merchants transaction date and time. The timestamp format is ISO8601.",
             "example":"2020-06-19T18:00:00.000+1100"
@@ -21665,13 +21665,13 @@
             ]
           },
           "lastUpdated":{
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"The timestamp the payment agreement was last updated in the container. The timestamp format is ISO8601.",
             "example":"2018-09-01T00:00:00.000+1100"
           },
           "lastUsed":{
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"The timestamp the payment agreement was last used in the container. The timestamp format is ISO8601. Will be null if never used.",
             "example":"2018-09-14T12:00:00.000+1100"
@@ -21727,13 +21727,13 @@
             "example":"22"
           },
           "startDate":{
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"The payment agreement start date and time. The timestamp format is ISO8601.",
             "example":"2018-09-01T00:00:00.000+1100"
           },
           "endDate":{
-            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):(\\d{2})|Z)?)$",
+            "pattern":"^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type":"string",
             "description":"The payment agreement end date and time. The timestamp format is ISO8601.",
             "example":"2018-12-31T23:59:59.999+1100"
