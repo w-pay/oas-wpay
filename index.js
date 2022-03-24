@@ -24,8 +24,8 @@ function createSchemaDictionary(schemaDirectoryPath, fileNameMatch){
 function getLatestVersion(schemas){
     let latestVersion = undefined;
     for (const version in schemas) {
-        const latest = latestVersion? latestVersion.match(/(\d+).(\d+).(\d+)/): undefined;
-        const current = version.match(/(\d+).(\d+).(\d+)/);
+        const latest = latestVersion? latestVersion.match(/(\d+).(\d+).(\d+)/).map(Number): undefined;
+        const current = version.match(/(\d+).(\d+).(\d+)/).map(Number);
         //update if there is no latest version defined or major minor and patch are greater for the current schema.
         if(!latestVersion || 
             current[1] > latest[1] ||
