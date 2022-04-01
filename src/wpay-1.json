@@ -10673,7 +10673,7 @@
         "x-codegen-request-body-name": "body"
       }
     },
-    "/wow/v1/pay/gifting/products": {
+    "/v1/gifting/products": {
       "get": {
         "tags": [
           "Gifting"
@@ -10851,7 +10851,7 @@
         "x-codegen-request-body-name": "body"
       }
     },
-    "/wow/v1/pay/gifting/products/{productId}": {
+    "/v1/gifting/products/{productId}": {
       "get": {
         "tags": [
           "Gifting"
@@ -11004,7 +11004,7 @@
         "x-codegen-request-body-name": "body"
       }
     },
-    "/wow/v1/pay/gifting/products/quote": {
+    "/v1/gifting/products/quote": {
       "post": {
         "tags": [
           "Gifting"
@@ -11158,7 +11158,7 @@
         }
       }
     },
-    "/wow/v1/pay/gifting/products/order": {
+    "/v1/gifting/products/order": {
       "post": {
         "tags": [
           "Gifting"
