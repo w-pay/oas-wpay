@@ -10673,7 +10673,7 @@
         "x-codegen-request-body-name": "body"
       }
     },
-    "/v1/gifting/products": {
+    "/v1/gifting/listProducts": {
       "get": {
         "tags": [
           "Gifting"
@@ -10851,7 +10851,7 @@
         "x-codegen-request-body-name": "body"
       }
     },
-    "/v1/gifting/products/{productId}": {
+    "/v1/gifting/product/{id}": {
       "get": {
         "tags": [
           "Gifting"
@@ -11004,7 +11004,7 @@
         "x-codegen-request-body-name": "body"
       }
     },
-    "/v1/gifting/products/quote": {
+    "/v1/gifting/order/review": {
       "post": {
         "tags": [
           "Gifting"
@@ -11158,7 +11158,7 @@
         }
       }
     },
-    "/v1/gifting/products/order": {
+    "/v1/gifting/order/submit": {
       "post": {
         "tags": [
           "Gifting"
