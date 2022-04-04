@@ -10908,7 +10908,7 @@
           },
           {
             "in": "path",
-            "name": "productId",
+            "name": "id",
             "description": "The ID of the specific gift card product",
             "required": true,
             "schema": {
