@@ -3,7 +3,7 @@
   "info": {
     "title": "Wpay APIs",
     "description": "Wpay APIs for payments and gifting",
-    "version": "1.0.16"
+    "version": "1.0.17"
   },
   "servers": [
     {
@@ -3054,8 +3054,25 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "The payment session has been successfully updated. No content returned."
+          "200": {
+            "description": "The payment session has been successfully updated.",
+            "$ref": "#/components/responses/getMerchantTransactionDetailsResponse"
+          },
+          "400": {
+            "description": "Payment session: 10ae2e22-61fd-4936-b315-fcedc33f7b89 expired",
+            "$ref": "#/components/schemas/error"
+          },
+          "500": {
+            "description": "Payment session: 10ae2e22-61fd-4936-b315-fcedc33f7b89 is already associated with payment request: 20ae2e22-61fd-4936-b315-fcedc33f7b89",
+            "$ref": "#/components/schemas/error"
+          },
+          "503": {
+            "description": "The Service is currently unavailable.",
+            "$ref": "#/components/schemas/error"
+          },
+          "504": {
+            "description": "The request timed out.",
+            "$ref": "#/components/schemas/error"
           }
         }
       },
