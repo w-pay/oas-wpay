@@ -14792,7 +14792,8 @@
                   "enum": [
                     "WEEKLY",
                     "FORTNIGHTLY",
-                    "MONTHLY"
+                    "MONTHLY",
+                    "ANNUALLY"
                   ]
                 },
                 "chargeAmount": {
@@ -20009,7 +20010,8 @@
                 "enum": [
                   "WEEKLY",
                   "FORTNIGHTLY",
-                  "MONTHLY"
+                  "MONTHLY",
+                  "ANNUALLY"
                 ]
               },
               "chargeAmount": {
@@ -20295,7 +20297,8 @@
                 "enum": [
                   "WEEKLY",
                   "FORTNIGHTLY",
-                  "MONTHLY"
+                  "MONTHLY",
+                  "ANNUALLY"
                 ]
               },
               "chargeAmount": {
@@ -20681,7 +20684,8 @@
                 "enum": [
                   "WEEKLY",
                   "FORTNIGHTLY",
-                  "MONTHLY"
+                  "MONTHLY",
+                  "ANNUALLY"
                 ]
               },
               "chargeAmount": {
@@ -22319,7 +22323,8 @@
             "enum": [
               "WEEKLY",
               "FORTNIGHTLY",
-              "MONTHLY"
+              "MONTHLY",
+              "ANNUALLY"
             ]
           },
           "chargeAmount": {
