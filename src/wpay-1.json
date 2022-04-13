@@ -7560,6 +7560,64 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/apmTokenizeRequest"
+              },
+              "examples": {
+                "Paypal": {
+                  "value": {
+                    "data": {
+                      "paymentInstrumentType": "PAYPAL",
+                      "payload": {
+                        "nonce": "4234ac11-e67e-0770-7517-8d58ac21e5ef"
+                      }
+                    },
+                    "meta": {}
+                  }
+                },
+                "GiftCard": {
+                  "value": {
+                    "data": {
+                      "paymentInstrumentType": "GIFTCARD",
+                      "payload": {
+                        "cardNumber": "6280003104690954242",
+                        "pinCode": "3721"
+                      }
+                    },
+                    "meta": {}
+                  }
+                },
+                "ApplePay": {
+                  "value": {
+                    "data": {
+                      "paymentInstrumentType": "APPLEPAY",
+                      "payload": {
+                        "data": "kZHLADxW/ZIGvpAO3DPwvytXJtm0F4/uQ5J/zDM4VYODqfrMgp4vQrPqN2",
+                        "ephemeralPublicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQg+dfzWCoXmsCepXw==",
+                        "publicKeyHash": "v+uhvrrIXuXV11aZzcAO15bC/3lsOoLvo+UEUKCKOGM=",
+                        "transactionId": "96885a55b034ae8d958493ac7017d0ec657b1046c7394e5b787e0bb35246a065",
+                        "signature": "MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG=",
+                        "version": "EC_v1",
+                        "instrumentType": "MasterCard",
+                        "primary": false,
+                        "comment": "MasterCard 1471",
+                        "applicationData": ""
+                      }
+                    },
+                    "meta": {}
+                  }
+                },
+                "GooglePay": {
+                  "value": {
+                    "data": {
+                      "paymentInstrumentType": "GOOGLEPAY",
+                      "payload": {
+                        "instrumentType": "MASTERCARD",
+                        "comment": "MASTERCARD-9722",
+                        "tokenData": "{\"signature\":\"MEQCIA2zvCbpHYMZQaOHYE87Il1RxZyqiA8nqDVEaW2u5gNLAiBlTTj2hDMyzsnlhadX03ZQXce8n5V6TA28xz2Iw3OVuw\\u003d\\u003d\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE8Yhwy2VNyj62sfxC3SC8VGNabTym7FHsypJVj9oG76JpP0tEJKBv4YdRat3a7EaK4gZ1V9OvP+Vvffas5NnYMA\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1649796805735\\\"}\",\"signatures\":[\"MEUCIQDKWqzBTR66sqamJMcWDGvapC8ai9DZjP6ElmM7HCCDAAIgS9KAwTfE53nISu3v+wYMknZSoobQsBua8JS8j2/lsYo\\u003d\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"OEGE99dqh2aD8hy1UI9qeyR/utK6HMluUGL9s9BxVdpSLS44KbzJgJ3zmA28K07a5CMKYU0veSc29ny+/pEYUsUgF/P7ByT9b+MrCPXMRUzAFqX06/8OkBWXN4CQyN9ZPOlBuNaskg79hjyG9pJ25Gx6H5GAKsJFtenq4sUzHZoJqEkNLIsL33QTZyC1XyBcxn1MW2i8gaQbquT6k+sP4X5fGi4SxCJpMwCrzBeX8xdkhfr+RHrUve/9pTZyxFOP+W2AZZv/AwStnV4a/L0bDnpW/b7dUwem8WrXal2BSpmVSu/RhAqAtdSS+JNgc8Gb11VA9k43W7oTnKBBcvE6KLa+4d/jkm9tNE9RR7NsmE2hOjn/gQWZLKmjkFLU190j4KdIfgG3I+zQaX4eSXvGMirfhW0D4/Wn9YvvwDsCCubfa44BJ2pd4wR0M0ooM9RW/KHNfpdJg98fiu4IEQ+mKD+BnulLTlYgsA4AUV8WyHFnbe87C1585py7BfRN2cSUCNGFVZB3Atfeifmf9WzlGNmrPxq2Hucb4TcmswPcxLr/caYEQWSaIBqAQWP6rqZg8w7TGJY79u/HEw\\\\u003d\\\\u003d\\\",\\\"ephemeralPublicKey\\\":\\\"BBTiXiLcf1zIE/CF82ORtV9fSGbsIRojcyyzaUSLwPS1eem/YKYRVK6orNzlifhbjJU6g9D0jvQLPQ3cs//wN/0\\\\u003d\\\",\\\"tag\\\":\\\"mehr3HzRwdZS5OMxTZKiFdQ/eoYgB63V6O87lpKQjp0\\\\u003d\\\"}\"}"
+                      }
+                    },
+                    "meta": {}
+                  }
+                }
               }
             }
           },
@@ -12549,63 +12607,14 @@
             "type": "object"
           }
         },
-        "examples": {
-          "Paypal": {
-            "value": {
-              "data": {
-                "paymentInstrumentType": "PAYPAL",
-                "payload": {
-                  "nonce": "4234ac11-e67e-0770-7517-8d58ac21e5ef"
-                }
-              },
-              "meta": {}
+        "example": {
+          "data": {
+            "paymentInstrumentType": "PAYPAL",
+            "payload": {
+              "nonce": "4234ac11-e67e-0770-7517-8d58ac21e5ef"
             }
           },
-          "GiftCard": {
-            "value": {
-              "data": {
-                "paymentInstrumentType": "GIFTCARD",
-                "payload": {
-                  "cardNumber": "6280003104690954242",
-                  "pinCode": "3721"
-                }
-              },
-              "meta": {}
-            }
-          },
-          "ApplePay": {
-            "value": {
-              "data": {
-                "paymentInstrumentType": "APPLEPAY",
-                "payload": {
-                  "data": "kZHLADxW/ZIGvpAO3DPwvytXJtm0F4/uQ5J/zDM4VYODqfrMgp4vQrPqN2",
-                  "ephemeralPublicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQg+dfzWCoXmsCepXw==",
-                  "publicKeyHash": "v+uhvrrIXuXV11aZzcAO15bC/3lsOoLvo+UEUKCKOGM=",
-                  "transactionId": "96885a55b034ae8d958493ac7017d0ec657b1046c7394e5b787e0bb35246a065",
-                  "signature": "MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG=",
-                  "version": "EC_v1",
-                  "instrumentType": "MasterCard",
-                  "primary": false,
-                  "comment": "MasterCard 1471",
-                  "applicationData": ""
-                }
-              },
-              "meta": {}
-            }
-          },
-          "GooglePay": {
-            "value": {
-              "data": {
-                "paymentInstrumentType": "GOOGLEPAY",
-                "payload": {
-                  "instrumentType": "MASTERCARD",
-                  "comment": "MASTERCARD-9722",
-                  "tokenData": "{\"signature\":\"MEQCIA2zvCbpHYMZQaOHYE87Il1RxZyqiA8nqDVEaW2u5gNLAiBlTTj2hDMyzsnlhadX03ZQXce8n5V6TA28xz2Iw3OVuw\\u003d\\u003d\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE8Yhwy2VNyj62sfxC3SC8VGNabTym7FHsypJVj9oG76JpP0tEJKBv4YdRat3a7EaK4gZ1V9OvP+Vvffas5NnYMA\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1649796805735\\\"}\",\"signatures\":[\"MEUCIQDKWqzBTR66sqamJMcWDGvapC8ai9DZjP6ElmM7HCCDAAIgS9KAwTfE53nISu3v+wYMknZSoobQsBua8JS8j2/lsYo\\u003d\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"OEGE99dqh2aD8hy1UI9qeyR/utK6HMluUGL9s9BxVdpSLS44KbzJgJ3zmA28K07a5CMKYU0veSc29ny+/pEYUsUgF/P7ByT9b+MrCPXMRUzAFqX06/8OkBWXN4CQyN9ZPOlBuNaskg79hjyG9pJ25Gx6H5GAKsJFtenq4sUzHZoJqEkNLIsL33QTZyC1XyBcxn1MW2i8gaQbquT6k+sP4X5fGi4SxCJpMwCrzBeX8xdkhfr+RHrUve/9pTZyxFOP+W2AZZv/AwStnV4a/L0bDnpW/b7dUwem8WrXal2BSpmVSu/RhAqAtdSS+JNgc8Gb11VA9k43W7oTnKBBcvE6KLa+4d/jkm9tNE9RR7NsmE2hOjn/gQWZLKmjkFLU190j4KdIfgG3I+zQaX4eSXvGMirfhW0D4/Wn9YvvwDsCCubfa44BJ2pd4wR0M0ooM9RW/KHNfpdJg98fiu4IEQ+mKD+BnulLTlYgsA4AUV8WyHFnbe87C1585py7BfRN2cSUCNGFVZB3Atfeifmf9WzlGNmrPxq2Hucb4TcmswPcxLr/caYEQWSaIBqAQWP6rqZg8w7TGJY79u/HEw\\\\u003d\\\\u003d\\\",\\\"ephemeralPublicKey\\\":\\\"BBTiXiLcf1zIE/CF82ORtV9fSGbsIRojcyyzaUSLwPS1eem/YKYRVK6orNzlifhbjJU6g9D0jvQLPQ3cs//wN/0\\\\u003d\\\",\\\"tag\\\":\\\"mehr3HzRwdZS5OMxTZKiFdQ/eoYgB63V6O87lpKQjp0\\\\u003d\\\"}\"}"
-                }
-              },
-              "meta": {}
-            }
-          }
+          "meta": {}
         }
       },
       "apmTokenizeResponse": {
