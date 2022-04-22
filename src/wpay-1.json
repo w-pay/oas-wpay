@@ -12598,7 +12598,7 @@
                 ]
               },
               "payload": {
-                "oneOf": [
+                "anyOf": [
                   {
                     "$ref": "#/components/schemas/TokenizePaypalRequest"
                   },
