@@ -12582,105 +12582,47 @@
         ],
         "properties": {
           "data": {
-            "oneOf": [
-              {
-                "type": "object",
-                "required": [
-                  "paymentInstrumentType",
-                  "payload"
-                ],
-                "properties": {
-                  "paymentInstrumentType": {
-                    "type": "string",
-                    "enum": [
-                      "PAYPAL"
-                    ]
-                  },
-                  "payload": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/TokenizePaypalRequest"
-                      },
-                      {
-                        "$ref": "#/components/schemas/GuestTokenizePaypalRequest"
-                      }
-                    ]
-                  }
-                }
+            "type": "object",
+            "required": [
+              "paymentInstrumentType",
+              "payload"
+            ],
+            "properties": {
+              "paymentInstrumentType": {
+                "type": "string",
+                "enum": [
+                  "PAYPAL",
+                  "APPLEPAY",
+                  "GOOGLEPAY",
+                  "GIFTCARD"
+                ]
               },
-              {
-                "type": "object",
-                "required": [
-                  "paymentInstrumentType",
-                  "payload"
-                ],
-                "properties": {
-                  "paymentInstrumentType": {
-                    "type": "string",
-                    "enum": [
-                      "APPLEPAY"
-                    ]
+              "payload": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/TokenizePaypalRequest"
                   },
-                  "payload": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/TokenizeApplePayRequest"
-                      },
-                      {
-                        "$ref": "#/components/schemas/GuestTokenizeApplePayRequest"
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "required": [
-                  "paymentInstrumentType",
-                  "payload"
-                ],
-                "properties": {
-                  "paymentInstrumentType": {
-                    "type": "string",
-                    "enum": [
-                      "GOOGLEPAY"
-                    ]
+                  {
+                    "$ref": "#/components/schemas/GuestTokenizePaypalRequest"
                   },
-                  "payload": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/TokenizeGooglePayRequest"
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "required": [
-                  "paymentInstrumentType",
-                  "payload"
-                ],
-                "properties": {
-                  "paymentInstrumentType": {
-                    "type": "string",
-                    "enum": [
-                      "GIFTCARD"
-                    ]
+                  {
+                    "$ref": "#/components/schemas/TokenizeApplePayRequest"
                   },
-                  "payload": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/TokenizeGiftcardRequest"
-                      },
-                      {
-                        "$ref": "#/components/schemas/GuestTokenizeGiftcardRequest"
-                      }
-                    ]
+                  {
+                    "$ref": "#/components/schemas/GuestTokenizeApplePayRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TokenizeGooglePayRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/TokenizeGiftcardRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/GuestTokenizeGiftcardRequest"
                   }
-                }
+                ]
               }
-            ]
+            }
           },
           "meta": {
             "type": "object"
