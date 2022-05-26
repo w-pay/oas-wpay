@@ -4459,12 +4459,12 @@
                   "$ref": "#/components/schemas/BaseErrorResponse"
                 },
                 "examples": {
-                  "MandatoryHeadersMissing": {
+                  "SchemaValidationError": {
                     "value": {
                       "httpStatusCode": 400,
                       "errorCode": "AP99",
                       "errorMessage": "Bad Request",
-                      "errorDetail": "Todo"
+                      "errorDetail": "`Request body failed schema validation - [{\"instancePath\":\"\",\"schemaPath\":\"#\/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"senderEmail\"},\"message\":\"must have required property 'senderEmail'\"},{\"instancePath\":\"\",\"schemaPath\":\"#\/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"senderPhone\"},\"message\":\"must have required property 'senderPhone'\"}]`"
                     }
                   }
                 }
@@ -4504,11 +4504,23 @@
                 "schema": {
                   "$ref": "#/components/schemas/BaseErrorResponse"
                 },
-                "example": {
-                  "httpStatusCode": 500,
-                  "errorCode": "UN68",
-                  "errorMessage": "UNSUPPORTED OPERATION",
-                  "errorDetail": "Account is not currently set up for sending risk context data."
+                "examples": {
+                  "PaypalAuthenticationError": {
+                    "value": {
+                      "httpStatusCode": 500,
+                      "errorCode": "UN99",
+                      "errorMessage": "Downstream request failed with status code 200. Message from downstream available in errorDetail",
+                      "errorDetail": "[{\"message\":\"Authentication credentials are invalid.\",\"extensions\":{\"errorClass\":\"AUTHENTICATION\",\"errorType\":\"developer_error\"}}]"
+                    }
+                  },
+                  "PaypalSetupError": {
+                    "value": {
+                      "httpStatusCode": 500,
+                      "errorCode": "UN99",
+                      "errorMessage": "Downstream request failed with status code 200. Message from downstream available in errorDetail",
+                      "errorDetail": "[{\"message\":\"Account is not currently set up for sending risk context data.\",\"locations\":[{\"line\":3,\"column\":7}],\"path\":[\"createTransactionRiskContext\"],\"extensions\":{\"errorClass\":\"VALIDATION\",\"errorType\":\"user_error\",\"inputPath\":[\"input\",\"riskContext\"],\"legacyCode\":\"97001\"}}]"
+                    }
+                  }
                 }
               }
             }
@@ -13931,6 +13943,12 @@
             "type": "string",
             "description": "Country code registered with buyer's partner/merchant account (ISO Alpha-2 Country Code)",
             "example": "AU"
+          },
+          "senderCreateDate": {
+            "pattern": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
+            "type": "string",
+            "description": "Date of creation of buyer's account on the partner/merchant's platform. Format is ISO8601.",
+            "example": "2012-12-09T19:14:55.277-0:00"
           },
           "dgDeliveryMethod": {
             "type": "string",
