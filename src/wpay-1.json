@@ -13948,7 +13948,7 @@
             "pattern": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
             "type": "string",
             "description": "Date of creation of buyer's account on the partner/merchant's platform. Format is ISO8601.",
-            "example": "2012-12-09T19:14:55.277-0:00"
+            "example": "2012-12-09T19:14:55.277+00:00"
           },
           "dgDeliveryMethod": {
             "type": "string",
@@ -13978,7 +13978,7 @@
           "senderEmail":"John@sample.com",
           "senderPhone":"0423484844",
           "senderCountryCode":"AU",
-          "senderCreateDate":"2012-12-09T19:14:55.277-0:00",
+          "senderCreateDate":"2012-12-09T19:14:55.277+00:00",
           "dgDeliveryMethod":"email",
           "highRiskTxnFlag": true,
           "vertical":"Retail"
