@@ -13909,7 +13909,7 @@
           "senderPhone",
           "senderCountryCode",
           "senderCreateDate",
-          "highRiskTxnFlag",
+          "highriskTxnFlag",
           "vertical"
         ],
         "type": "object",
@@ -13980,7 +13980,7 @@
           "senderCountryCode":"AU",
           "senderCreateDate":"2012-12-09T19:14:55.277+00:00",
           "dgDeliveryMethod":"email",
-          "highRiskTxnFlag": true,
+          "highriskTxnFlag": true,
           "vertical":"Retail"
         }
       },
