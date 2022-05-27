@@ -4364,6 +4364,211 @@
         "x-codegen-request-body-name": "body"
       }
     },
+    "/wow/v1/pay/paypal/createtransactionriskcontext": {
+      "post": {
+        "tags": [
+          "Wallet Management"
+        ],
+        "summary": "CreateTransactionRiskContext for PayPal",
+        "description": "This api accepts customer metadata and returns clientMetadataId to be used in paypal sdk. This api call is required to enable seller protection",
+        "parameters": [
+          {
+            "name": "X-Api-Key",
+            "description": "The API key for the request. The API keys (non-prod/prod) will be supplied by the Digital Pay team.",
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "required": true,
+            "example": "haTdoUWVhnXm5n75u6d0VG67vCCvKjQC"
+          },
+          {
+            "name": "X-Auth-Key",
+            "in": "header",
+            "description": "(Deprecated) You are required to use this header to provide the base64 encoded API key. Requires the X-Auth-Digest header to be present.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "OHR1Ull5TVk53NjI5Ng=="
+          },
+          {
+            "name": "X-Auth-Digest",
+            "in": "header",
+            "description": "(Deprecated) You are required to use this header to provide the encrypted API key. The value is the API key encrypted with the client secret key. Requires the X-Auth-Key header to be present.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "c51e0ee540cd3893982d3539d81fddec0bcd832d"
+          },
+          {
+            "name": "X-Message-Id",
+            "in": "header",
+            "description": "This id is used to keep track of the request and its response in the Digital Pay platform. If no value is provided for the request header, Apigee will auto generate an id to use for the request. This header will also be returned in the response and will have the value passed in (or auto generated) from the request.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "f23c096b2e816da158fdf1ad839298e2"
+          },
+          {
+            "name": "Authorization",
+            "description": "The Bearer token for the request. The Bearer token authentication approach can be used by API consumers that implement a client-to-server architecture (mobile app, browser site/page) or server-to-server architecture (BFF, microservice, web server, etc.) for calling Digital Pay APIs. However the Bearer token for a shopper/customer must be obtained from the IDM Server Token API which can only be accessed from a server-to-server architecture (BFF, microservice, web server, etc.). The Authorization header is only required if the X-JWS-Signature header is not present.",
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "required": true,
+            "example": "Bearer 7M8hv8tqpdfSnsEZIDBzJNo91MHF"
+          },
+          {
+            "name": "X-JWS-Signature",
+            "description": "The JWS signature used to sign the request. The JWS signature authentication approach can only be used by API consumers that implement a server-to-server architecture (BFF, microservice, web server, etc.) for calling the Digital Pay APIs. The RSA private key, required to generate the signiture, has to be stored securely and should not be publicly accessible. The X-JWS-Signature header is only required if the Authorization header is not present.",
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "required": true,
+            "example": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImRldiIsInZlcmIiOiJQT1NUIiwidXJsIjoiaHR0cHM6Ly9kZXYubW9iaWxlLWFwaS53b29sd29ydGhzLmNvbS5hdS93b3cvdjEvandzZGVtby92YWxpZGF0ZSIsInRpbWVzdGFtcCI6MTU5NTIwNjcxNDQzOH0..muEr0b3GNORrP0FW1ohUh2XITRNaOO7uBz"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionRiskContextRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "clientMetadataId": "117549cec5dce166540c5f3131812f83"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid request payload or value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseErrorResponse"
+                },
+                "examples": {
+                  "SchemaValidationError": {
+                    "value": {
+                      "httpStatusCode": 400,
+                      "errorCode": "AP99",
+                      "errorMessage": "Bad Request",
+                      "errorDetail": "`Request body failed schema validation - [{\"instancePath\":\"\",\"schemaPath\":\"#\/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"senderEmail\"},\"message\":\"must have required property 'senderEmail'\"},{\"instancePath\":\"\",\"schemaPath\":\"#\/required\",\"keyword\":\"required\",\"params\":{\"missingProperty\":\"senderPhone\"},\"message\":\"must have required property 'senderPhone'\"}]`"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid API Key or API Product Match Not Found or Invalid Token or Expired Token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseErrorResponse"
+                },
+                "example": {
+                  "httpStatusCode": 401,
+                  "errorCode": "AP02",
+                  "errorMessage": "Unauthorized",
+                  "errorDetail": "Invalid or Expired Token"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid API Route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unknown error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseErrorResponse"
+                },
+                "examples": {
+                  "PaypalAuthenticationError": {
+                    "value": {
+                      "httpStatusCode": 500,
+                      "errorCode": "UN99",
+                      "errorMessage": "Downstream request failed with status code 200. Message from downstream available in errorDetail",
+                      "errorDetail": "[{\"message\":\"Authentication credentials are invalid.\",\"extensions\":{\"errorClass\":\"AUTHENTICATION\",\"errorType\":\"developer_error\"}}]"
+                    }
+                  },
+                  "PaypalSetupError": {
+                    "value": {
+                      "httpStatusCode": 500,
+                      "errorCode": "UN99",
+                      "errorMessage": "Downstream request failed with status code 200. Message from downstream available in errorDetail",
+                      "errorDetail": "[{\"message\":\"Account is not currently set up for sending risk context data.\",\"locations\":[{\"line\":3,\"column\":7}],\"path\":[\"createTransactionRiskContext\"],\"extensions\":{\"errorClass\":\"VALIDATION\",\"errorType\":\"user_error\",\"inputPath\":[\"input\",\"riskContext\"],\"legacyCode\":\"97001\"}}]"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "A Business Validation error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "An Internal System error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The Service is currently unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "The request timed out.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
     "/wow/v1/pay/giftcards/tokenize": {
       "post": {
         "tags": [
@@ -11511,7 +11716,8 @@
                 "STEP_UP",
                 "PASSCODE",
                 "3DS",
-                "3DS-frictionless"
+                "3DS-frictionless",
+                "DEVICE_DATA"
               ]
             },
             "token": {
@@ -13692,6 +13898,90 @@
         "example": {
           "validationUrl": "https://apple-pay-gateway-cert.apple.com/paymentservices/paymentSession",
           "displayName": "MyStore"
+        }
+      },
+      "TransactionRiskContextRequest": {
+        "required": [
+          "senderAccountId",
+          "senderFirstName",
+          "senderLastName",
+          "senderEmail",
+          "senderPhone",
+          "senderCountryCode",
+          "senderCreateDate",
+          "highRiskTxnFlag",
+          "vertical"
+        ],
+        "type": "object",
+        "properties": {
+          "senderAccountId": {
+            "type": "string",
+            "description": "unique identifier of the buyer account on the wpay platform",
+            "example": "A123N23424"
+          },
+          "senderFirstName": {
+            "type": "string",
+            "description": "First Name registered with buyer's partner/merchant account",
+            "example": "John"
+          },
+          "senderLastName": {
+            "type": "string",
+            "description": "Last Name registered with buyer's partner/merchant account",
+            "example": "Smith"
+          },
+          "senderEmail": {
+            "type": "string",
+            "description": "Email registered with buyer's partner/merchant account (E.123 - Email address",
+            "example": "John@sample.com"
+          },
+          "senderPhone": {
+            "type": "string",
+            "description": "Phone number (national notation) registered with buyer's partner/merchant account (E.123 - Telephone number (national notation))",
+            "example": "(02) 4283 1211"
+          },
+          "senderCountryCode": {
+            "type": "string",
+            "description": "Country code registered with buyer's partner/merchant account (ISO Alpha-2 Country Code)",
+            "example": "AU"
+          },
+          "senderCreateDate": {
+            "pattern": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
+            "type": "string",
+            "description": "Date of creation of buyer's account on the partner/merchant's platform. Format is ISO8601.",
+            "example": "2012-12-09T19:14:55.277+00:00"
+          },
+          "dgDeliveryMethod": {
+            "type": "string",
+            "enum": [
+              "email",
+              "phone"
+            ],
+            "description": "Delivery method for an intengible item if there is an associated email/phone. It acts as the shipping address for an intengible (this field is required for intengible goods only; otherwise optional)",
+            "example": "email"
+          },
+          "highriskTxnFlag": {
+            "type": "boolean",
+            "description": "Flag for high risk items such giftcards/anything cash equivalent",
+            "example": true
+          },
+          "vertical": {
+            "type": "string",
+            "description": "Transation level vertical flag for partner/merchant's transactions that are in several verticals",
+            "example": "Retail"
+          }
+        },
+        "description": "The JSON request structure of the PayPal CreateTransactionRiskContext endpoint.",
+        "example": {
+          "senderAccountId":"A123N23424",
+          "senderFirstName": "John",
+          "senderLastName": "Smith",
+          "senderEmail":"John@sample.com",
+          "senderPhone":"0423484844",
+          "senderCountryCode":"AU",
+          "senderCreateDate":"2012-12-09T19:14:55.277+00:00",
+          "dgDeliveryMethod":"email",
+          "highRiskTxnFlag": true,
+          "vertical":"Retail"
         }
       },
       "TokenizeApplePayRequest": {
@@ -19922,13 +20212,11 @@
           },
           "customerRef": {
             "type": "string",
-			"nullable": true,
             "description": "A merchant application specific reference number. This number should uniquely identify the customer in the merchant’s system.",
             "example": "654321"
           },
           "orderNumber": {
             "type": "string",
-			"nullable": true,
             "description": "The merchant order number of the transaction. This property is only required if the 'immediateCharge' property is true.",
             "example": "201905070001"
           },
@@ -19943,7 +20231,6 @@
               "suburb"
             ],
             "type": "object",
-			"nullable": true,
             "properties": {
               "firstName": {
                 "type": "string",
@@ -20012,7 +20299,6 @@
               "suburb"
             ],
             "type": "object",
-			"nullable": true,
             "properties": {
               "firstName": {
                 "type": "string",
@@ -20145,7 +20431,6 @@
               "version"
             ],
             "type": "object",
-			"nullable": true,
             "properties": {
               "provider": {
                 "type": "string",
@@ -20232,8 +20517,7 @@
       },
       "UpdatePaymentAgreementRequest": {
         "required": [
-          "clientReference",
-          "paymentAgreement"
+          "clientReference"
         ],
         "type": "object",
         "properties": {
@@ -20244,7 +20528,6 @@
           },
           "customerRef": {
             "type": "string",
-			"nullable": true,
             "description": "A merchant application specific reference number. This number should uniquely identify the customer in the merchant’s system.",
             "example": "654321"
           },
@@ -20259,7 +20542,6 @@
               "suburb"
             ],
             "type": "object",
-			"nullable": true,
             "properties": {
               "firstName": {
                 "type": "string",
@@ -20328,7 +20610,6 @@
               "suburb"
             ],
             "type": "object",
-			"nullable": true,
             "properties": {
               "firstName": {
                 "type": "string",
@@ -20388,13 +20669,19 @@
           },
           "paymentAgreement": {
             "type": "object",
-			"nullable": true,
             "properties": {
               "paymentInstrumentId": {
                 "type": "string",
                 "nullable": true,
                 "description": "The payment agreement payment instrument id that will be used for the charges.",
                 "example": "90731"
+              },
+              "startDate": {
+                "pattern": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
+                "type": "string",
+                "nullable": true,
+                "description": "The payment agreement start date and time. The timestamp format is ISO8601.",
+                "example": "2018-09-01T00:00:00.000+1100"
               },
               "endDate": {
                 "pattern": "^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2}):(\\d{2}(?:\\.\\d*)?)(([-|+](\\d{2}):?(\\d{2})|Z)?)$",
@@ -20416,7 +20703,6 @@
               },
               "chargeAmount": {
                 "type": "number",
-				"nullable": true,
                 "description": "The amount that will be charged at the frequency specified in the payment agreement.",
                 "example": 25.99
               },
@@ -20437,7 +20723,6 @@
               "version"
             ],
             "type": "object",
-			"nullable": true,
             "properties": {
               "provider": {
                 "type": "string",
@@ -20504,6 +20789,7 @@
           },
           "paymentAgreement": {
             "paymentInstrumentId": "90731",
+            "startDate": "2018-09-01T00:00:00.000+1100",
             "endDate": "2018-12-31T23:59:59.999+1100",
             "chargeFrequency": "WEEKLY",
             "chargeAmount": 25.99,
@@ -22639,6 +22925,11 @@
                 "instrumentId": "81054",
                 "type": "PASSCODE",
                 "token": "1425"
+              },
+              {
+                "instrumentId": "90271",
+                "type": "DEVICE_DATA",
+                "token": "a long string"
               }
             ]
           }
