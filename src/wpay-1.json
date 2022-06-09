@@ -20678,7 +20678,7 @@
           },
           "paymentAgreement": {
             "required": [
-              chargeFrequency
+              "chargeFrequency"
             ],
             "type": "object",			
             "properties": {
