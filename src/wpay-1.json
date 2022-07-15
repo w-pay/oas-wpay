@@ -16423,7 +16423,6 @@
       },
       "GuestTokenizeApplePayRequest": {
         "required": [
-          "applicationData",
           "comment",
           "data",
           "ephemeralPublicKey",
@@ -16477,8 +16476,9 @@
           },
           "applicationData": {
             "type": "string",
+            "nullable": true,
             "description": "The \"applicationData\" value from the Apple Pay wallet.",
-            "example": "666555ef411bf515621f"
+            "example": "www.example.com"
           }
         },
         "description": "The JSON request structure of the Guest Tokenize Apple Pay endpoint.",
@@ -16491,7 +16491,7 @@
           "version": "EC_V1",
           "instrumentType": "AMEX",
           "comment": "AMEX-0001",
-          "applicationData": "666555ef411bf515621f"
+          "applicationData": "www.example.com"
         }
       },
       "PaymentTransactionType": {
